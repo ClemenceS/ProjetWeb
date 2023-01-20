@@ -1,6 +1,7 @@
 import re
 import json
 from Bio import SeqIO
+import sys
 
 def get_id(fasta):
     return fasta.id
@@ -11,15 +12,21 @@ def get_seq(fasta):
 def get_chromosome(fasta):
     for match in re.finditer(r'chromosome:(\w+)', fasta.description):
         return match.group(1)
+    for match in re.finditer(r'plasmid:(\w+)', fasta.description):
+        return match.group(1)
     return None
 
 def get_start(fasta):
     for match in re.finditer(r'Chromosome:(\d+)', fasta.description):
         return int(match.group(1))
+    for match in re.finditer(r'plasmid:\w+:\w+:(\d+)', fasta.description):
+        return int(match.group(1))
     return None
 
 def get_end(fasta):
     for match in re.finditer(r'Chromosome:\d+:(\d+)', fasta.description):
+        return int(match.group(1))
+    for match in re.finditer(r'plasmid:\w+:\w+:\d+:(\d+)', fasta.description):
         return int(match.group(1))
     return None
 
@@ -59,6 +66,12 @@ def get_size(fasta):
 def get_phase(fasta):
     for match in re.finditer(r'Chromosome:\d+:\d+:-?(\d+)', fasta.description):
         return int(match.group(1))
+    for match in re.finditer(r'plasmid:\w+:\w+:\d+:\d+:-?(\d+)', fasta.description):
+        return int(match.group(1))
+
+def is_plasmid(fasta):
+    for match in re.finditer(r'plasmid:', fasta.description):
+        return True
 
 def get_espece(address):
     for match in re.finditer(r'\/?(\w+)(_cds)\.', address):
@@ -105,6 +118,7 @@ def fa_2_json(file_address, cds=True):
         fields['transcript_biotype'] = get_transcriptBiotype(fasta)
         fields['gene_symbol'] = get_geneSymbol(fasta)
         fields['description'] = get_description(fasta)
+        fields['is_plasmid'] = is_plasmid(fasta)
         temp['fields'] = fields
         dico_info.append(temp)
 
@@ -153,18 +167,11 @@ def genome_2_fasta(file_address):
     with open(f"{file_address[:-3]}_seq.json", "w") as write_file:
         json.dump(dico_seq, write_file, indent=4)
 
-genome_2_fasta("data/Escherichia_coli_cft073.fa")
-fa_2_json('data/Escherichia_coli_cft073_cds.fa')
-fa_2_json('data/Escherichia_coli_cft073_pep.fa')
 
-#genome_2_fasta("data/Escherichia_coli_o157_h7_str_edl933.fa")
-#fa_2_json('data/Escherichia_coli_o157_h7_str_edl933_cds.fa')
-#fa_2_json('data/Escherichia_coli_o157_h7_str_edl933_pep.fa')
-#
-#genome_2_fasta("data/Escherichia_coli_str_k_12_substr_mg1655.fa")
-#fa_2_json('data/Escherichia_coli_str_k_12_substr_mg1655_cds.fa')
-#fa_2_json('data/Escherichia_coli_str_k_12_substr_mg1655_pep.fa')
-#
-#genome_2_fasta("data/new_coli.fa")
-#fa_2_json('data/new_coli_cds.fa')
-#fa_2_json('data/new_coli_pep.fa')
+entry = sys.argv[1]
+
+genome_2_fasta(f"data/{entry}.fa")
+fa_2_json(f'data/{entry}_cds.fa')
+fa_2_json(f'data/{entry}_pep.fa')
+
+

@@ -1,11 +1,10 @@
 from django.db import models
 
 
-
 class SeqInfo(models.Model):
     id = models.CharField(primary_key=True, max_length=200)
     taille = models.IntegerField(blank=False)
-    phaseLecture = models.IntegerField(blank=False)
+    phaseLecture = models.IntegerField(blank=True, null=True)
     espece = models.CharField(max_length=200, blank=False)
     
 
@@ -15,7 +14,6 @@ class SeqInfo(models.Model):
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.id}'
-
 
 
 
@@ -42,6 +40,7 @@ class CodantInfo(SeqInfo):
     transcript_biotype = models.CharField(max_length=200, blank=True, null=True)
     gene_symbol = models.CharField(max_length=200, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+    is_plasmid = models.BooleanField(blank=True, null=True)
 
     def __str__(self):
         """String for representing the Model object."""
