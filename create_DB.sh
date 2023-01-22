@@ -7,7 +7,7 @@ for e in ${entries[*]};do
     python3 src/create_json.py ${e}
 done
 
-cd Genomicus
+cd genomicus
 
 python3 manage.py makemigrations
 python3 manage.py migrate
