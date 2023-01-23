@@ -26,13 +26,14 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-            <a class="navbar-brand" href="{% url 'genomApp:formulaire_genome' %}">
-                <img src="{% static 'logo.png' %}" alt="logo" width="40" height="34" class="d-inline-block align-text">
+            <a class="navbar-brand" href="{% url 'genomApp:accueil' %}">
+                <img src="{% static 'logo.png' %}" alt="logo" width="40" height="40" class="d-inline-block align-text">
                 GENOMICUS
             </a>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'genomApp:formulaire_genome' %}">Accueil</a>
+                    <a class="nav-link active" aria-current="page"
+                        href="{% url 'genomApp:accueil' %}">Accueil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'genomApp:accueil_annotateur' %}">Annotation</a>
@@ -52,111 +53,117 @@
 </nav>
 <!--end of Navigation bar-->
 
-<div class="container">  
+<div class="container">
     <div class="mt-5"></div>
     <div class="h3 pb-2 mb-4 border-bottom border-dark">Formulaire</div>
     <div class="row">
 
-  <ul class="nav nav-pills">  
-    <li class="nav-item">  
-        <a class="nav-link" href="{% url 'genomApp:formulaire_genome' %}" >Génome</a>  
-      </li>  
-      <li class="nav-item">  
-        <a class="nav-link active" href="{% url 'genomApp:prot_gene' %}">Protéine</a></li>  
-  </ul>  
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'genomApp:formulaire_genome' %}">Génome</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'genomApp:prot_gene' %}">Protéine</a>
+            </li>
+        </ul>
 
-    <form action="" method="post" novalidate="">
-    {% csrf_token %}
-    <p>
-    <div class="mt-3">
-        <label class="form-label" >Type :</label>
-    </p>
-    <div id="id_type">
-    <div>
-        <label class="form-check-label" for="id_type_0"><input class="form-check-input" type="radio" name="type" value="Peptide" id="id_type_0">
-                    Peptide</label>
-    </div>
-    <div>
-        <label class="form-check-label" for="id_type_1"><input class="form-check-input" type="radio" name="type" value="CDS" id="id_type_1">
-                    CDS</label>
-    </div>
-    </div>
-    </div>
-    <p>
-    <div class="mt-3">
-        <label for="id_ID" class="form-label"> ID :</label>
-        <input type="text" class="form-control" name="ID" maxlength="100" required="" id="id_ID">
-    </div>
-    </p>
-    <p>
-    <div class="mt-3">
-        <label for="id_ID_chr" class="form-label"> ID du chromosome :</label>
-        <input type="text" class="form-control" name="ID_chr" maxlength="100" required="" id="id_ID_chr">
-    </div>
-    </p>
-    <p>
-    <div class="mt-3">
-        <label for="id_gene" class="form-label"> Gène :</label>
-        <input type="text" class="form-control" name="gene" maxlength="100" required="" id="id_gene">
-    </div>
-    </p>
-    <div class="mt-3">
-        <label for="id_motif2" class="form-label">Motif recherché :</label>
-        <input type="text" class="form-control" name="motif2" maxlength="100" required="" id="id_motif2">
-    </div>
-    </p>
-    <p>
-    <div class="mt-3">
-        <label for="id_start" class="form-label"> Position du start :</label>
-        <input type="text" class="form-control" name="stop" maxlength="100" required="" id="id_start">
-    </div>
-    </p>
-    <p>
-    <div class="mt-3">
-        <label for="id_stop" class="form-label"> Position du stop :</label>
-        <input type="text" class="form-control" name="stop" maxlength="100" required="" id="id_stop">
-    </div>
-    </p>
-    <p>
-    <div class="mt-3">
-        <label for="id_espece" class="form-label">Espèce :</label>
-        <input type="text" class="form-control" name="espece" maxlength="100" required="" id="id_espece">
-    </div>
-    </p>
-    <p>
-    <div class="mt-3">
-        <label for="id_tailleMin" class="form-label" >Taille minimale :</label>
-        <input type="text" class="form-control" name="tailleMin" maxlength="100" required="" id="id_tailleMin">
-    </div>
-    </p>
-    <p>
-    <div class="mt-3">
-        <label for="id_tailleMax" class="form-label" >Taille maximale :</label>
-        <input type="text" class="form-control" name="tailleMax" maxlength="100" required="" id="id_tailleMax">
-    </div>
-    </p>
-    <p>
-    <div class="mt-3">
-        <label class="form-label" >BDD :</label>
-    </p>
-    <div id="id_nomBDD">
-    <div>
-        <label class="form-check-label" for="id_nomBDD_0"><input class="form-check-input" type="radio" name="nomBDD" value="Genomicus" checked id="id_nomBDD_0">
-                Genomicus</label>
-    </div>
-    <div>
-        <label class="form-check-label" for="id_nomBDD_1"><input class="form-check-input" type="radio" name="nomBDD" value="BDD1" id="id_nomBDD_1">
-                BDD1</label>
-    </div>
-    </div>
-    </div>
-    <p></p>
-    <div class="my-3 d-flex justify-content-end">
-    <input type="submit" value="Soumettre">
-    </div>
+        <form action="" method="post" novalidate="">
+            {% csrf_token %}
+            <p>
+            <div class="mt-3">
+                <label class="form-label">Type :</label>
+                </p>
+                <div id="id_type">
+                    <div>
+                        <label class="form-check-label" for="id_type_0"><input class="form-check-input" type="radio"
+                                name="type" value="Peptide" id="id_type_0">
+                            Peptide</label>
+                    </div>
+                    <div>
+                        <label class="form-check-label" for="id_type_1"><input class="form-check-input" type="radio"
+                                name="type" value="CDS" id="id_type_1">
+                            CDS</label>
+                    </div>
+                </div>
+            </div>
+            <p>
+            <div class="mt-3">
+                <label for="id_ID" class="form-label"> ID :</label>
+                <input type="text" class="form-control" name="ID" maxlength="100" required="" id="id_ID">
+            </div>
+            </p>
+            <p>
+            <div class="mt-3">
+                <label for="id_ID_chr" class="form-label"> ID du chromosome :</label>
+                <input type="text" class="form-control" name="ID_chr" maxlength="100" required="" id="id_ID_chr">
+            </div>
+            </p>
+            <p>
+            <div class="mt-3">
+                <label for="id_gene" class="form-label"> Gène :</label>
+                <input type="text" class="form-control" name="gene" maxlength="100" required="" id="id_gene">
+            </div>
+            </p>
+            <div class="mt-3">
+                <label for="id_motif" class="form-label">Motif recherché :</label>
+                <input type="text" class="form-control" name="motif" maxlength="500" required="" id="id_motif">
+            </div>
+            </p>
+            <p>
+            <div class="mt-3">
+                <label for="id_start" class="form-label"> Position du start :</label>
+                <input type="text" class="form-control" name="start" maxlength="100" required="" id="id_start">
+            </div>
+            </p>
+            <p>
+            <div class="mt-3">
+                <label for="id_stop" class="form-label"> Position du stop :</label>
+                <input type="text" class="form-control" name="stop" maxlength="100" required="" id="id_stop">
+            </div>
+            </p>
+            <p>
+            <div class="mt-3">
+                <label for="id_espece" class="form-label">Espèce :</label>
+                <input type="text" class="form-control" name="espece" maxlength="100" required="" id="id_espece">
+            </div>
+            </p>
+            <p>
+            <div class="mt-3">
+                <label for="id_tailleMin" class="form-label">Taille minimale :</label>
+                <input type="text" class="form-control" name="tailleMin" maxlength="100" required="" id="id_tailleMin">
+            </div>
+            </p>
+            <p>
+            <div class="mt-3">
+                <label for="id_tailleMax" class="form-label">Taille maximale :</label>
+                <input type="text" class="form-control" name="tailleMax" maxlength="100" required="" id="id_tailleMax">
+            </div>
+            </p>
+            <p>
+            <div class="mt-3">
+                <label class="form-label">BDD :</label>
+                </p>
+                <div id="id_nomBDD">
+                    <div>
+                        <label class="form-check-label" for="id_nomBDD_0"><input class="form-check-input" type="radio"
+                                name="nomBDD" value="Genomicus" checked id="id_nomBDD_0">
+                            Genomicus</label>
+                    </div>
+                    <div>
+                        <label class="form-check-label" for="id_nomBDD_1"><input class="form-check-input" type="radio"
+                                name="nomBDD" value="BDD1" id="id_nomBDD_1">
+                            BDD1</label>
+                    </div>
+                </div>
+            </div>
+            <p></p>
+            <div class="my-3 d-flex justify-content-end">
+                <input type="submit" value="Soumettre">
+            </div>
 
-    </form>
+        </form>
+    </div>
 </div>
 </div>
-</div>
+
 </html>

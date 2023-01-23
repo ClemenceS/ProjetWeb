@@ -26,13 +26,13 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-            <a class="navbar-brand" href="{% url 'genomApp:formulaire_genome' %}">
-                <img src="{% static 'logo.png' %}" alt="logo" width="40" height="34" class="d-inline-block align-text">
+            <a class="navbar-brand" href="{% url 'genomApp:accueil' %}">
+                <img src="{% static 'logo.png' %}" alt="logo" width="40" height="40" class="d-inline-block align-text">
                 GENOMICUS
             </a>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'genomApp:formulaire_genome' %}">Accueil</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'genomApp:accueil' %}">Accueil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'genomApp:accueil_annotateur' %}">Annotation</a>
@@ -52,70 +52,52 @@
 </nav>
 <!--end of Navigation bar-->
 
-<div class="container">  
+<div class="container">
     <div class="mt-5"></div>
-    <div class="h3 pb-2 mb-4 border-bottom border-dark">Formulaire</div>
+    <div class="h3 pb-2 mb-4 border-bottom border-dark">Accueil</div>
     <div class="row">
+        <div class="col">
+            <p align="center">
+                <img src="{% static 'logo.png' %}" width="400">
+            </p>
 
-  <ul class="nav nav-pills">  
-    <li class="nav-item">  
-        <a class="nav-link active" href="{% url 'genomApp:formulaire_genome' %}" >Génome</a>  
-      </li>  
-      <li class="nav-item">  
-        <a class="nav-link" href="{% url 'genomApp:prot_gene' %}">Protéine</a></li>  
-  </ul>  
-  
-                <form action="" method="post" novalidate="">
-                    {% csrf_token %}
-                    <p>
-                    <div class="mt-3">
-                        <label for="id_ID" class="form-label"> ID :</label>
-                        <input type="text" class="form-control" name="ID" maxlength="100" required="" id="id_ID">
-                    </div>
-                    </p>
-                    <p>
-                    <div class="mt-3">
-                        <label for="id_motif" class="form-label">Motif recherché :</label>
-                        <input type="text" class="form-control" name="motif" maxlength="100" required="" id="id_motif">
-                    </div>
-                    </p>
-                    <p>
-                    <div class="mt-3">
-                        <label for="id_espece" class="form-label">Espèce :</label>
-                        <input type="text" class="form-control" name="espece" maxlength="100" required="" id="id_espece">
-                    </div>
-                    </p>
-                    <p>
-                    <div class="mt-3">
-                        <label for="id_tailleMin" class="form-label" >Taille minimale :</label>
-                        <input type="text" class="form-control" name="tailleMin" maxlength="100" required="" id="id_tailleMin">
-                    </div>
-                    </p>
-                    <p>
-                    <div class="mt-3">
-                        <label for="id_tailleMax" class="form-label" >Taille maximale :</label>
-                        <input type="text" class="form-control" name="tailleMax" maxlength="100" required="" id="id_tailleMax">
-                    </div>
-                    </p>
-                    <p>
-                    <div class="mt-3">
-                        <label class="form-label" >BDD :</label>
-                    </p>
-                    <div id="id_nomBDD">
-                        <div>
-                            <label class="form-check-label" for="id_nomBDD_0"><input class="form-check-input" type="radio" name="nomBDD" value="Genomicus" checked id="id_nomBDD_0">
-                            Genomicus</label>
-                        </div>
-                        <div>
-                            <label class="form-check-label" for="id_nomBDD_1"><input class="form-check-input" type="radio" name="nomBDD" value="BDD1" id="id_nomBDD_1">
-                            BDD1</label>
-                        </div>
-                    </div>
-                    </div>
-                    <p></p>
-                    <div class="my-3 d-flex justify-content-end">
-                    <input type="submit" value="Soumettre">
-                    </div>
-                </form>
+            <h5 align="justify">
+                Bienvenue à Genomicus! Imaginez que l'ADN est comme le squelette d'un diplodocus, chaque os était un
+                nucléotide composant une séquence. Notre base de données est comme un musée des sciences
+                naturelles, où
+                chaque os est soigneusement catalogué et classé pour une étude approfondie. De la même manière,
+                notre base de données de séquences d'ADN et d'ARN est un outil puissant pour la recherche génétique,
+                permettant aux chercheurs d'étudier et de comprendre les secrets de notre code génétique.
+            </h5>
+        </div>
+        <div class="col">
+
+
+            
+
+
+                <h5 align="justify">
+                    Genomicus permet la recherche de Génome ou de Protéine, sélectionnez quelle type de 
+                    recherche vous souhaitez effectuer. 
+                </h5>
+                <br>
+                <p align="center">
+                    <a role="button" class="btn btn-outline-secondary btn-lg"
+                        href="{% url 'genomApp:formulaire_genome' %}">Génome</a>
+
+                    <a role="button" class="btn btn-outline-secondary btn-lg"
+                        href="{% url 'genomApp:prot_gene' %}">Protéine</a>
+                </p>
+
+
+
+        
+
+
+
+        </div>
+
+
+
     </div>
 </div>

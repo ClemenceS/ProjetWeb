@@ -63,7 +63,7 @@ def get_description(fasta):
     return None
 
 def get_size(fasta):
-    return get_end(fasta) + get_start(fasta) + 1
+    return get_end(fasta) - get_start(fasta) + 1
 
 def get_phase(fasta):
     for match in re.finditer(r'Chromosome:\d+:\d+:-?(\d+)', fasta.description):
@@ -128,7 +128,7 @@ def fa_2_json(file_address, cds=True):
         temp['pk'] = get_id(fasta)
         temp['model'] = f"{NAME_APPLI}.SequenceCodant"
         fields = {}
-        fields['sequence'] = str(fasta.seq)
+        fields['sequence'] = str(fasta.seq).upper()
         temp['fields'] = fields
         dico_seq.append(temp)
     
@@ -159,7 +159,7 @@ def genome_2_fasta(file_address):
         temp['pk'] = get_chromosome(fasta)
         temp['model'] = f"{NAME_APPLI}.SequenceGenome"
         fields = {}
-        fields['sequence'] = str(fasta.seq)
+        fields['sequence'] = str(fasta.seq).upper()
         temp['fields'] = fields
         dico_seq.append(temp)
     

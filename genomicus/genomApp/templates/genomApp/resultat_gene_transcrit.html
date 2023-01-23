@@ -26,13 +26,14 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-            <a class="navbar-brand" href="{% url 'genomApp:formulaire_genome' %}">
-                <img src="{% static 'logo.png' %}" alt="logo" width="40" height="34" class="d-inline-block align-text">
+            <a class="navbar-brand" href="{% url 'genomApp:accueil' %}">
+                <img src="{% static 'logo.png' %}" alt="logo" width="40" height="40" class="d-inline-block align-text">
                 GENOMICUS
             </a>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'genomApp:formulaire_genome' %}">Accueil</a>
+                    <a class="nav-link active" aria-current="page"
+                        href="{% url 'genomApp:accueil' %}">Accueil</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'genomApp:accueil_annotateur' %}">Annotation</a>
@@ -59,33 +60,17 @@
         <div class="h3 pb-2 mb-4 border-bottom border-dark">Résultats</div>
         <div class="col-5">
             <div class="my-3">
-                <a role="button" class="btn btn-outline-secondary" href="{% url 'genomApp:prot_gene' %}"><i class="arrow left"></i> Retour
-                    au
-                    formulaire</a>
             </div>
-            <th scope="col">Votre recherche :</th>
+            <h4>Votre recherche :</h4>
+            <br>
             <table class="table table-sm table-light">
                 <tbody>
+                    {% for c in criterias %}
                     <tr>
-                        <th>ID </th>
-                        <td>{{ ID }}</td>
+                        <th>{{c.key}} </th>
+                        <td>{{c.value}} </td>
                     </tr>
-                    <tr>
-                        <th>Motif </th>
-                        <td>{{ motif }}</td>
-                    </tr>
-                    <tr>
-                        <th>Espèce </th>
-                        <td>{{ espece }}</td>
-                    </tr>
-                    <tr>
-                        <th>Taille minimale</th>
-                        <td>{{ tailleMin }}</td>
-                    </tr>
-                    <tr>
-                        <th>Taille maximale</th>
-                        <td>{{ tailleMax }}</td>
-                    </tr>
+                    {% endfor %}
                     <tr>
                         <th>Base de données</th>
                         <td>{{ nomBDD }}</td>
@@ -96,7 +81,6 @@
         <div class="col-1"></div>
         <div class="col-6">
             <div class="mt-5">
-                <br>
                 <table class="table table-borderless">
                     <thead>
                         <tr>
@@ -106,8 +90,8 @@
                     <tbody>
                         <tr>
                             {% for id in id_results %}
-                            <tr>
-                                <td><a href="{% url 'genomApp:info_relatives' result_id=id %}">{{ id }}</a></td>
+                        <tr>
+                            <td><a href="{% url 'genomApp:info_relatives' result_id=id.id %}">{{ id.id }}</a> ({{ id.codant_type }}) taille : ({{ id.taille }})</td>
                             {% endfor %}
                         </tr>
 
