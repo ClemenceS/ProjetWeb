@@ -1,10 +1,10 @@
-cd Genomicus
+cd genomicus
 
 python3 manage.py flush
-python3 manage.py migrate appli zero
+python3 manage.py migrate genomApp zero
 
 rm -rf db.sqlite3
-rm -rf appli/migrations/0*.py
+rm -rf genomApp/migrations/0*.py
 
 cd ..
 

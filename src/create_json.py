@@ -3,6 +3,8 @@ import json
 from Bio import SeqIO
 import sys
 
+NAME_APPLI = 'genomApp'
+
 def get_id(fasta):
     return fasta.id
 
@@ -96,7 +98,7 @@ def fa_2_json(file_address, cds=True):
     for fasta in fasta_sequences:
         temp={}
         temp['pk'] = get_id(fasta)
-        temp['model'] = "appli.CodantInfo"
+        temp['model'] = f"{NAME_APPLI}.CodantInfo"
         
         fields = {}
         fields['taille'] = get_size(fasta)
@@ -124,7 +126,7 @@ def fa_2_json(file_address, cds=True):
 
         temp={}
         temp['pk'] = get_id(fasta)
-        temp['model'] = "appli.SequenceCodant"
+        temp['model'] = f"{NAME_APPLI}.SequenceCodant"
         fields = {}
         fields['sequence'] = str(fasta.seq)
         temp['fields'] = fields
@@ -145,7 +147,7 @@ def genome_2_fasta(file_address):
     for fasta in fasta_sequences:
         temp={}
         temp['pk'] = get_chromosome(fasta)
-        temp['model'] = "appli.Genome"
+        temp['model'] = f"{NAME_APPLI}.Genome"
         fields = {}
         fields['taille'] = get_size(fasta)
         fields['phaseLecture'] = get_phase(fasta)
@@ -155,7 +157,7 @@ def genome_2_fasta(file_address):
 
         temp={}
         temp['pk'] = get_chromosome(fasta)
-        temp['model'] = "appli.SequenceGenome"
+        temp['model'] = f"{NAME_APPLI}.SequenceGenome"
         fields = {}
         fields['sequence'] = str(fasta.seq)
         temp['fields'] = fields
