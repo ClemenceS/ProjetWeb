@@ -84,6 +84,12 @@ def get_espece(address):
         return match.group(1)
     return None
 
+def get_gc_rate(fasta):
+    seq = get_seq(fasta)
+    G = seq.count('G')
+    C = seq.count('C')
+    return (G+C)/len(seq)*100
+
 def fa_2_json(file_address, cds=True):
 
     cds = False
@@ -97,13 +103,18 @@ def fa_2_json(file_address, cds=True):
     fasta_sequences = SeqIO.parse(open(file_address),'fasta')
     for fasta in fasta_sequences:
         temp={}
-        temp['pk'] = get_id(fasta)
+        if(cds):
+            temp['pk'] = f'cds_{get_id(fasta)}'
+        else:
+            temp['pk'] = f'pep_{get_id(fasta)}'
+
         temp['model'] = f"{NAME_APPLI}.CodantInfo"
         
         fields = {}
         fields['taille'] = get_size(fasta)
         fields['phaseLecture'] = get_phase(fasta)
         fields['espece'] = get_espece(file_address)
+        fields['gc_rate'] = 0
 
         #fields['seq'] = get_seq(fasta)
         fields['chromosome'] = get_chromosome(fasta)
@@ -125,7 +136,10 @@ def fa_2_json(file_address, cds=True):
         dico_info.append(temp)
 
         temp={}
-        temp['pk'] = get_id(fasta)
+        if(cds):
+            temp['pk'] = f'cds_{get_id(fasta)}'
+        else:
+            temp['pk'] = f'pep_{get_id(fasta)}'
         temp['model'] = f"{NAME_APPLI}.SequenceCodant"
         fields = {}
         fields['sequence'] = str(fasta.seq).upper()
@@ -152,6 +166,7 @@ def genome_2_fasta(file_address):
         fields['taille'] = get_size(fasta)
         fields['phaseLecture'] = get_phase(fasta)
         fields['espece'] = get_espece(file_address)
+        fields['gc_rate'] = get_gc_rate(fasta)
         temp['fields'] = fields
         dico_genome.append(temp)
 

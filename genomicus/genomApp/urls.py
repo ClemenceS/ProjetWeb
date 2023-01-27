@@ -16,6 +16,7 @@ urlpatterns = [
     path('valider/', views.valider, name = 'valider'),
     path('deja_affectees/', views.seq_deja_affectees, name = 'seq_deja_affectees'),
     path('affectations_annotations/', views.affectation_annotation, name = 'aff_ann'),
+    path('blast_<result_id>/', views.blastRedirection, name='blastRedirection'),
 ]
 
 

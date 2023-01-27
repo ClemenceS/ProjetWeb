@@ -89,9 +89,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                            {% for id in id_results %}
+                            {% for id in shown_id %}
                         <tr>
-                            <td><a href="{% url 'genomApp:info_relatives' result_id=id.id %}">{{ id.id }}</a> ({{ id.codant_type }}) taille : ({{ id.taille }})</td>
+                            <td><a href="{% url 'genomApp:info_relatives' result_id=id %}">{{ id }}</a> </td>
                             {% endfor %}
                         </tr>
 

@@ -7,6 +7,8 @@
     <title>Accueil</title>
 </head>
 
+<body>
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 <link type="text/css" href="{% static 'mise_en_page.css' %}" rel="stylesheet">
@@ -68,6 +70,21 @@
                 <form action="" method="post" novalidate="">
                     {% csrf_token %}
                     <p>
+                        <div class="mt-3">
+                            <label class="form-label" >BDD :</label>
+                    </p>
+                        <div id="id_nomBDD">
+                            <div>
+                                <label class="form-check-label" for="id_genomicus"><input class="form-check-input" type="radio" name="nomBDD" value="Genomicus" checked id="id_genomicus" onclick="enableField()">
+                                Genomicus</label>
+                            </div>
+                            <div>
+                                <label class="form-check-label" for="id_ncbi"><input class="form-check-input" type="radio" name="nomBDD" value="NCBI Genome" id="id_ncbi" onclick="disableField()">
+                                NCBI Genome</label>
+                            </div>
+                        </div>
+                    </div>
+                    <p>
                     <div class="mt-3">
                         <label for="id_ID" class="form-label"> ID :</label>
                         <input type="text" class="form-control" name="ID" maxlength="100" required="" id="id_ID">
@@ -76,15 +93,33 @@
                     <p>
                     <div class="mt-3">
                         <label for="id_motif" class="form-label">Motif recherché :</label>
-                        <input type="text" class="form-control" name="motif" maxlength="100" required="" id="id_motif">
+                        <input type="text" class="form-control" name="motif" maxlength="500" required="" id="id_motif">
                     </div>
                     </p>
+                    <p>
+                        <div class="mt-3">
+                            <label for="id_ratio" class="form-label">Ratio :</label>
+                            <input type="text" class="form-control" name="ratio" maxlength="100" required="" id="id_ratio">
+                        </div>
+                        </p>
                     <p>
                     <div class="mt-3">
                         <label for="id_espece" class="form-label">Espèce :</label>
                         <input type="text" class="form-control" name="espece" maxlength="100" required="" id="id_espece">
                     </div>
                     </p>
+                    <p>
+                        <div class="mt-3">
+                            <label for="id_gcMin" class="form-label" >%GC minimal :</label>
+                            <input type="text" class="form-control" name="gcMin" maxlength="100" required="" id="id_gcMin">
+                        </div>
+                        </p>
+                        <p>
+                        <div class="mt-3">
+                            <label for="id_gcMax" class="form-label" >%GC maximal :</label>
+                            <input type="text" class="form-control" name="gcMax" maxlength="100" required="" id="id_gcMax">
+                        </div>
+                        </p>
                     <p>
                     <div class="mt-3">
                         <label for="id_tailleMin" class="form-label" >Taille minimale :</label>
@@ -97,21 +132,6 @@
                         <input type="text" class="form-control" name="tailleMax" maxlength="100" required="" id="id_tailleMax">
                     </div>
                     </p>
-                    <p>
-                    <div class="mt-3">
-                        <label class="form-label" >BDD :</label>
-                    </p>
-                    <div id="id_nomBDD">
-                        <div>
-                            <label class="form-check-label" for="id_nomBDD_0"><input class="form-check-input" type="radio" name="nomBDD" value="Genomicus" checked id="id_nomBDD_0">
-                            Genomicus</label>
-                        </div>
-                        <div>
-                            <label class="form-check-label" for="id_nomBDD_1"><input class="form-check-input" type="radio" name="nomBDD" value="BDD1" id="id_nomBDD_1">
-                            BDD1</label>
-                        </div>
-                    </div>
-                    </div>
                     <p></p>
                     <div class="my-3 d-flex justify-content-end">
                     <input type="submit" value="Soumettre">
@@ -119,3 +139,27 @@
                 </form>
     </div>
 </div>
+  
+
+  
+<script>
+    function disableField() {
+        document.querySelector("#id_motif").disabled = true;
+        document.querySelector("#id_tailleMax").disabled = true;
+        document.querySelector("#id_tailleMin").disabled = true;
+        document.querySelector("#id_gcMin").disabled = true;
+        document.querySelector("#id_gcMax").disabled = true;
+    }
+
+    function enableField() {
+        document.querySelector("#id_motif").disabled = false;
+        document.querySelector("#id_tailleMax").disabled = false;
+        document.querySelector("#id_tailleMin").disabled = false;
+        document.querySelector("#id_gcMin").disabled = false;
+        document.querySelector("#id_gcMax").disabled = false;
+    }
+</script>
+
+</body>
+
+</html>

@@ -70,22 +70,22 @@
         <form action="" method="post" novalidate="">
             {% csrf_token %}
             <p>
-            <div class="mt-3">
-                <label class="form-label">Type :</label>
-                </p>
-                <div id="id_type">
-                    <div>
-                        <label class="form-check-label" for="id_type_0"><input class="form-check-input" type="radio"
-                                name="type" value="Peptide" id="id_type_0">
-                            Peptide</label>
-                    </div>
-                    <div>
-                        <label class="form-check-label" for="id_type_1"><input class="form-check-input" type="radio"
-                                name="type" value="CDS" id="id_type_1">
-                            CDS</label>
+                <div class="mt-3">
+                    <label class="form-label">BDD :</label>
+                    </p>
+                    <div id="id_nomBDD">
+                        <div>
+                            <label class="form-check-label" for="id_enomicus"><input class="form-check-input" type="radio"
+                                    name="nomBDD" value="Genomicus" checked id="id_genomicus" onclick="enableField()">
+                                Genomicus</label>
+                        </div>
+                        <div>
+                            <label class="form-check-label" for="id_ncbi"><input class="form-check-input" type="radio"
+                                    name="nomBDD" value="NCBI Proteine" id="id_ncbi" onclick="disableField()">
+                                NCBI Proteine</label>
+                        </div>
                     </div>
                 </div>
-            </div>
             <p>
             <div class="mt-3">
                 <label for="id_ID" class="form-label"> ID :</label>
@@ -111,18 +111,6 @@
             </p>
             <p>
             <div class="mt-3">
-                <label for="id_start" class="form-label"> Position du start :</label>
-                <input type="text" class="form-control" name="start" maxlength="100" required="" id="id_start">
-            </div>
-            </p>
-            <p>
-            <div class="mt-3">
-                <label for="id_stop" class="form-label"> Position du stop :</label>
-                <input type="text" class="form-control" name="stop" maxlength="100" required="" id="id_stop">
-            </div>
-            </p>
-            <p>
-            <div class="mt-3">
                 <label for="id_espece" class="form-label">Espèce :</label>
                 <input type="text" class="form-control" name="espece" maxlength="100" required="" id="id_espece">
             </div>
@@ -139,23 +127,6 @@
                 <input type="text" class="form-control" name="tailleMax" maxlength="100" required="" id="id_tailleMax">
             </div>
             </p>
-            <p>
-            <div class="mt-3">
-                <label class="form-label">BDD :</label>
-                </p>
-                <div id="id_nomBDD">
-                    <div>
-                        <label class="form-check-label" for="id_nomBDD_0"><input class="form-check-input" type="radio"
-                                name="nomBDD" value="Genomicus" checked id="id_nomBDD_0">
-                            Genomicus</label>
-                    </div>
-                    <div>
-                        <label class="form-check-label" for="id_nomBDD_1"><input class="form-check-input" type="radio"
-                                name="nomBDD" value="BDD1" id="id_nomBDD_1">
-                            BDD1</label>
-                    </div>
-                </div>
-            </div>
             <p></p>
             <div class="my-3 d-flex justify-content-end">
                 <input type="submit" value="Soumettre">
@@ -165,5 +136,19 @@
     </div>
 </div>
 </div>
+
+<script>
+    function disableField() {
+        document.querySelector("#id_motif").disabled = true;
+        document.querySelector("#id_tailleMax").disabled = true;
+        document.querySelector("#id_tailleMin").disabled = true;
+    }
+
+    function enableField() {
+        document.querySelector("#id_motif").disabled = false;
+        document.querySelector("#id_tailleMax").disabled = false;
+        document.querySelector("#id_tailleMin").disabled = false;
+    }
+</script>
 
 </html>

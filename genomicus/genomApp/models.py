@@ -5,7 +5,7 @@ class SeqInfo(models.Model):
     taille = models.IntegerField(blank=False)
     phaseLecture = models.IntegerField(blank=True, null=True)
     espece = models.CharField(max_length=200, blank=False)
-    
+    gc_rate = models.FloatField(blank=True)
 
     class Meta:
         abstract = True
