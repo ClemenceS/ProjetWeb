@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from .forms import SearchGenomeForm, SearchProteineGeneForm
 from django.template import loader
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import SequenceGenome, SequenceCodant, Genome, CodantInfo
 import requests
 from fuzzywuzzy import fuzz
+import re
 
 #Define auxiliary functions
 #Function to remove header from ID
@@ -16,6 +17,16 @@ def similarite(seq, motif, ratio):
     if ratio > ratio:
         return True
     return False
+
+def seq_type(sequence):
+    amino_acid_regex = re.compile("^[ARNDCEQGHILKMFPSTWYV]+$")
+    nucleotide_regex = re.compile("^[ACGT]+$")
+    if nucleotide_regex.match(sequence):
+        return "Nucleotide"
+    elif amino_acid_regex.match(sequence):
+        return "Amino Acid"
+    else:
+        return "Unknown"
         
 #Connexion, inscription
 def connexion(request):
@@ -58,7 +69,6 @@ def valider(request):
 def resultatsFormulaireGenome(request):
     if request.method == 'POST':
         form = SearchGenomeForm(request.POST)
-        print(form)
 
         if form.is_valid():
             id = form.cleaned_data['ID']
@@ -110,18 +120,11 @@ def resultatsFormulaireGenome(request):
                 if motif != "":
                     motif= motif.upper()
                     criterias.append({'key': 'Motif ', 'value':motif})
-
-                    if similarite != None:
-                        criterias.append({'key': 'Ratio (%)', 'value':ratio})
-                        for id in q:
-                            seq = SequenceGenome.objects.get(id=id).sequence
-                            if similarite(seq, motif, ratio):
-                                id_list.append(seq)
-
-                    else :
-                        q2 = SequenceGenome.objects.filter(sequence__contains=motif)
-                        id_list2 = q2.values_list('id', flat=True)
-                        id_list = [value for value in id_list if value in id_list2]
+                    criterias.append({'key': 'Similarité (%)', 'value':ratio})
+                    for id in q:
+                        seq = SequenceGenome.objects.get(id=id).sequence
+                        if similarite(seq, motif, ratio):
+                            id_list.append(seq)
 
                 context = {**form.cleaned_data, **{'id_results' : id_list}, **{'criterias':criterias}}
                 #print(context)
@@ -147,6 +150,7 @@ def resultatsFormulaireProteineGene(request):
             id_chr = form.cleaned_data['ID_chr']
             gene = form.cleaned_data['gene']
             motif = form.cleaned_data['motif']
+            ratio = form.cleaned_data['ratio']
             espece = form.cleaned_data['espece']
             tailleMin = form.cleaned_data['tailleMin']
             tailleMax = form.cleaned_data['tailleMax']
@@ -189,10 +193,22 @@ def resultatsFormulaireProteineGene(request):
                     id_list = q.values_list('id', flat=True)
 
                 if motif != "":
+                    motif= motif.upper()
                     criterias.append({'key': 'Motif ', 'value':motif})
-                    q2 = SequenceCodant.objects.all().filter(sequence__contains=motif)
-                    id_list2 = q2.values_list('id', flat=True)
-                    id_list = [value for value in id_list if value in id_list2]
+                    criterias.append({'key': 'Similarité (%)', 'value':ratio})
+                    if seq_type(motif) == 'Amino Acid':
+                        for id in id_list:
+                            if id.startswith("pep_"):
+                                seq = SequenceCodant.objects.get(id=id).sequence
+                                if similarite(seq, motif, ratio):
+                                    id_list.append(seq)
+
+                    elif seq_type(motif) == 'Nucleotide':
+                        for id in id_list:
+                            if id.startswith("cds_"):
+                                seq = SequenceCodant.objects.get(id=id).sequence
+                                if similarite(seq, motif, ratio):
+                                    id_list.append(seq)
 
                 shown_id = [remove_header(id) for id in id_list]
                 shown_id = list(set(shown_id))
@@ -212,7 +228,7 @@ def resultatsFormulaireProteineGene(request):
     return render(request, 'genomApp/accueil_prot_gene.html', {'form':form})
 
 def informationsRelativesProteineGene(request, result_id):
-    p = CodantInfo.objects.get(id="cds_"+result_id)
+    p = CodantInfo.objects.get(id="pep_"+result_id)
 
     id_chr = p.chromosome
     start = p.start
@@ -223,6 +239,7 @@ def informationsRelativesProteineGene(request, result_id):
     espece = p.espece
     sequence_aa = SequenceCodant.objects.all().filter(id="pep_"+result_id).values_list('sequence', flat=True)[0]
     sequence_nucl = SequenceCodant.objects.all().filter(id="cds_"+result_id).values_list('sequence', flat=True)[0]
+    
     context = {'id_cds' : "cds_"+result_id, 'id_pep' : "pep_"+result_id, 'id_chr' : id_chr, 'start' : start, 'stop' : stop, 'gene' : gene, 'description' : description, 'seq_aa':sequence_aa, 'seq_nucl' : sequence_nucl, 'symbol':symbol, 'espece' : espece}
     return render(request, 'genomApp/info.html', context)
 
@@ -242,4 +259,34 @@ def blastRedirection(request, result_id):
     data = {'PROGRAM' : program, 'PAGE_TYPE' : 'BlastSearch', 'LINK_LOC' : 'blasthome', 'QUERY': query}
     response = requests.get("https://blast.ncbi.nlm.nih.gov/Blast.cgi", params=data)
     return HttpResponseRedirect(response.url)
+
+#Autocomplétion
+def speciesGenomeAutocomplete(request):
+    query = request.GET.get("term", "")
+    suggestions = Genome.objects.filter(espece__icontains=query)
+    espece =  [obj.espece for obj in suggestions]
+    suggestions_list = [{"label": s} for s in set(espece)]
+    return JsonResponse(suggestions_list, safe=False)
+
+def idGenomeAutocomplete(request):
+    query = request.GET.get("term", "")
+    suggestions = Genome.objects.filter(id__icontains=query)
+    id =  [obj.id for obj in suggestions]
+    suggestions_list = [{"label": i} for i in set(id)]
+    return JsonResponse(suggestions_list, safe=False)
+
+def speciesProteineAutocomplete(request):
+    query = request.GET.get("term", "")
+    suggestions = CodantInfo.objects.filter(espece__icontains=query)
+    espece =  [obj.espece for obj in suggestions]
+    suggestions_list = [{"label": s} for s in set(espece)]
+    return JsonResponse(suggestions_list, safe=False)
+
+def geneProteineAutocomplete(request):
+    query = request.GET.get("term", "")
+    suggestions = set(list(CodantInfo.objects.filter(gene__icontains=query)))
+    gene =  [obj.gene for obj in suggestions]
+    suggestions_list = [{"label": g} for g in set(gene)]
+    print(suggestions_list)
+    return JsonResponse(suggestions_list, safe=False)
 
