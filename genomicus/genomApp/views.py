@@ -36,11 +36,20 @@ def get_users():
     m = Member.objects.filter(connecte=True)
     if len(m) != 0:
         perso = m[0].firstName + ' ' + m[0].lastName
-        people = {"profile":m[0].user_type, 'connecte':m[0].connecte, 'who':perso }
+        people = {"profile":m[0].user_type, 'connecte':m[0].connecte, 'who':perso, 'email': m[0].email }
     else :
         people = {"profile":0, 'connecte':False}
 
     return people
+
+#Fonction qui retourne la liste IDs dans il a droit d'annoter
+def get_annotations(user):
+    tab = list(Annotation.objects.filter(annotateur = Member.objects.get(email = user['email'])))
+    res=[]
+    for a in tab:
+        res.append(str(a)[4:])#To remove the 'cds_' at the beginning
+    return res
+
 
 # ------------------------------------------------------------------------------       
 
@@ -63,9 +72,7 @@ def accueil_annotateur(request):
     people = get_users()
 
     #List des annotations possible pour l'utilisateur
-    #TODO -> définir fonction qui retourne la liste IDs dans il a droit d'annoter
-    gene_a_annoter = ['ABG68043', 'AAG58066']
-
+    gene_a_annoter = get_annotations(people)
 
     info_gene = []
     num=1
@@ -296,10 +303,10 @@ def informationsRelativesProteineGene(request, result_id):
     #p = CodantInfo.objects.get(id="cds_"+result_id)
     p = CodantInfo.objects.get(id="pep_"+result_id)
 
-    #TODO -> define function that gets the info if the user is allowed to annote page
-    show_annotation = True
-
+    #Since the user is vewing they are not annotating
     annotating = False
+    #TODO -> Define function to check if the user is allowed to annotate
+    allowed_2_annotate = True
 
     id_chr = p.chromosome
     start = p.start
@@ -313,8 +320,8 @@ def informationsRelativesProteineGene(request, result_id):
     
     context = {'id_cds' : "cds_"+result_id, 'id_pep' : "pep_"+result_id, 'id_chr' : id_chr, 'start' : start, 
     'stop' : stop, 'gene' : gene, 'description' : description, 'seq_aa':sequence_aa, 'seq_nucl' : sequence_nucl, 
-    'symbol':symbol, 'espece' : espece, 'shown_id' : result_id, 'show_annotation' : show_annotation,
-    'annotating' :annotating, 'people': people}
+    'symbol':symbol, 'espece' : espece, 'shown_id' : result_id, 'annotating' :annotating, 'people': people,
+    'allowed_2_annotate':allowed_2_annotate}
 
     template = loader.get_template('genomApp/info.html')
     return HttpResponse(template.render(context, request))
@@ -394,8 +401,8 @@ def protein_annotation(request, result_id):
     else:
         p = CodantInfo.objects.get(id='cds_'+result_id)
 
-        show_annotation = False
-        annotating = True
+
+        annotating = True #Mode annotating 
         #TODO -> Define function to check if the user is allowed to annotate
         allowed_2_annotate = True
 
@@ -411,8 +418,8 @@ def protein_annotation(request, result_id):
         
         context = {'id_cds' : "cds_"+result_id, 'id_pep' : "pep_"+result_id, 'id_chr' : id_chr, 'start' : start, 
         'stop' : stop, 'gene' : gene, 'description' : description, 'seq_aa':sequence_aa, 'seq_nucl' : sequence_nucl, 
-        'symbol':symbol, 'espece' : espece, 'shown_id' : result_id, 'show_annotation' : show_annotation,
-        'annotating' :annotating, 'allowed_2_annotate':allowed_2_annotate, 'people':people}
+        'symbol':symbol, 'espece' : espece, 'shown_id' : result_id, 'annotating' :annotating, 
+        'allowed_2_annotate':allowed_2_annotate, 'people':people}
         template = loader.get_template('genomApp/info.html')
         return HttpResponse(template.render(context, request))
         #return render(request, 'genomApp/info.html', context)

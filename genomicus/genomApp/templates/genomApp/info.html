@@ -84,17 +84,21 @@
     {% endif %}
     <div class="my-4">
 
-        {% if show_annotation %}
+        {% if people.profile == 2 and people.connecte %}
+        {% if allowed_2_annotate %}
+        {% if not annotating %}
         <!--SHOW ANNOTATION BUTTON IF POSSIBLE OR NOT-->
         <div class="row">
             <div class="col-2">
             </div>
             <div class="col-9"></div>
             <div class="col-1">
-                <!--TODO -> update button-->
-                <a role="button" class="btn btn-outline-secondary" href="annotation.html">Annotation</a>
+                <!--TODO -> The way that the button is linked isn't amazing-->
+                <a role="button" class="btn btn-outline-secondary" href="http://127.0.0.1:8000/protein_annotation/{{shown_id}}/">Annotation</a>
             </div>
         </div>
+        {% endif %}
+        {% endif %}
         {% endif %}
 
     </div>

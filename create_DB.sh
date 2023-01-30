@@ -28,7 +28,6 @@ DJANGO_SUPERUSER_EMAIL='clemence.22.sebe@gmail.com' \
 python3 manage.py createsuperuser --no-input
 
 # add members in the bdd
-echo "Creation of users"
 
 echo "from member.models import Member; Member.objects.create_member(email='clemence.sebe@universite-paris-saclay.fr', password='clemence', lastName='Sebe', firstName='Clémence')" | python3 manage.py shell
 
@@ -42,5 +41,10 @@ echo "from member.models import Member; Member.objects.create_member(email='geor
 echo "from member.models import Member; m = Member.objects.filter(email='george.marchment@universite-paris-saclay.fr'); m.update(user_type=4) " | python3 manage.py shell
 
 echo "Members created sucessfully."
+
+# add an annotation
+echo 'from genomApp.models import Annotation, CodantInfo; from member.models import Member; Annotation(id= CodantInfo.objects.get(id="cds_AAN80781"), gene = "", gene_symbol = "", description = "", annotateur = Member.objects.get(email="ambre.baumann@universite-paris-saclay.fr")).save() ' | python3 manage.py shell
+echo 'from genomApp.models import Annotation, CodantInfo; from member.models import Member; Annotation(id= CodantInfo.objects.get(id="cds_ABG68043"), gene = "", gene_symbol = "", description = "", annotateur = Member.objects.get(email="ambre.baumann@universite-paris-saclay.fr")).save() ' | python3 manage.py shell
+echo "Annotations created sucessfully."
 
 cd ..

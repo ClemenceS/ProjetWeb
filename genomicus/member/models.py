@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.core.validators import RegexValidator
 
+
 # Create your models here.
 
 #verifiy the form of the phone number
@@ -16,7 +17,7 @@ class MemberManager(models.Manager):
 
 class Member(AbstractBaseUser): 
     #email - primary key
-    email = models.EmailField(max_length=255, unique=True)
+    email = models.EmailField(max_length=255, unique=True, primary_key=True)
 
     #user type
     USER_TYPE_CHOICES = (
@@ -30,6 +31,7 @@ class Member(AbstractBaseUser):
     #First + Last Name
     firstName  = models.CharField(max_length=100)
     lastName = models.CharField(max_length=100)
+
 
     #telephone number
     phone = models.CharField(validators=[regexNumberTel], max_length=14,blank=True) 
