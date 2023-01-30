@@ -81,78 +81,74 @@
     <div class="h3 pb-2 mb-4 border-bottom border-dark">Valider des annotations</div>
     <div class="my-3">
     </div>
+
+    <!------------------------------------------------------------------------------->
+
     <h4><text class=titre2>Annotations à valider</text></h4>
-    <table class="table table-sm table-light">
-        <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">Identification Ensembl</th>
-                <th scope="col">Nom Annotateur</th>
-                <th scope="col">Commentaires</th>
-                <th scope="col">Valider ?</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>1.</th>
-                <td>None</td>
-                <td>None</td>
-                <td>None</td>
-                <td>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="check1">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th>2.</th>
-                <td>None</td>
-                <td>None</td>
-                <td>None</td>
-                <td>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="check2">
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <br>
+    <form action="" method="post" novalidate="">
+        {% csrf_token %}
+        <table class="table table-sm table-light">
+            <thead>
+                <tr>
+                    <th scope="col"></th>
+                    <th scope="col">Identification</th>
+                    <th scope="col">Nom de l'Annotateur</th>
+                    <th scope="col">Espece</th>
+                    <th scope="col">Valider</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for v in a_valider %}
+                <tr>
+                    <th>{{v.num}}.</th>
+                    <td>{{v.id}}</td>
+                    <td>{{v.name}}</td>
+                    <td>{{v.espece}}</td>
+                    <td>
+                        <div>
+                            <input type="checkbox" name="to_validate" id={{v.id}} value={{v.id}} />
+                        </div>
+                    </td>
+                    <td>
+                        <a href="{% url 'genomApp:view_annotation' result_id=v.id%}">(View)</a>
+                    </td>
+                </tr>
+                {% endfor %}
 
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button type="submit" class="btn btn-outline-success">Valider</button>
-    </div>
+            </tbody>
+        </table>
+        <div class="my-3 d-flex justify-content-end">
+            <input type="submit" value="Valider">
+        </div>
 
-    <div class="mt-3">
+    </form>
+
+    <!------------------------------------------------------------------------------->
+
+    <div class="mt-4">
     </div>
     <h4><text class=titre2>En attente</text></h4>
+    <br>
     <table class="table table-sm table-light">
         <thead>
             <tr>
                 <th scope="col"></th>
-                <th scope="col">Identification Ensembl</th>
-                <th scope="col">Nom Annotateur</th>
-                <th scope="col">Commentaires</th>
+                <th scope="col">Identification</th>
+                <th scope="col">Nom de l'Annotateur</th>
+                <th scope="col">Espece</th>
             </tr>
         </thead>
         <tbody>
+            {% for v in en_attente %}
             <tr>
-                <th>1.</th>
-                <td>None</td>
-                <td>None</td>
-                <td>None</td>
+                <th>{{v.num}}.</th>
+                <td>{{v.id}}</td>
+                <td>{{v.name}}</td>
+                <td>{{v.espece}}</td>
             </tr>
-            <tr>
-                <th>2.</th>
-                <td>None</td>
-                <td>None</td>
-                <td>None</td>
-            </tr>
-            <tr>
-                <th>3.</th>
-                <td>None</td>
-                <td>None</td>
-                <td>None</td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 

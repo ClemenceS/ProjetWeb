@@ -61,15 +61,45 @@ def allowed_to_annotate(user, id_prot):
             return True
     return False
 
-#Fonction qui retourne la liste IDs dont l'utilisateur est validateur
+#Fonction qui retourne la liste des annotations dont l'utilisateur est validateur
 def get_annotations_validateur(user):
     tab = list(Annotation.objects.filter(validateur = Member.objects.get(email = user['email'])))
     res=[]
     annotated=[]
     for a in tab:
-        res.append(str(a)[4:])#To remove the 'cds_' at the beginning
-        annotated.append(a.already_annotated)
-    return res, annotated
+        res.append(a)
+    return res
+
+#Function that return the first and last name of a user
+def get_names(user):
+    return f'{user.firstName} {user.lastName}'
+
+#Function that returns the species of a protein from it's short id
+def get_espece(id):
+    return CodantInfo.objects.get(id='cds_'+id).espece
+
+#Function that validates the annotations by updating the CodantInfo table and deleting the corresponding annotations
+def validate_annotations(to_validate):
+    for v in to_validate:
+        cds = CodantInfo.objects.get(id='cds_'+v)
+        pep = CodantInfo.objects.get(id='pep_'+v)
+        annotation = Annotation.objects.get(id='cds_'+v)
+        
+        cds.gene = annotation.gene
+        pep.gene = annotation.gene
+
+        cds.gene_symbol = annotation.gene_symbol
+        pep.gene_symbol = annotation.gene_symbol
+
+        cds.description = annotation.description
+        pep.description = annotation.description
+
+        cds.save()
+        pep.save()
+
+        annotation.delete()
+
+
 
 # ------------------------------------------------------------------------------       
 
@@ -88,6 +118,7 @@ def accueil_validateur(request):
     #return render(request, 'genomApp/validation.html')
 
 
+#Function that shows the annotations possible for the user
 def accueil_annotateur(request):
     people = get_users()
 
@@ -144,14 +175,38 @@ def annotation_possible(request):
     return HttpResponse(template.render({'people':people}, request))
     #return render(request, 'genomApp/annotation.html')
 
+#Function that allows the validateur to validate annotations
 def valider(request):
     people = get_users()
 
+    if request.method == 'POST':
+        to_validate = request.POST.getlist('to_validate')
+        #print(request.POST.getlist('to_validate'))
+        validate_annotations(to_validate)
+        print(request.POST.getlist('to_validate'))
+
+    annotations= get_annotations_validateur(people)
+
+    a_valider, en_attente = [], []
+    a_valider_num, en_attente_num = 1, 1
+    for i in range(len(annotations)):
+        id=str(annotations[i])[4:]
+        v=annotations[i].already_annotated
+        name = get_names(annotations[i].annotateur)
+        espece = get_espece(id)
+        if(not v):
+            en_attente.append({'id':id, 'num':en_attente_num, 'name':name, 'espece':espece})
+            en_attente_num+=1
+        else:
+            a_valider.append({'id':id, 'num':a_valider_num, 'name':name, 'espece':espece})
+            a_valider_num+=1
+    
+    context = {**{'people':people}, **{'en_attente':en_attente}, **{'a_valider':a_valider}}
     template = loader.get_template('genomApp/valider.html')
-    return HttpResponse(template.render({'people':people}, request))
+    return HttpResponse(template.render(context, request))
     #return render(request, 'genomApp/valider.html')
 
-
+#Function that shows the formulaire Genome
 def resultatsFormulaireGenome(request):
     people = get_users()
 
@@ -231,6 +286,7 @@ def resultatsFormulaireGenome(request):
     return HttpResponse(template.render({'form':form, 'people':people}, request))
     #return render(request, 'genomApp/accueil_genome.html', {'form':form})
 
+#Function that shows the formulaire Proteine
 def resultatsFormulaireProteineGene(request):
     people = get_users()
 
@@ -321,6 +377,7 @@ def resultatsFormulaireProteineGene(request):
     return HttpResponse(template.render({'form':form, 'people':people}, request))
     #return render(request, 'genomApp/accueil_prot_gene.html', {'form':form})
 
+#Function that shows corresponding info for a protein
 def informationsRelativesProteineGene(request, result_id):
     people = get_users()
 
@@ -406,6 +463,7 @@ def geneProteineAutocomplete(request):
     print(suggestions_list)
     return JsonResponse(suggestions_list, safe=False)
 
+#Function that allows to modifie an annotation
 def protein_annotation(request, result_id):
     people = get_users()
 
@@ -413,24 +471,23 @@ def protein_annotation(request, result_id):
         form = SearchAnnotationForm(request.POST)
 
         if form.is_valid():
+            #This bit of code updates the annotation
             nom_gene = form.cleaned_data['nom_gene']
             symbol_gene = form.cleaned_data['symbol_gene']
             description = form.cleaned_data['description']
-            print(result_id, nom_gene, symbol_gene, description)
+            #print(result_id, nom_gene, symbol_gene, description)
             #print(CodantInfo.objects.filter(id='cds_'+result_id))
-            annotation = Annotation(id= CodantInfo.objects.get(id="cds_"+result_id),gene = nom_gene, gene_symbol = symbol_gene, description = description, annotateur = Member.objects.get(email=people['email']), already_annotated =True)
+            annotation = Annotation(id= CodantInfo.objects.get(id="cds_"+result_id),gene = nom_gene, gene_symbol = symbol_gene, description = description, annotateur = Member.objects.get(email=people['email']), already_annotated =True, validateur = Annotation.objects.get(id="cds_"+result_id).validateur)
             annotation.save()#Lorsqu'on fait ça -> ça écrase le dernier sauvegardd
-            print(annotation.id, annotation.gene,  annotation.gene_symbol, annotation.description)
+            #print(annotation.id, annotation.gene,  annotation.gene_symbol, annotation.description)
             return accueil_annotateur(request)
 
         else:
             None
             
-
+    #Load the annotations available for the user
     else:
         p = CodantInfo.objects.get(id='cds_'+result_id)
-
-
         annotating = True #Mode annotating 
         #Function to check if the user is allowed to annotate
         #If the user is not connected, they are not allowed to annotate anyway -> so we catch the error
@@ -459,7 +516,7 @@ def protein_annotation(request, result_id):
         return HttpResponse(template.render(context, request))
         #return render(request, 'genomApp/info.html', context)
 
-
+#Function that allows to visualize an annotation
 def view_annotation(request, result_id):
     people = get_users()
     #Function to check if the user is allowed to annotate
@@ -485,8 +542,6 @@ def view_annotation(request, result_id):
     annote_gene = a.gene
     annote_gene_symbol = a.gene_symbol 
     annote_description = a.description
-
-
 
 
 
