@@ -54,3 +54,6 @@ Simply run the command
 ```
 pip install -r requirements.txt
 ```
+___
+
+<img align="right" src="pictures/paris-saclay.png">
