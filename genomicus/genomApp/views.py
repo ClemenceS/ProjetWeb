@@ -62,7 +62,7 @@ def allowed_to_annotate(user, id_prot):
     return False
 
 #Fonction qui retourne la liste IDs dont l'utilisateur est validateur
-def get_annotations(user):
+def get_annotations_validateur(user):
     tab = list(Annotation.objects.filter(validateur = Member.objects.get(email = user['email'])))
     res=[]
     annotated=[]
@@ -146,6 +146,7 @@ def annotation_possible(request):
 
 def valider(request):
     people = get_users()
+
     template = loader.get_template('genomApp/valider.html')
     return HttpResponse(template.render({'people':people}, request))
     #return render(request, 'genomApp/valider.html')
