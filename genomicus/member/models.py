@@ -17,7 +17,8 @@ class MemberManager(models.Manager):
 
 class Member(AbstractBaseUser): 
     #email - primary key
-    email = models.EmailField(max_length=255, unique=True, primary_key=True)
+    #email = models.EmailField(max_length=255, unique=True, primary_key=True)
+    email = models.EmailField(max_length=255, unique=True)
 
     #user type
     USER_TYPE_CHOICES = (

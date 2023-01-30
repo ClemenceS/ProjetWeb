@@ -54,6 +54,7 @@ class Annotation(models.Model):
     description = models.TextField(blank=True, null=True)
     #On suppose qu'un seul annotateur peut annoter -> mais il nous faut toujours un foreign clé 
     annotateur = models.ForeignKey('member.Member', on_delete=models.RESTRICT)
+    already_annotated = models.BooleanField(blank=True, null=True)
 
     def __str__(self):
         """String for representing the Model object."""

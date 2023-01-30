@@ -76,7 +76,6 @@
 
 {% if people.profile >= 2 and people.connecte %}
 
-
 <div class="container">
     <div class="mt-5"></div>
     <div class="h3 pb-2 mb-4 border-bottom border-dark">Annotations possibles</div>
@@ -95,6 +94,7 @@
                 <th scope="col">Espece</th>
                 <th scope="col">Chromosome</th>
                 <th scope="col">Position</th>
+                <th scope="col">Already Annotated</th>
 
             </tr>
         </thead>
@@ -106,6 +106,12 @@
                 <td>{{ g.espece }}</td>
                 <td>{{ g.chromosone }}</td>
                 <td>{{ g.start }}:{{ g.stop }}</td>
+                <td>{{ g.annotated }}
+                    {% if g.annotated %}
+                    <a href="{% url 'genomApp:protein_annotation' result_id=g.id%}">(View)</a>
+                    {% endif %}
+
+                </td>
             </tr>
             {% endfor %}
 

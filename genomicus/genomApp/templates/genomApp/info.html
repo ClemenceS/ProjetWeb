@@ -84,7 +84,7 @@
     {% endif %}
     <div class="my-4">
 
-        {% if people.profile == 2 and people.connecte %}
+        {% if people.profile >= 2 and people.connecte %}
         {% if allowed_2_annotate %}
         {% if not annotating %}
         <!--SHOW ANNOTATION BUTTON IF POSSIBLE OR NOT-->
@@ -93,8 +93,7 @@
             </div>
             <div class="col-9"></div>
             <div class="col-1">
-                <!--TODO -> The way that the button is linked isn't amazing-->
-                <a role="button" class="btn btn-outline-secondary" href="http://127.0.0.1:8000/protein_annotation/{{shown_id}}/">Annotation</a>
+                <a role="button" class="btn btn-outline-secondary" href="{% url 'genomApp:protein_annotation' result_id=shown_id%}">Annotation</a>
             </div>
         </div>
         {% endif %}
@@ -109,12 +108,10 @@
 
     <!--ANNOTATION-->
     {% if annotating %}
-    {% if allowed_2_annotate %}
+    {% if people.profile >= 2 and people.connecte %}
     <form action="" method="post" novalidate="">
         {% csrf_token %}
         <ul class="list-group">
-            <li class="list-group-item"> <b>Espèce</b> : <input type="text" class="form-control" name="espece"
-                    maxlength="100" required="" id="espece" placeholder={{espece}}></li>
             <li class="list-group-item"> <b>Nom du gène</b> : <input type="text" class="form-control" name="nom_gene"
                     maxlength="100" required="" id="nom_gene" placeholder={{gene}}></li>
             <li class="list-group-item"> <b>Symbole du gène</b> : <input type="text" class="form-control"

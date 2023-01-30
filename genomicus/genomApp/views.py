@@ -46,9 +46,20 @@ def get_users():
 def get_annotations(user):
     tab = list(Annotation.objects.filter(annotateur = Member.objects.get(email = user['email'])))
     res=[]
+    annotated=[]
     for a in tab:
         res.append(str(a)[4:])#To remove the 'cds_' at the beginning
-    return res
+        annotated.append(a.already_annotated)
+    return res, annotated
+
+#Function that return true is the user is allowed to annotate the protein -> False if not
+def allowed_to_annotate(user, id_prot):
+    tab = list(Annotation.objects.filter(annotateur = Member.objects.get(email = user['email'])))
+    res=[]
+    for a in tab:
+        if (str(a)[4:] == id_prot):
+            return True
+    return False
 
 
 # ------------------------------------------------------------------------------       
@@ -72,11 +83,13 @@ def accueil_annotateur(request):
     people = get_users()
 
     #List des annotations possible pour l'utilisateur
-    gene_a_annoter = get_annotations(people)
+    gene_a_annoter, already_annotated= get_annotations(people)
 
     info_gene = []
     num=1
-    for g in gene_a_annoter:
+    for i in range(len(gene_a_annoter)):
+        g  = gene_a_annoter[i]
+        annotated = already_annotated[i]
         dico = {}
         p = CodantInfo.objects.get(id='cds_'+g)
         dico['id'] = g
@@ -85,6 +98,7 @@ def accueil_annotateur(request):
         dico['chromosone'] = p.chromosome
         dico['espece'] = p.espece
         dico['num'] = num
+        dico['annotated'] = annotated
 
         num+=1
         info_gene.append(dico)
@@ -305,8 +319,13 @@ def informationsRelativesProteineGene(request, result_id):
 
     #Since the user is vewing they are not annotating
     annotating = False
-    #TODO -> Define function to check if the user is allowed to annotate
-    allowed_2_annotate = True
+    #Function to check if the user is allowed to annotate
+    #If the user is not connected, they are not allowed to annotate anyway -> so we catch the error
+    try:
+        allowed_2_annotate = allowed_to_annotate(people, result_id)
+    except:
+        allowed_2_annotate = False
+    #allowed_2_annotate = True
 
     id_chr = p.chromosome
     start = p.start
@@ -384,15 +403,15 @@ def protein_annotation(request, result_id):
         form = SearchAnnotationForm(request.POST)
 
         if form.is_valid():
-            espece = form.cleaned_data['espece']
             nom_gene = form.cleaned_data['nom_gene']
             symbol_gene = form.cleaned_data['symbol_gene']
             description = form.cleaned_data['description']
-            print(result_id, espece, nom_gene, symbol_gene, description)
-            print(CodantInfo.objects.filter(id='cds_'+result_id))
-            annotation = Annotation(id= CodantInfo.objects.get(id="cds_"+result_id), annotateur = "George", gene = nom_gene, gene_symbol = symbol_gene, description = description)
+            print(result_id, nom_gene, symbol_gene, description)
+            #print(CodantInfo.objects.filter(id='cds_'+result_id))
+            annotation = Annotation(id= CodantInfo.objects.get(id="cds_"+result_id),gene = nom_gene, gene_symbol = symbol_gene, description = description, annotateur = Member.objects.get(email=people['email']), already_annotated =True)
             annotation.save()#Lorsqu'on fait ça -> ça écrase le dernier sauvegardd
-            print(annotation.id)
+            print(annotation.id, annotation.gene,  annotation.gene_symbol, annotation.description)
+            return accueil_annotateur(request)
 
         else:
             None
@@ -403,8 +422,14 @@ def protein_annotation(request, result_id):
 
 
         annotating = True #Mode annotating 
-        #TODO -> Define function to check if the user is allowed to annotate
-        allowed_2_annotate = True
+        #Function to check if the user is allowed to annotate
+        #If the user is not connected, they are not allowed to annotate anyway -> so we catch the error
+        try:
+            allowed_2_annotate = allowed_to_annotate(people, result_id)
+        except:
+            allowed_2_annotate = False
+        #allowed_2_annotate = True
+        
 
         id_chr = p.chromosome
         start = p.start
