@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from .forms import SearchGenomeForm, SearchProteineGeneForm
+from .forms import SearchGenomeForm, SearchProteineGeneForm, SearchAnnotationForm
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import SequenceGenome, SequenceCodant, Genome, CodantInfo
+from .models import SequenceGenome, SequenceCodant, Genome, CodantInfo, Annotation
 import requests
 from fuzzywuzzy import fuzz
 import re
@@ -43,7 +43,28 @@ def accueil_validateur(request):
     return render(request, 'genomApp/validation.html')
 
 def accueil_annotateur(request):
-    return render(request, 'genomApp/annotation.html')
+    #List des annotations possible pour l'utilisateur
+    #TODO -> définir fonction qui retourne la liste IDs dans il a droit d'annoter
+    gene_a_annoter = ['ABG68043', 'AAG58066']
+
+
+    info_gene = []
+    num=1
+    for g in gene_a_annoter:
+        dico = {}
+        p = CodantInfo.objects.get(id='cds_'+g)
+        dico['id'] = g
+        dico['start'] = p.start
+        dico['stop'] = p.stop
+        dico['chromosone'] = p.chromosome
+        dico['espece'] = p.espece
+        dico['num'] = num
+
+        num+=1
+        info_gene.append(dico)
+
+    context = {'genes' : info_gene}
+    return render(request, 'genomApp/annotation.html', context)
 
 def accueil_admin(request):
     return render(request, 'genomApp/admin.html')
@@ -228,7 +249,13 @@ def resultatsFormulaireProteineGene(request):
     return render(request, 'genomApp/accueil_prot_gene.html', {'form':form})
 
 def informationsRelativesProteineGene(request, result_id):
+    #p = CodantInfo.objects.get(id="cds_"+result_id)
     p = CodantInfo.objects.get(id="pep_"+result_id)
+
+    #TODO -> define function that gets the info if the user is allowed to annote page
+    show_annotation = True
+
+    annotating = False
 
     id_chr = p.chromosome
     start = p.start
@@ -240,7 +267,10 @@ def informationsRelativesProteineGene(request, result_id):
     sequence_aa = SequenceCodant.objects.all().filter(id="pep_"+result_id).values_list('sequence', flat=True)[0]
     sequence_nucl = SequenceCodant.objects.all().filter(id="cds_"+result_id).values_list('sequence', flat=True)[0]
     
-    context = {'id_cds' : "cds_"+result_id, 'id_pep' : "pep_"+result_id, 'id_chr' : id_chr, 'start' : start, 'stop' : stop, 'gene' : gene, 'description' : description, 'seq_aa':sequence_aa, 'seq_nucl' : sequence_nucl, 'symbol':symbol, 'espece' : espece}
+    context = {'id_cds' : "cds_"+result_id, 'id_pep' : "pep_"+result_id, 'id_chr' : id_chr, 'start' : start, 
+    'stop' : stop, 'gene' : gene, 'description' : description, 'seq_aa':sequence_aa, 'seq_nucl' : sequence_nucl, 
+    'symbol':symbol, 'espece' : espece, 'shown_id' : result_id, 'show_annotation' : show_annotation,
+    'annotating' :annotating}
     return render(request, 'genomApp/info.html', context)
 
 def visualisationGenome(request, result_id):
@@ -289,4 +319,47 @@ def geneProteineAutocomplete(request):
     suggestions_list = [{"label": g} for g in set(gene)]
     print(suggestions_list)
     return JsonResponse(suggestions_list, safe=False)
+
+def protein_annotation(request, result_id):
+    if request.method == 'POST':
+        form = SearchAnnotationForm(request.POST)
+
+        if form.is_valid():
+            espece = form.cleaned_data['espece']
+            nom_gene = form.cleaned_data['nom_gene']
+            symbol_gene = form.cleaned_data['symbol_gene']
+            description = form.cleaned_data['description']
+            print(result_id, espece, nom_gene, symbol_gene, description)
+            print(CodantInfo.objects.filter(id='cds_'+result_id))
+            annotation = Annotation(id= CodantInfo.objects.get(id="cds_"+result_id), annotateur = "George", gene = nom_gene, gene_symbol = symbol_gene, description = description)
+            annotation.save()#Lorsqu'on fait ça -> ça écrase le dernier sauvegardd
+            print(annotation.id)
+
+        else:
+            None
+            
+
+    else:
+        p = CodantInfo.objects.get(id='cds_'+result_id)
+
+        show_annotation = False
+        annotating = True
+        #TODO -> Define function to check if the user is allowed to annotate
+        allowed_2_annotate = True
+
+        id_chr = p.chromosome
+        start = p.start
+        stop = p.stop
+        gene = p.gene
+        description = p.description
+        symbol = p.gene_symbol
+        espece = p.espece
+        sequence_aa = SequenceCodant.objects.all().filter(id="pep_"+result_id).values_list('sequence', flat=True)[0]
+        sequence_nucl = SequenceCodant.objects.all().filter(id="cds_"+result_id).values_list('sequence', flat=True)[0]
+        
+        context = {'id_cds' : "cds_"+result_id, 'id_pep' : "pep_"+result_id, 'id_chr' : id_chr, 'start' : start, 
+        'stop' : stop, 'gene' : gene, 'description' : description, 'seq_aa':sequence_aa, 'seq_nucl' : sequence_nucl, 
+        'symbol':symbol, 'espece' : espece, 'shown_id' : result_id, 'show_annotation' : show_annotation,
+        'annotating' :annotating, 'allowed_2_annotate':allowed_2_annotate}
+        return render(request, 'genomApp/info.html', context)
 

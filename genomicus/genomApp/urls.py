@@ -22,6 +22,8 @@ urlpatterns = [
     path('recherche_proteine_gene/id_chr_proteine_autocomplete/', views.idGenomeAutocomplete, name='idChrProteineAutocomplete'),
     path('recherche_proteine_gene/gene_proteine_autocomplete/', views.geneProteineAutocomplete, name='geneProteineAutocomplete'),
     path('recherche_proteine_gene/species_proteine_autocomplete/', views.speciesProteineAutocomplete, name='speciesProteineAutocomplete'),
-    ]
+    path('protein_annotation/<result_id>/', views.protein_annotation, name='protein_annotation'),
+]
+
 
 app_name = "genomApp"

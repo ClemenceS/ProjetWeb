@@ -22,3 +22,10 @@ class SearchProteineGeneForm(forms.Form):
     tailleMin = forms.IntegerField(label='tailleMin', required=False)
     tailleMax = forms.IntegerField(label='tailleMax', required=False)
     nomBDD = forms.ChoiceField(label='nomBDD', widget=forms.RadioSelect, choices = (('Genomicus', 'Genomicus'), ('NCBI Proteine', 'NCBI Proteine')))
+
+class SearchAnnotationForm(forms.Form):
+    espece = forms.CharField(label='espece', max_length=100, required=False)
+    nom_gene = forms.CharField(label='nom_gene', max_length=100, required=False)
+    symbol_gene = forms.CharField(label='symbol_gene', max_length=100, required=False)
+    description = forms.CharField(label='description', max_length=100, required=False)
+

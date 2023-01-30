@@ -56,37 +56,42 @@
 <div class="container">
     <div class="mt-5"></div>
     <div class="h3 pb-2 mb-4 border-bottom border-dark">Annotations possibles</div>
+
+    
+    <h4> Protéines :</h4>
     <div class="my-3">
-        <a role="button" class="btn btn-outline-secondary" href="{% url 'genomApp:formulaire_genome' %}"><i class="arrow left"></i> Retour à l'accueil</a>
     </div>
+
     <table class="table table-sm table-light">
 
         <thead>
             <tr>
                 <th scope="col"></th>
-                <th scope="col">Identification Ensembl</th>
-                <th scope="col">Types</th>
-                <th scope="col">Positions</th>
-                <th scope="col">Chromosomes</th>
-                <th scope="col">Annoter ?</th>
+                <th scope="col">Identification</th>
+                <th scope="col">Espece</th>
+                <th scope="col">Chromosome</th>
+                <th scope="col">Position</th>
+
             </tr>
         </thead>
         <tbody>
+            {% for g in genes %}
             <tr>
-                <th>1.</th>
-                <td>ABG68043</td>
-                <td>CDS</td>
-                <td>190:255</td>
-                <td>ASM1330v1</td>
-                <td><div class="form-check">
-                    <input class="form-check-input" type="radio" id="radio1" name="annotation" checked>
-                  </div></td>
+                <th>{{g.num}}.</th>
+                <td><a href="{% url 'genomApp:protein_annotation' result_id=g.id%}">{{ g.id }}</a></td>
+                <td>{{ g.espece }}</td>
+                <td>{{ g.chromosone }}</td>
+                <td>{{ g.start }}:{{ g.stop }}</td>
             </tr>
+            {% endfor %}
+
         </tbody>
     </table>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a role="button" class="btn btn-outline-success" href="">Valider</a>
-    </div>
+
+
+
+
+
 
 </div>
 

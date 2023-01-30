@@ -5,7 +5,7 @@ class SeqInfo(models.Model):
     taille = models.IntegerField(blank=False)
     phaseLecture = models.IntegerField(blank=True, null=True)
     espece = models.CharField(max_length=200, blank=False)
-    gc_rate = models.FloatField(blank=True)
+    gc_rate = models.FloatField(blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -44,6 +44,16 @@ class CodantInfo(SeqInfo):
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.id}'
+
+class Annotation(models.Model):
+    #On suppose qu'un seul annotateur peut annoter -> d'où qu'un seul clé primaire et non double
+    id = models.ForeignKey('CodantInfo', on_delete=models.RESTRICT, primary_key=True)
+    annotateur = models.CharField(max_length=200, blank=True, null=True)#TODO -> faire référence à son annotateur
+    gene = models.CharField(max_length=200, blank=True, null=True)
+    gene_symbol = models.CharField(max_length=200, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+
+   
 
 
 class SequenceBase(models.Model):
