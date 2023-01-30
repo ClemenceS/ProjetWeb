@@ -79,150 +79,33 @@
 <div class="container">
     <div class="mt-5"></div>
     <div class="h3 pb-2 mb-4 border-bottom border-dark">Déjà Affectées</div>
-    <div class="my-3">
-        <a role="button" class="btn btn-outline-secondary" href="{% url 'genomApp:accueil_validateur' %}"><i
-                class="arrow left"></i> Retour</a>
+    <div class="col-5 my-3">
     </div>
+
+    {% for p in annotateurs %}
     <details>
         <summary>
-            <h4>Lindsay</h4>
+            <h4>{{p.key}}</h4>
         </summary>
         <table class="table table-sm table-light">
             <thead>
                 <tr>
                     <th scope="col"></th>
-                    <th scope="col">Identification Ensembl</th>
-                    <th scope="col">Types</th>
-                    <th scope="col">Commentaires</th>
+                    <th scope="col">Identification</th>
                 </tr>
             </thead>
             <tbody>
+                {% for a in p.val %}
                 <tr>
-                    <th>1.</th>
-                    <td>None</td>
-                    <td>None</td>
-                    <td>None</td>
+                    <th>{{a.num}}.</th>
+                    <td>{{a.id}}</td>
                 </tr>
-                <tr>
-                    <th>2.</th>
-                    <td>None</td>
-                    <td>None</td>
-                    <td>None</td>
-                </tr>
-                <tr>
-                    <th>3.</th>
-                    <td>None</td>
-                    <td>None</td>
-                    <td>None</td>
-                </tr>
+                {% endfor %}
             </tbody>
         </table>
     </details>
-    <details>
-        <summary>
-            <h4>Clémence</h4>
-        </summary>
-        <table class="table table-sm table-light">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Identification Ensembl</th>
-                    <th scope="col">Types</th>
-                    <th scope="col">Commentaires</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th>1.</th>
-                    <td>None</td>
-                    <td>None</td>
-                    <td>None</td>
-                </tr>
-                <tr>
-                    <th>2.</th>
-                    <td>None</td>
-                    <td>None</td>
-                    <td>None</td>
-                </tr>
-                <tr>
-                    <th>3.</th>
-                    <td>None</td>
-                    <td>None</td>
-                    <td>None</td>
-                </tr>
-            </tbody>
-        </table>
-    </details>
-    <details>
-        <summary>
-            <h4>George</h4>
-        </summary>
-        <table class="table table-sm table-light">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Identification Ensembl</th>
-                    <th scope="col">Types</th>
-                    <th scope="col">Commentaires</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th>1.</th>
-                    <td>None</td>
-                    <td>None</td>
-                    <td>None</td>
-                </tr>
-                <tr>
-                    <th>2.</th>
-                    <td>None</td>
-                    <td>None</td>
-                    <td>None</td>
-                </tr>
-                <tr>
-                    <th>3.</th>
-                    <td>None</td>
-                    <td>None</td>
-                    <td>None</td>
-                </tr>
-            </tbody>
-        </table>
-    </details>
-    <details>
-        <summary>
-            <h4>Ambre</h4>
-        </summary>
-        <table class="table table-sm table-light">
-            <thead>
-                <tr>
-                    <th scope="col"></th>
-                    <th scope="col">Identification Ensembl</th>
-                    <th scope="col">Types</th>
-                    <th scope="col">Commentaires</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th>1.</th>
-                    <td>None</td>
-                    <td>None</td>
-                    <td>None</td>
-                </tr>
-                <tr>
-                    <th>2.</th>
-                    <td>None</td>
-                    <td>None</td>
-                    <td>None</td>
-                </tr>
-                <tr>
-                    <th>3.</th>
-                    <td>None</td>
-                    <td>None</td>
-                    <td>None</td>
-                </tr>
-            </tbody>
-        </table>
-    </details>
+    {% endfor %}
+
 </div>
 
 {% else %}

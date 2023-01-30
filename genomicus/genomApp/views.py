@@ -74,6 +74,10 @@ def get_annotations_validateur(user):
 def get_names(user):
     return f'{user.firstName} {user.lastName}'
 
+#Function that return the first and last name of a user from the email
+def get_names_from_email(email):
+    return get_names(Member.objects.get(email=email))
+
 #Function that returns the species of a protein from it's short id
 def get_espece(id):
     return CodantInfo.objects.get(id='cds_'+id).espece
@@ -98,6 +102,36 @@ def validate_annotations(to_validate):
         pep.save()
 
         annotation.delete()
+
+#Function that return the annotateurs (and their possible annotations) from the validateur
+def annotateurs_from_validateur(validateur):
+    tab = list(Annotation.objects.filter(validateur = Member.objects.get(email = validateur['email'])))
+    dico ={}
+    num ={}
+    list_num ={}
+    for t in tab:
+        name = get_names_from_email(t.annotateur)
+        try:
+            dico[name].append(str(t.id)[4:])
+            list_num[name].append(num[name])
+            num[name]+=1
+        except:
+            dico[name] = []
+            list_num[name] = []
+            num[name] = 1
+            dico[name].append(str(t.id)[4:])
+            list_num[name].append(num[name])
+            num[name]+=1
+    
+    tab=[]
+    for d in dico:
+        temp=[]
+        for i in range(len(dico[d])):
+            temp.append({'id':dico[d][i], 'num':list_num[d][i]})
+        tab.append({'key':d, 'val':temp})
+
+        
+    return tab
 
 
 
@@ -149,12 +183,13 @@ def accueil_annotateur(request):
     #return render(request, 'genomApp/annotation.html', context)
 
 
-#Annotations
-
+#Function that shows the annotateurs that the validateur has affected pages to
 def seq_deja_affectees(request):
     people = get_users()
+    annotateurs = annotateurs_from_validateur(people)
+    print(annotateurs)
     template = loader.get_template('genomApp/affecte.html')
-    return HttpResponse(template.render({'people':people}, request))
+    return HttpResponse(template.render({'people':people, 'annotateurs':annotateurs}, request))
     #return render(request, 'genomApp/affecte.html')
 
 def soumission_annotation(request):
