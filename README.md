@@ -23,7 +23,17 @@ To fill the database we have decided to use (*json*) fixtures which we create by
 ./run.sh
 ```
 
-To access the application, go to the following address : http://127.0.0.1:8000/genomApp/ 
+* To access the application, go to the following address : http://127.0.0.1:8000/ 
+
+
+* To access the different users :  
+
+| Type             | email                                       | password |
+|------------------|---------------------------------------------|----------|
+| 'lecteur'        | clemence.sebe@universite-paris-saclay.fr    | clemence |
+| 'annotateur'     | ambre.baumann@universite-paris-saclay.fr    | ambre    |
+| 'validateur'     | lindsay.goulet@universite-paris-saclay.fr   | lindsay  |
+| 'administrateur' | george.marchment@universite-paris-saclay.fr | george   |
 
 ### To empty and delete the Database
 

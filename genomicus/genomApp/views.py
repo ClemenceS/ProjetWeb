@@ -6,6 +6,10 @@ from .models import SequenceGenome, SequenceCodant, Genome, CodantInfo, Annotati
 import requests
 from fuzzywuzzy import fuzz
 import re
+from django.contrib import admin
+
+
+from member.models import Member
 
 #Define auxiliary functions
 #Function to remove header from ID
@@ -27,22 +31,37 @@ def seq_type(sequence):
         return "Amino Acid"
     else:
         return "Unknown"
-        
-#Connexion, inscription
-def connexion(request):
-    return render(request, 'genomApp/connexion.html')
 
-def inscription(request):
-    return render(request, 'genomApp/inscription.html')
+def get_users():
+    m = Member.objects.filter(connecte=True)
+    if len(m) != 0:
+        perso = m[0].firstName + ' ' + m[0].lastName
+        people = {"profile":m[0].user_type, 'connecte':m[0].connecte, 'who':perso }
+    else :
+        people = {"profile":0, 'connecte':False}
+
+    return people
+
+# ------------------------------------------------------------------------------       
 
 #Pages d'accueil
 def accueil(request):
-    return render(request, 'genomApp/accueil.html')
+    people = get_users()
+    template = loader.get_template('genomApp/accueil.html')
+    return HttpResponse(template.render({'people':people}, request))
+    #return render(request, 'genomApp/accueil.html')
+
 
 def accueil_validateur(request):
-    return render(request, 'genomApp/validation.html')
+    people = get_users()
+    template = loader.get_template('genomApp/validation.html')
+    return HttpResponse(template.render({'people':people}, request))
+    #return render(request, 'genomApp/validation.html')
+
 
 def accueil_annotateur(request):
+    people = get_users()
+
     #List des annotations possible pour l'utilisateur
     #TODO -> définir fonction qui retourne la liste IDs dans il a droit d'annoter
     gene_a_annoter = ['ABG68043', 'AAG58066']
@@ -63,31 +82,48 @@ def accueil_annotateur(request):
         num+=1
         info_gene.append(dico)
 
-    context = {'genes' : info_gene}
-    return render(request, 'genomApp/annotation.html', context)
+    context = {'genes' : info_gene, 'people':people}
+    template = loader.get_template('genomApp/annotation.html')
+    return HttpResponse(template.render(context, request))
+    #return render(request, 'genomApp/annotation.html', context)
 
-def accueil_admin(request):
-    return render(request, 'genomApp/admin.html')
 
 #Annotations
 
 def seq_deja_affectees(request):
-    return render(request, 'genomApp/affecte.html')
+    people = get_users()
+    template = loader.get_template('genomApp/affecte.html')
+    return HttpResponse(template.render({'people':people}, request))
+    #return render(request, 'genomApp/affecte.html')
 
 def soumission_annotation(request):
-    return render(request, 'genomApp/a_annoter.html')
+    people = get_users()
+    template = loader.get_template('genomApp/a_annoter.html')
+    return HttpResponse(template.render({'people':people}, request))
+    #return render(request, 'genomApp/a_annoter.html')
 
 def affectation_annotation(request):
-    return render(request, 'genomApp/a_affecter.html')
+    people = get_users()
+    template = loader.get_template('genomApp/a_affecter.html')
+    return HttpResponse(template.render({'people':people}, request))
+    #return render(request, 'genomApp/a_affecter.html')
 
 def annotation_possible(request):
-    return render(request, 'genomApp/annotation.html')
+    people = get_users()
+    template = loader.get_template('genomApp/annotation.html')
+    return HttpResponse(template.render({'people':people}, request))
+    #return render(request, 'genomApp/annotation.html')
 
 def valider(request):
-    return render(request, 'genomApp/valider.html')
+    people = get_users()
+    template = loader.get_template('genomApp/valider.html')
+    return HttpResponse(template.render({'people':people}, request))
+    #return render(request, 'genomApp/valider.html')
 
 
 def resultatsFormulaireGenome(request):
+    people = get_users()
+
     if request.method == 'POST':
         form = SearchGenomeForm(request.POST)
 
@@ -147,7 +183,7 @@ def resultatsFormulaireGenome(request):
                         if similarite(seq, motif, ratio):
                             id_list.append(seq)
 
-                context = {**form.cleaned_data, **{'id_results' : id_list}, **{'criterias':criterias}}
+                context = {**form.cleaned_data, **{'id_results' : id_list}, **{'criterias':criterias}, **{'people':people}}
                 #print(context)
                 
                 template = loader.get_template('genomApp/resultat_genome.html')
@@ -160,9 +196,13 @@ def resultatsFormulaireGenome(request):
                 return HttpResponseRedirect(response.url)
     else:
         form = SearchGenomeForm()
-    return render(request, 'genomApp/accueil_genome.html', {'form':form})
+    template = loader.get_template('genomApp/accueil_genome.html')
+    return HttpResponse(template.render({'form':form, 'people':people}, request))
+    #return render(request, 'genomApp/accueil_genome.html', {'form':form})
 
 def resultatsFormulaireProteineGene(request):
+    people = get_users()
+
     if request.method == 'POST':
         form = SearchProteineGeneForm(request.POST)
             
@@ -234,7 +274,7 @@ def resultatsFormulaireProteineGene(request):
                 shown_id = [remove_header(id) for id in id_list]
                 shown_id = list(set(shown_id))
 
-                context = {**form.cleaned_data, **{'id_results' : id_list}, **{'shown_id' : shown_id}, **{'criterias':criterias}}
+                context = {**form.cleaned_data, **{'id_results' : id_list}, **{'shown_id' : shown_id}, **{'criterias':criterias}, **{'people':people}}
                 template = loader.get_template('genomApp/resultat_gene_transcrit.html')
                 return HttpResponse(template.render(context, request))
             
@@ -246,9 +286,13 @@ def resultatsFormulaireProteineGene(request):
 
     else:
         form = SearchProteineGeneForm()
-    return render(request, 'genomApp/accueil_prot_gene.html', {'form':form})
+    template = loader.get_template('genomApp/accueil_prot_gene.html')
+    return HttpResponse(template.render({'form':form, 'people':people}, request))
+    #return render(request, 'genomApp/accueil_prot_gene.html', {'form':form})
 
 def informationsRelativesProteineGene(request, result_id):
+    people = get_users()
+
     #p = CodantInfo.objects.get(id="cds_"+result_id)
     p = CodantInfo.objects.get(id="pep_"+result_id)
 
@@ -270,12 +314,18 @@ def informationsRelativesProteineGene(request, result_id):
     context = {'id_cds' : "cds_"+result_id, 'id_pep' : "pep_"+result_id, 'id_chr' : id_chr, 'start' : start, 
     'stop' : stop, 'gene' : gene, 'description' : description, 'seq_aa':sequence_aa, 'seq_nucl' : sequence_nucl, 
     'symbol':symbol, 'espece' : espece, 'shown_id' : result_id, 'show_annotation' : show_annotation,
-    'annotating' :annotating}
-    return render(request, 'genomApp/info.html', context)
+    'annotating' :annotating, 'people': people}
+
+    template = loader.get_template('genomApp/info.html')
+    return HttpResponse(template.render(context, request))
+    #return render(request, 'genomApp/info.html', context)
 
 def visualisationGenome(request, result_id):
-    context = {'id_genome' : result_id}
-    return render(request, 'genomApp/visualisation.html', context)
+    people = get_users()
+    context = {'id_genome' : result_id, 'people':people}
+    template = loader.get_template('genomApp/visualisation.html')
+    return HttpResponse(template.render(context, request))
+    #return render(request, 'genomApp/visualisation.html', context)
 
 def blastRedirection(request, result_id):
     type = CodantInfo.objects.filter(id=result_id).values_list('codant_type', flat=True)[0]
@@ -321,6 +371,8 @@ def geneProteineAutocomplete(request):
     return JsonResponse(suggestions_list, safe=False)
 
 def protein_annotation(request, result_id):
+    people = get_users()
+
     if request.method == 'POST':
         form = SearchAnnotationForm(request.POST)
 
@@ -360,6 +412,8 @@ def protein_annotation(request, result_id):
         context = {'id_cds' : "cds_"+result_id, 'id_pep' : "pep_"+result_id, 'id_chr' : id_chr, 'start' : start, 
         'stop' : stop, 'gene' : gene, 'description' : description, 'seq_aa':sequence_aa, 'seq_nucl' : sequence_nucl, 
         'symbol':symbol, 'espece' : espece, 'shown_id' : result_id, 'show_annotation' : show_annotation,
-        'annotating' :annotating, 'allowed_2_annotate':allowed_2_annotate}
-        return render(request, 'genomApp/info.html', context)
+        'annotating' :annotating, 'allowed_2_annotate':allowed_2_annotate, 'people':people}
+        template = loader.get_template('genomApp/info.html')
+        return HttpResponse(template.render(context, request))
+        #return render(request, 'genomApp/info.html', context)
 
