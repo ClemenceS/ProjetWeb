@@ -53,7 +53,9 @@ class Annotation(models.Model):
     gene_symbol = models.CharField(max_length=200, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     #On suppose qu'un seul annotateur peut annoter -> mais il nous faut toujours un foreign clé 
-    annotateur = models.ForeignKey('member.Member', on_delete=models.RESTRICT)
+    annotateur = models.ForeignKey('member.Member', on_delete=models.RESTRICT, related_name='annotateur')
+    #On suppose qu'un seul validateur peut donner droit a un annotateur 
+    validateur = models.ForeignKey('member.Member', on_delete=models.RESTRICT, related_name='validateur')
     already_annotated = models.BooleanField(blank=True, null=True)
 
     def __str__(self):

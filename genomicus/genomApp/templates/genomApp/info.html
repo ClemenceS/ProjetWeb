@@ -131,8 +131,24 @@
 
     {% else %}
     {% if view_annotation %} <!--In the case view annotation-->
-        George
-    {% else %}
+    <!--<div class="h3 pb-2 mb-4 border-bottom border-dark">Annotation existant</div>-->
+    <br>
+    <h2>
+        Annotation existant
+    </h2>
+    <ul class="list-group">
+        <li class="list-group-item"> <b>Nom du gène</b> : {{annote_gene}}</li>
+        <li class="list-group-item"> <b>Symbole du gène</b> : {{annote_gene_symbol}}</li>
+        <li class="list-group-item"> <b>Description</b> : {{annote_description}}</li>
+    </ul>
+
+
+    <!--<div class="h3 pb-2 mb-4 border-bottom border-dark">Informations relatives aux gènes</div>-->
+    <br>
+    <h2>
+        Informations relatives aux gènes
+    </h2>
+    {% endif %}
     <!--VISUALISATION-->
     <ul class="list-group">
         <li class="list-group-item"> <b>Espèce</b> : {{espece}}</li>
@@ -143,7 +159,6 @@
         <li class="list-group-item"> <b>Symbole du gène</b> : {{ symbol }}</li>
         <li class="list-group-item"> <b>Description</b> : {{ description }}</li>
     </ul>
-    {% endif %}
     {% endif %}
 
 
