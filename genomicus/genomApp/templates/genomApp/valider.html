@@ -80,8 +80,6 @@
     <div class="mt-5"></div>
     <div class="h3 pb-2 mb-4 border-bottom border-dark">Valider des annotations</div>
     <div class="my-3">
-        <a role="button" class="btn btn-outline-secondary" href="{% url 'genomApp:accueil_validateur' %}"><i
-                class="arrow left"></i> Retour</a>
     </div>
     <h4><text class=titre2>Annotations à valider</text></h4>
     <table class="table table-sm table-light">
@@ -160,37 +158,6 @@
 
     <div class="mt-5">
     </div>
-    <h4><text class=titre2>Déjà validées</text></h4>
-    <table class="table table-sm table-light">
-        <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col">Identification Ensembl</th>
-                <th scope="col">Nom Annotateur</th>
-                <th scope="col">Commentaires</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th>1.</th>
-                <td>None</td>
-                <td>None</td>
-                <td>None</td>
-            </tr>
-            <tr>
-                <th>2.</th>
-                <td>None</td>
-                <td>None</td>
-                <td>None</td>
-            </tr>
-            <tr>
-                <th>3.</th>
-                <td>None</td>
-                <td>None</td>
-                <td>None</td>
-            </tr>
-        </tbody>
-    </table>
 </div>
 
 {% else %}

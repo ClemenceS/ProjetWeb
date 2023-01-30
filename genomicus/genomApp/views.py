@@ -61,6 +61,15 @@ def allowed_to_annotate(user, id_prot):
             return True
     return False
 
+#Fonction qui retourne la liste IDs dont l'utilisateur est validateur
+def get_annotations(user):
+    tab = list(Annotation.objects.filter(validateur = Member.objects.get(email = user['email'])))
+    res=[]
+    annotated=[]
+    for a in tab:
+        res.append(str(a)[4:])#To remove the 'cds_' at the beginning
+        annotated.append(a.already_annotated)
+    return res, annotated
 
 # ------------------------------------------------------------------------------       
 
