@@ -340,7 +340,7 @@ def informationsRelativesProteineGene(request, result_id):
     context = {'id_cds' : "cds_"+result_id, 'id_pep' : "pep_"+result_id, 'id_chr' : id_chr, 'start' : start, 
     'stop' : stop, 'gene' : gene, 'description' : description, 'seq_aa':sequence_aa, 'seq_nucl' : sequence_nucl, 
     'symbol':symbol, 'espece' : espece, 'shown_id' : result_id, 'annotating' :annotating, 'people': people,
-    'allowed_2_annotate':allowed_2_annotate}
+    'allowed_2_annotate':allowed_2_annotate, 'view_annotation':False}
 
     template = loader.get_template('genomApp/info.html')
     return HttpResponse(template.render(context, request))
@@ -444,8 +444,26 @@ def protein_annotation(request, result_id):
         context = {'id_cds' : "cds_"+result_id, 'id_pep' : "pep_"+result_id, 'id_chr' : id_chr, 'start' : start, 
         'stop' : stop, 'gene' : gene, 'description' : description, 'seq_aa':sequence_aa, 'seq_nucl' : sequence_nucl, 
         'symbol':symbol, 'espece' : espece, 'shown_id' : result_id, 'annotating' :annotating, 
-        'allowed_2_annotate':allowed_2_annotate, 'people':people}
+        'allowed_2_annotate':allowed_2_annotate, 'people':people, 'view_annotation':False}
         template = loader.get_template('genomApp/info.html')
         return HttpResponse(template.render(context, request))
         #return render(request, 'genomApp/info.html', context)
+
+
+def view_annotation(request, result_id):
+    people = get_users()
+    
+    #Function to check if the user is allowed to annotate
+    #If the user is not connected, they are not allowed to annotate anyway -> so we catch the error
+    try:
+        allowed_2_annotate = allowed_to_annotate(people, result_id)
+    except:
+        allowed_2_annotate = False
+
+    context = {'id_cds' : "cds_"+result_id, 'id_pep' : "pep_"+result_id, 'shown_id' : result_id, 'annotating' :False, 
+        'allowed_2_annotate':allowed_2_annotate, 'people':people, 'view_annotation':True}
+    
+    template = loader.get_template('genomApp/info.html')
+    
+    return HttpResponse(template.render(context, request))
 

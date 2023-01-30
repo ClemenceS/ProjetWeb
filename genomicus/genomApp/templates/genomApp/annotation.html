@@ -108,7 +108,7 @@
                 <td>{{ g.start }}:{{ g.stop }}</td>
                 <td>{{ g.annotated }}
                     {% if g.annotated %}
-                    <a href="{% url 'genomApp:protein_annotation' result_id=g.id%}">(View)</a>
+                    <a href="{% url 'genomApp:view_annotation' result_id=g.id%}">(View)</a>
                     {% endif %}
 
                 </td>

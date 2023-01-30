@@ -77,7 +77,7 @@
 
 <div class="container" style="margin-bottom: 50px;">
     <div class="mt-5"></div>
-    {% if annotating %}
+    {% if annotating or view_annotation%}
     <div class="h3 pb-2 mb-4 border-bottom border-dark">Annotation des informations relatives aux gènes</div>
     {% else %}
     <div class="h3 pb-2 mb-4 border-bottom border-dark">Informations relatives aux gènes</div>
@@ -130,6 +130,9 @@
     {% endif %}
 
     {% else %}
+    {% if view_annotation %} <!--In the case view annotation-->
+        George
+    {% else %}
     <!--VISUALISATION-->
     <ul class="list-group">
         <li class="list-group-item"> <b>Espèce</b> : {{espece}}</li>
@@ -140,6 +143,7 @@
         <li class="list-group-item"> <b>Symbole du gène</b> : {{ symbol }}</li>
         <li class="list-group-item"> <b>Description</b> : {{ description }}</li>
     </ul>
+    {% endif %}
     {% endif %}
 
 
