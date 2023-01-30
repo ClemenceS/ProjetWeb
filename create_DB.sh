@@ -30,16 +30,16 @@ python3 manage.py createsuperuser --no-input
 # add members in the bdd
 echo "Creation of users"
 
-echo "from member.models import Member; Member.objects.create_member(email='clemence.sebe@universite-paris-saclay.fr', password='clemence', lastName='Sebe', firstName='Clémence')" | python manage.py shell
+echo "from member.models import Member; Member.objects.create_member(email='clemence.sebe@universite-paris-saclay.fr', password='clemence', lastName='Sebe', firstName='Clémence')" | python3 manage.py shell
 
-echo "from member.models import Member; Member.objects.create_member(email='ambre.baumann@universite-paris-saclay.fr', password='ambre', lastName='Baumann', firstName='Ambre')" | python manage.py shell
-echo "from member.models import Member; m = Member.objects.filter(email='ambre.baumann@universite-paris-saclay.fr'); m.update(user_type=2) " | python manage.py shell
+echo "from member.models import Member; Member.objects.create_member(email='ambre.baumann@universite-paris-saclay.fr', password='ambre', lastName='Baumann', firstName='Ambre')" | python3 manage.py shell
+echo "from member.models import Member; m = Member.objects.filter(email='ambre.baumann@universite-paris-saclay.fr'); m.update(user_type=2) " | python3 manage.py shell
 
-echo "from member.models import Member; Member.objects.create_member(email='lindsay.goulet@universite-paris-saclay.fr', password='lindsay', lastName='Goulet', firstName='Lindsay')" | python manage.py shell
-echo "from member.models import Member; m = Member.objects.filter(email='lindsay.goulet@universite-paris-saclay.fr'); m.update(user_type=3) " | python manage.py shell
+echo "from member.models import Member; Member.objects.create_member(email='lindsay.goulet@universite-paris-saclay.fr', password='lindsay', lastName='Goulet', firstName='Lindsay')" | python3 manage.py shell
+echo "from member.models import Member; m = Member.objects.filter(email='lindsay.goulet@universite-paris-saclay.fr'); m.update(user_type=3) " | python3 manage.py shell
 
-echo "from member.models import Member; Member.objects.create_member(email='george.marchment@universite-paris-saclay.fr', password='george', lastName='Marchment', firstName='George')" | python manage.py shell
-echo "from member.models import Member; m = Member.objects.filter(email='george.marchment@universite-paris-saclay.fr'); m.update(user_type=4) " | python manage.py shell
+echo "from member.models import Member; Member.objects.create_member(email='george.marchment@universite-paris-saclay.fr', password='george', lastName='Marchment', firstName='George')" | python3 manage.py shell
+echo "from member.models import Member; m = Member.objects.filter(email='george.marchment@universite-paris-saclay.fr'); m.update(user_type=4) " | python3 manage.py shell
 
 echo "Members created sucessfully."
 
