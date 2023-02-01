@@ -105,13 +105,17 @@
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
+                            <th scope="col">Espece</th>
+                            <th scope="col">Taux GC (%)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             {% for id in id_results %}
                         <tr>
-                            <td><a href="{% url 'genomApp:visualisation' result_id=id %}">{{ id }}</a></td>
+                            <td><a href="{% url 'genomApp:visualisation' result_id=id.id %}">{{ id.id }}</a></td>
+                            <td>{{id.espece}}</td>
+                            <td>{{id.gc_rate}}</td>
                         </tr>
                         {% endfor %}
                         </tr>

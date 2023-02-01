@@ -309,7 +309,12 @@ def resultatsFormulaireGenome(request):
                         if similarite(seq, motif, ratio):
                             id_list.append(seq)
 
-                context = {**form.cleaned_data, **{'id_results' : id_list}, **{'criterias':criterias}, **{'people':people}}
+                results = []
+                for i in range(len(id_list)):
+                    p = Genome.objects.get(id=id_list[i])
+                    results.append({'id' : id_list[i], 'taille':p.taille, 'espece':p.espece, 'gc_rate':p.gc_rate})
+
+                context = {**form.cleaned_data, **{'id_results' : results }, **{'criterias':criterias}, **{'people':people}}
                 #print(context)
                 
                 template = loader.get_template('genomApp/resultat_genome.html')
@@ -455,7 +460,11 @@ def informationsRelativesProteineGene(request, result_id):
 
 def visualisationGenome(request, result_id):
     people = get_users()
-    context = {'id_genome' : result_id, 'people':people}
+
+    p = Genome.objects.get(id=result_id)
+    espece = p.espece
+
+    context = {'id_genome' : result_id, 'people':people, 'espece' : espece}
     template = loader.get_template('genomApp/visualisation.html')
     return HttpResponse(template.render(context, request))
     #return render(request, 'genomApp/visualisation.html', context)
