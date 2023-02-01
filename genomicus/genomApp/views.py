@@ -314,6 +314,7 @@ def resultatsFormulaireGenome(request):
                     p = Genome.objects.get(id=id_list[i])
                     results.append({'id' : id_list[i], 'taille':p.taille, 'espece':p.espece, 'gc_rate':p.gc_rate})
 
+
                 context = {**form.cleaned_data, **{'id_results' : results }, **{'criterias':criterias}, **{'people':people}}
                 #print(context)
                 
