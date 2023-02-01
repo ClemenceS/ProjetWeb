@@ -8,6 +8,8 @@ from fuzzywuzzy import fuzz
 import re
 from django.contrib import admin
 from .functionsVisualisationGenome import *
+from django import forms
+
 
 
 from member.models import Member
@@ -135,6 +137,15 @@ def annotateurs_from_validateur(validateur):
     return tab
 
 
+#Function that returns the ids of the proteins which aren't being annotated
+def protein_not_being_annotated(validateur):
+    temp = list(CodantInfo.objects.exclude(id__in=Annotation.objects.values('id')).filter(codant_type = 1).values('id'))
+    tab = []
+    for t in temp:
+        tab.append(t['id'][4:])
+    return tab
+
+
 
 # ------------------------------------------------------------------------------       
 
@@ -203,11 +214,20 @@ def affectation_annotation(request):
     people = get_users()
     print('HEERRREEE')
     if request.method == 'POST':
-        None
+        print(request.POST.getlist('services'))
     else: 
         people = get_users()
+
+        #Pour l'instant seumelement les 50 premier
+        ids= protein_not_being_annotated(people)[:50]
+        person = ['George', 'Clemence', 'Lindsay']
+
+
+
+        services = [{'id':'George', 'name':'--George--'}, {'id':'Clemence', 'name':'--Clemence--'}, {'id':'Lindsay', 'name':'--Lindsay--'}]
+
         template = loader.get_template('genomApp/a_affecter.html')
-        return HttpResponse(template.render({'people':people}, request))
+        return HttpResponse(template.render({'people':people, 'services':services, 'ids':ids}, request))
     #return render(request, 'genomApp/a_affecter.html')
 
 def annotation_possible(request):

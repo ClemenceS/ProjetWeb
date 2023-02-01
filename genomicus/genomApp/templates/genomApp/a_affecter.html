@@ -139,29 +139,53 @@
                 </tr>
             </tbody>
         </table>
-        <div class="d-grid gap-2 d-md-flex">
-            <button type="submit" class="btn btn-outline-success">Soumettre</button>
-        </div>
 
+        <br>
+        <br>
+        <br>
 
-        <form action="" method="post" novalidate="">
+        <form method="POST">
             {% csrf_token %}
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="inputState">State</label>
-                    <select id="inputState" class="form-control" name="select">
-                        <option selected>Choisir..</option>
-                        <option>George</option>
-                        <option>Lindsay</option>
-                        <option>Clémence</option>
-                        <option>Ambre</option>
-                    </select>
-                </div>
-            </div>
-            <div class="my-3 d-flex justify-content-end">
-                <input type="submit" value="Valider">
-            </div>
+            <table class="table table-sm table-light">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Identification Ensembl</th>
+                        <th scope="col">Sélectionner ?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for id in ids %}
+                    <tr>
+                        <th></th>
+                        <td>{{id}}</td>
+                        <td>None</td>
+                        <td>
+                            <select multiple="multiple" name="services" id="services" size="2">
+                                {% for service in services %}
+                                <option value="{{id}}-{{service.id}}">{{service.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <input type="submit" value="Submit">
         </form>
+
+
+        <!--
+        <form method="POST">
+            {% csrf_token %}
+                    <select multiple="multiple"  name="services" id="services" size="1">
+            {% for service in services %}
+                <option value="{{service.id}}">{{service.name}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Submit">
+    </form>-->
+
 
     </div>
 </div>
