@@ -88,7 +88,7 @@ def get_gc_rate(fasta):
     seq = get_seq(fasta)
     G = seq.count('G')
     C = seq.count('C')
-    return (G+C)/len(seq)*100
+    return round((G+C)/len(seq)*100,2)
 
 def fa_2_json(file_address, cds=True):
 
