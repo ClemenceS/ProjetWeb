@@ -200,8 +200,13 @@ def soumission_annotation(request):
 
 def affectation_annotation(request):
     people = get_users()
-    template = loader.get_template('genomApp/a_affecter.html')
-    return HttpResponse(template.render({'people':people}, request))
+    print('HEERRREEE')
+    if request.method == 'POST':
+        None
+    else: 
+        people = get_users()
+        template = loader.get_template('genomApp/a_affecter.html')
+        return HttpResponse(template.render({'people':people}, request))
     #return render(request, 'genomApp/a_affecter.html')
 
 def annotation_possible(request):
