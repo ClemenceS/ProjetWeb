@@ -48,6 +48,9 @@ echo 'from genomApp.models import Annotation, CodantInfo; from member.models imp
 echo 'from genomApp.models import Annotation, CodantInfo; from member.models import Member; Annotation(id= CodantInfo.objects.get(id="cds_ABG68043"), gene = "", gene_symbol = "", description = "", annotateur = Member.objects.get(email="ambre.baumann@universite-paris-saclay.fr"), validateur = Member.objects.get(email="george.marchment@universite-paris-saclay.fr"), already_annotated =False ).save() ' | python3 manage.py shell
 echo 'from genomApp.models import Annotation, CodantInfo; from member.models import Member; Annotation(id= CodantInfo.objects.get(id="cds_AAG54493"), gene = "", gene_symbol = "", description = "", annotateur = Member.objects.get(email="lindsay.goulet@universite-paris-saclay.fr"), validateur = Member.objects.get(email="george.marchment@universite-paris-saclay.fr"), already_annotated =False ).save() ' | python3 manage.py shell
 echo 'from genomApp.models import Annotation, CodantInfo; from member.models import Member; Annotation(id= CodantInfo.objects.get(id="cds_ABG68044"), gene = "Gene test", gene_symbol = "Test symbol", description = "Description", annotateur = Member.objects.get(email="ambre.baumann@universite-paris-saclay.fr"), validateur = Member.objects.get(email="george.marchment@universite-paris-saclay.fr"), already_annotated =True ).save() ' | python3 manage.py shell
+
+echo 'from genomApp.models import Annotation, CodantInfo; from member.models import Member; Annotation(id= CodantInfo.objects.get(id="cds_ABG70353"), gene = "", gene_symbol = "", description = "", annotateur = Member.objects.get(email="ambre.baumann@universite-paris-saclay.fr"), validateur = Member.objects.get(email="george.marchment@universite-paris-saclay.fr"), already_annotated =False ).save() ' | python3 manage.py shell
 echo "Annotations created sucessfully."
+
 
 cd ..

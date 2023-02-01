@@ -7,6 +7,7 @@ import requests
 from fuzzywuzzy import fuzz
 import re
 from django.contrib import admin
+from .functionsVisualisationGenome import *
 
 
 from member.models import Member
@@ -464,6 +465,10 @@ def visualisationGenome(request, result_id):
 
     p = Genome.objects.get(id=result_id)
     espece = p.espece
+    #Call functions to create files for the genome visualisation
+    create_new_fa(result_id)
+    create_gff(result_id)
+    creat_fai(result_id)
 
     context = {'id_genome' : result_id, 'people':people, 'espece' : espece}
     template = loader.get_template('genomApp/visualisation.html')
