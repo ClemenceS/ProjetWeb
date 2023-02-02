@@ -1,10 +1,19 @@
 from django import forms
+from django.core import validators
 
 from django.core.validators import RegexValidator
 regexNumberTel = RegexValidator(regex = r"0\d (\d{2} ){3}\d{2}")
 
 class CreationMemberForm(forms.Form):
-    email = forms.CharField(max_length=255, label='email', widget=forms.TextInput(attrs={'placeholder':"xyz@exemple.com"}))
+    """
+    Classe pour la creation d'un membre
+        - email : devant respecter son format
+        - password : demander deux fois pour la verification
+        - prenom et nom
+        - numero de telephone (optionnel + dans un certain format)
+    """
+
+    email = forms.CharField(max_length=255, label='email', widget=forms.TextInput(attrs={'placeholder':"xyz@exemple.com"}), validators=[validators.EmailValidator(message="Adresse email incorrecte")])
 
     #define that the field pasword must be hidden
     password1 = forms.CharField(max_length=63, widget=forms.PasswordInput(attrs={'placeholder':'********'}), label='password1')
@@ -17,10 +26,23 @@ class CreationMemberForm(forms.Form):
 
 
 class ConnexionMemberForm(forms.Form):
-    email = forms.CharField(max_length=255, label='email', widget=forms.TextInput(attrs={'placeholder':"xyz@exemple.com"}))
+    """
+    Classe pour la connexion
+        - email
+        - password 
+    """
+
+    email = forms.CharField(max_length=255, label='email', widget=forms.TextInput(attrs={'placeholder':"xyz@exemple.com"}), validators=[validators.EmailValidator(message="Adresse email incorrecte")])
     password = forms.CharField(max_length=63, widget=forms.PasswordInput(attrs={'placeholder':'********'}), label='password')
 
 class UpdateMemberForm(forms.Form):
+    """
+    Classe pour la mise à jour des données
+        - password (x2) pour vérification
+        - prenom et nom 
+        - numero de telephone (dans un certain format)
+    """
+
     password1 = forms.CharField(max_length=63, widget=forms.PasswordInput(attrs={'placeholder':'********'}), label='password1', required=False)
     password2 = forms.CharField(max_length=63, widget=forms.PasswordInput(attrs={'placeholder':'********'}), label='password2', required=False)
 

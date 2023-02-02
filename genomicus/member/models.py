@@ -16,6 +16,10 @@ class MemberManager(models.Manager):
         return m
 
 class Member(AbstractBaseUser): 
+    """
+    Class Member avec toutes les informations sur les membres de l'application
+    """
+    
     #email - primary key
     #email = models.EmailField(max_length=255, unique=True, primary_key=True)
     email = models.EmailField(max_length=255, unique=True)

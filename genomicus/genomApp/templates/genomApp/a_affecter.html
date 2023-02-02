@@ -63,7 +63,7 @@
 
             {% if people.connecte %}
             <a role="button" class="btn btn-outline-secondary" href="{% url 'member:updateInformation' %}">Bienvenue
-                {{ people.who }}</a>
+                {{ people.who }}</a> &nbsp
             <a role="button" class="btn btn-outline-secondary" href="{% url 'member:deconnexion' %}">Deconnexion</a>
             {% else %}
             <a role="button" class="btn btn-outline-secondary" href="{% url 'member:connexion' %}">Connexion</a>

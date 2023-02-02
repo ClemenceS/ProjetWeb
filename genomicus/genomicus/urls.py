@@ -18,7 +18,6 @@ from django.urls import include, path
 
 urlpatterns = [
 
-    # enlever la partie 'genomeApp/' si marche pas remettre dans path
     path('', include('genomApp.urls')),
     path('',include('member.urls')),
 

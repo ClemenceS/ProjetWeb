@@ -11,7 +11,6 @@ class MemberBackend(ModelBackend):
 
         try:
             member = Member.objects.get(email=email)
-            #if member.check_password(password) is True: #marche pas je sais pas pk
             if password == member.password:
                 return member
         except Member.DoesNotExist:

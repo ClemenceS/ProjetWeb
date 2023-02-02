@@ -154,14 +154,12 @@ def accueil(request):
     people = get_users()
     template = loader.get_template('genomApp/accueil.html')
     return HttpResponse(template.render({'people':people}, request))
-    #return render(request, 'genomApp/accueil.html')
 
 
 def accueil_validateur(request):
     people = get_users()
     template = loader.get_template('genomApp/validation.html')
     return HttpResponse(template.render({'people':people}, request))
-    #return render(request, 'genomApp/validation.html')
 
 
 #Function that shows the annotations possible for the user
@@ -192,7 +190,6 @@ def accueil_annotateur(request):
     context = {'genes' : info_gene, 'people':people}
     template = loader.get_template('genomApp/annotation.html')
     return HttpResponse(template.render(context, request))
-    #return render(request, 'genomApp/annotation.html', context)
 
 
 #Function that shows the annotateurs that the validateur has affected pages to
@@ -202,13 +199,11 @@ def seq_deja_affectees(request):
     print(annotateurs)
     template = loader.get_template('genomApp/affecte.html')
     return HttpResponse(template.render({'people':people, 'annotateurs':annotateurs}, request))
-    #return render(request, 'genomApp/affecte.html')
 
 def soumission_annotation(request):
     people = get_users()
     template = loader.get_template('genomApp/a_annoter.html')
     return HttpResponse(template.render({'people':people}, request))
-    #return render(request, 'genomApp/a_annoter.html')
 
 def affectation_annotation(request):
     people = get_users()
@@ -228,13 +223,11 @@ def affectation_annotation(request):
 
         template = loader.get_template('genomApp/a_affecter.html')
         return HttpResponse(template.render({'people':people, 'services':services, 'ids':ids}, request))
-    #return render(request, 'genomApp/a_affecter.html')
 
 def annotation_possible(request):
     people = get_users()
     template = loader.get_template('genomApp/annotation.html')
     return HttpResponse(template.render({'people':people}, request))
-    #return render(request, 'genomApp/annotation.html')
 
 #Function that allows the validateur to validate annotations
 def valider(request):
@@ -265,7 +258,6 @@ def valider(request):
     context = {**{'people':people}, **{'en_attente':en_attente}, **{'a_valider':a_valider}}
     template = loader.get_template('genomApp/valider.html')
     return HttpResponse(template.render(context, request))
-    #return render(request, 'genomApp/valider.html')
 
 #Function that shows the formulaire Genome
 def resultatsFormulaireGenome(request):
@@ -351,7 +343,7 @@ def resultatsFormulaireGenome(request):
         form = SearchGenomeForm()
     template = loader.get_template('genomApp/accueil_genome.html')
     return HttpResponse(template.render({'form':form, 'people':people}, request))
-    #return render(request, 'genomApp/accueil_genome.html', {'form':form})
+
 
 #Function that shows the formulaire Proteine
 def resultatsFormulaireProteineGene(request):
@@ -442,7 +434,7 @@ def resultatsFormulaireProteineGene(request):
         form = SearchProteineGeneForm()
     template = loader.get_template('genomApp/accueil_prot_gene.html')
     return HttpResponse(template.render({'form':form, 'people':people}, request))
-    #return render(request, 'genomApp/accueil_prot_gene.html', {'form':form})
+
 
 #Function that shows corresponding info for a protein
 def informationsRelativesProteineGene(request, result_id):
@@ -478,7 +470,7 @@ def informationsRelativesProteineGene(request, result_id):
 
     template = loader.get_template('genomApp/info.html')
     return HttpResponse(template.render(context, request))
-    #return render(request, 'genomApp/info.html', context)
+
 
 def visualisationGenome(request, result_id):
     people = get_users()
@@ -493,7 +485,7 @@ def visualisationGenome(request, result_id):
     context = {'id_genome' : result_id, 'people':people, 'espece' : espece}
     template = loader.get_template('genomApp/visualisation.html')
     return HttpResponse(template.render(context, request))
-    #return render(request, 'genomApp/visualisation.html', context)
+
 
 def blastRedirection(request, result_id):
     type = CodantInfo.objects.filter(id=result_id).values_list('codant_type', flat=True)[0]
@@ -589,7 +581,7 @@ def protein_annotation(request, result_id):
         'allowed_2_annotate':allowed_2_annotate, 'people':people, 'view_annotation':False}
         template = loader.get_template('genomApp/info.html')
         return HttpResponse(template.render(context, request))
-        #return render(request, 'genomApp/info.html', context)
+
 
 #Function that allows to visualize an annotation
 def view_annotation(request, result_id):
