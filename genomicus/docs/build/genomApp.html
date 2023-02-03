@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>genomApp package &mdash; Documentation Genomicus 1.0</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="genomApp.migrations package" href="genomApp.migrations.html" />
+    <link rel="prev" title="genomicus" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Genomicus
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plan du site:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="accueil.html">Accueil</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formulaire.html">Formulaire</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resultat.html">Resultats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inscriptionconnexion.html">Inscription - Connexion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roles.html">Roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="forum.html">Forum des annotateurs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Fonctions et Classes du projet</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="py-modindex.html">Index du module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Récapitulatif des modules</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">genomicus</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">genomApp package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="genomApp.migrations.html">genomApp.migrations package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-genomApp.admin">genomApp.admin module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-genomApp.apps">genomApp.apps module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.apps.GenomappConfig"><code class="docutils literal notranslate"><span class="pre">GenomappConfig</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-genomApp.forms">genomApp.forms module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.forms.SearchAnnotation"><code class="docutils literal notranslate"><span class="pre">SearchAnnotation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.forms.SearchAnnotationForm"><code class="docutils literal notranslate"><span class="pre">SearchAnnotationForm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.forms.SearchGenomeForm"><code class="docutils literal notranslate"><span class="pre">SearchGenomeForm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.forms.SearchProteineGeneForm"><code class="docutils literal notranslate"><span class="pre">SearchProteineGeneForm</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-genomApp.functionsVisualisationGenome">genomApp.functionsVisualisationGenome module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.functionsVisualisationGenome.creat_fai"><code class="docutils literal notranslate"><span class="pre">creat_fai()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.functionsVisualisationGenome.create_gff"><code class="docutils literal notranslate"><span class="pre">create_gff()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.functionsVisualisationGenome.create_new_fa"><code class="docutils literal notranslate"><span class="pre">create_new_fa()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-genomApp.models">genomApp.models module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.models.Annotation"><code class="docutils literal notranslate"><span class="pre">Annotation</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.models.CodantInfo"><code class="docutils literal notranslate"><span class="pre">CodantInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.models.Genome"><code class="docutils literal notranslate"><span class="pre">Genome</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.models.SeqInfo"><code class="docutils literal notranslate"><span class="pre">SeqInfo</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.models.SequenceBase"><code class="docutils literal notranslate"><span class="pre">SequenceBase</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.models.SequenceCodant"><code class="docutils literal notranslate"><span class="pre">SequenceCodant</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.models.SequenceGenome"><code class="docutils literal notranslate"><span class="pre">SequenceGenome</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-genomApp.tests">genomApp.tests module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-genomApp.urls">genomApp.urls module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-genomApp.views">genomApp.views module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.accueil"><code class="docutils literal notranslate"><span class="pre">accueil()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.accueil_annotateur"><code class="docutils literal notranslate"><span class="pre">accueil_annotateur()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.accueil_validateur"><code class="docutils literal notranslate"><span class="pre">accueil_validateur()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.affectation_annotation"><code class="docutils literal notranslate"><span class="pre">affectation_annotation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.allowed_to_annotate"><code class="docutils literal notranslate"><span class="pre">allowed_to_annotate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.annotateurs_from_validateur"><code class="docutils literal notranslate"><span class="pre">annotateurs_from_validateur()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.annotation_possible"><code class="docutils literal notranslate"><span class="pre">annotation_possible()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.blastRedirection"><code class="docutils literal notranslate"><span class="pre">blastRedirection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.geneProteineAutocomplete"><code class="docutils literal notranslate"><span class="pre">geneProteineAutocomplete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.get_annotateurs"><code class="docutils literal notranslate"><span class="pre">get_annotateurs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.get_annotations"><code class="docutils literal notranslate"><span class="pre">get_annotations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.get_annotations_validateur"><code class="docutils literal notranslate"><span class="pre">get_annotations_validateur()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.get_current_annotateur"><code class="docutils literal notranslate"><span class="pre">get_current_annotateur()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.get_dico_annotateurs"><code class="docutils literal notranslate"><span class="pre">get_dico_annotateurs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.get_espece"><code class="docutils literal notranslate"><span class="pre">get_espece()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.get_names"><code class="docutils literal notranslate"><span class="pre">get_names()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.get_names_from_email"><code class="docutils literal notranslate"><span class="pre">get_names_from_email()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.get_users"><code class="docutils literal notranslate"><span class="pre">get_users()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.idGenomeAutocomplete"><code class="docutils literal notranslate"><span class="pre">idGenomeAutocomplete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.informationsRelativesProteineGene"><code class="docutils literal notranslate"><span class="pre">informationsRelativesProteineGene()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.protein_annotation"><code class="docutils literal notranslate"><span class="pre">protein_annotation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.protein_not_being_annotated"><code class="docutils literal notranslate"><span class="pre">protein_not_being_annotated()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.recherche_affectation_annotation"><code class="docutils literal notranslate"><span class="pre">recherche_affectation_annotation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.remove_header"><code class="docutils literal notranslate"><span class="pre">remove_header()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.resultatsFormulaireGenome"><code class="docutils literal notranslate"><span class="pre">resultatsFormulaireGenome()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.resultatsFormulaireProteineGene"><code class="docutils literal notranslate"><span class="pre">resultatsFormulaireProteineGene()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.seq_deja_affectees"><code class="docutils literal notranslate"><span class="pre">seq_deja_affectees()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.seq_type"><code class="docutils literal notranslate"><span class="pre">seq_type()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.similarite"><code class="docutils literal notranslate"><span class="pre">similarite()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.soumission_annotation"><code class="docutils literal notranslate"><span class="pre">soumission_annotation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.speciesGenomeAutocomplete"><code class="docutils literal notranslate"><span class="pre">speciesGenomeAutocomplete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.speciesProteineAutocomplete"><code class="docutils literal notranslate"><span class="pre">speciesProteineAutocomplete()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.validate_annotations"><code class="docutils literal notranslate"><span class="pre">validate_annotations()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.valider"><code class="docutils literal notranslate"><span class="pre">valider()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.view_annotation"><code class="docutils literal notranslate"><span class="pre">view_annotation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#genomApp.views.visualisationGenome"><code class="docutils literal notranslate"><span class="pre">visualisationGenome()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-genomApp">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="genomicus.html">genomicus package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="member.html">member package</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Genomicus</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">genomicus</a></li>
+      <li class="breadcrumb-item active">genomApp package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/genomApp.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="genomapp-package">
+<h1>genomApp package<a class="headerlink" href="#genomapp-package" title="Lien permanent vers cette rubrique"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Lien permanent vers cette rubrique"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="genomApp.migrations.html">genomApp.migrations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="genomApp.migrations.html#module-genomApp.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Lien permanent vers cette rubrique"></a></h2>
+</section>
+<section id="module-genomApp.admin">
+<span id="genomapp-admin-module"></span><h2>genomApp.admin module<a class="headerlink" href="#module-genomApp.admin" title="Lien permanent vers cette rubrique"></a></h2>
+</section>
+<section id="module-genomApp.apps">
+<span id="genomapp-apps-module"></span><h2>genomApp.apps module<a class="headerlink" href="#module-genomApp.apps" title="Lien permanent vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="genomApp.apps.GenomappConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genomApp.apps.</span></span><span class="sig-name descname"><span class="pre">GenomappConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.apps.GenomappConfig" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.apps.GenomappConfig.default_auto_field">
+<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django.db.models.BigAutoField'</span></em><a class="headerlink" href="#genomApp.apps.GenomappConfig.default_auto_field" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.apps.GenomappConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'genomApp'</span></em><a class="headerlink" href="#genomApp.apps.GenomappConfig.name" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-genomApp.forms">
+<span id="genomapp-forms-module"></span><h2>genomApp.forms module<a class="headerlink" href="#module-genomApp.forms" title="Lien permanent vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="genomApp.forms.SearchAnnotation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genomApp.forms.</span></span><span class="sig-name descname"><span class="pre">SearchAnnotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_order=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.forms.SearchAnnotation" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.forms.SearchAnnotation.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'ID':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#genomApp.forms.SearchAnnotation.base_fields" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.forms.SearchAnnotation.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'ID':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#genomApp.forms.SearchAnnotation.declared_fields" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="genomApp.forms.SearchAnnotation.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#genomApp.forms.SearchAnnotation.media" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genomApp.forms.SearchAnnotationForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genomApp.forms.</span></span><span class="sig-name descname"><span class="pre">SearchAnnotationForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_order=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.forms.SearchAnnotationForm" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.forms.SearchAnnotationForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'description':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'espece':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'nom_gene':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'symbol_gene':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#genomApp.forms.SearchAnnotationForm.base_fields" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.forms.SearchAnnotationForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'description':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'espece':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'nom_gene':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'symbol_gene':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#genomApp.forms.SearchAnnotationForm.declared_fields" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="genomApp.forms.SearchAnnotationForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#genomApp.forms.SearchAnnotationForm.media" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genomApp.forms.SearchGenomeForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genomApp.forms.</span></span><span class="sig-name descname"><span class="pre">SearchGenomeForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_order=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.forms.SearchGenomeForm" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.forms.SearchGenomeForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'ID':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'espece':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'gcMax':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'gcMin':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'motif':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'nomBDD':</span> <span class="pre">&lt;django.forms.fields.ChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'ratio':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'tailleMax':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'tailleMin':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#genomApp.forms.SearchGenomeForm.base_fields" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.forms.SearchGenomeForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'ID':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'espece':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'gcMax':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'gcMin':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'motif':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'nomBDD':</span> <span class="pre">&lt;django.forms.fields.ChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'ratio':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'tailleMax':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'tailleMin':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#genomApp.forms.SearchGenomeForm.declared_fields" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="genomApp.forms.SearchGenomeForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#genomApp.forms.SearchGenomeForm.media" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genomApp.forms.SearchProteineGeneForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genomApp.forms.</span></span><span class="sig-name descname"><span class="pre">SearchProteineGeneForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_order=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.forms.SearchProteineGeneForm" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.forms.SearchProteineGeneForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'ID':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'ID_chr':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'espece':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'gene':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'motif':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'nomBDD':</span> <span class="pre">&lt;django.forms.fields.ChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'ratio':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'tailleMax':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'tailleMin':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#genomApp.forms.SearchProteineGeneForm.base_fields" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.forms.SearchProteineGeneForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'ID':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'ID_chr':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'espece':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'gene':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'motif':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'nomBDD':</span> <span class="pre">&lt;django.forms.fields.ChoiceField</span> <span class="pre">object&gt;,</span> <span class="pre">'ratio':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'tailleMax':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;,</span> <span class="pre">'tailleMin':</span> <span class="pre">&lt;django.forms.fields.IntegerField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#genomApp.forms.SearchProteineGeneForm.declared_fields" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="genomApp.forms.SearchProteineGeneForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#genomApp.forms.SearchProteineGeneForm.media" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-genomApp.functionsVisualisationGenome">
+<span id="genomapp-functionsvisualisationgenome-module"></span><h2>genomApp.functionsVisualisationGenome module<a class="headerlink" href="#module-genomApp.functionsVisualisationGenome" title="Lien permanent vers cette rubrique"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.functionsVisualisationGenome.creat_fai">
+<span class="sig-prename descclassname"><span class="pre">genomApp.functionsVisualisationGenome.</span></span><span class="sig-name descname"><span class="pre">creat_fai</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.functionsVisualisationGenome.creat_fai" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.functionsVisualisationGenome.create_gff">
+<span class="sig-prename descclassname"><span class="pre">genomApp.functionsVisualisationGenome.</span></span><span class="sig-name descname"><span class="pre">create_gff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.functionsVisualisationGenome.create_gff" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.functionsVisualisationGenome.create_new_fa">
+<span class="sig-prename descclassname"><span class="pre">genomApp.functionsVisualisationGenome.</span></span><span class="sig-name descname"><span class="pre">create_new_fa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.functionsVisualisationGenome.create_new_fa" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-genomApp.models">
+<span id="genomapp-models-module"></span><h2>genomApp.models module<a class="headerlink" href="#module-genomApp.models" title="Lien permanent vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="genomApp.models.Annotation">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genomApp.models.</span></span><span class="sig-name descname"><span class="pre">Annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">annotateur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validateur</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">already_annotated</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.models.Annotation" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="genomApp.models.Annotation.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#genomApp.models.Annotation.DoesNotExist" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="genomApp.models.Annotation.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#genomApp.models.Annotation.MultipleObjectsReturned" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Annotation.already_annotated">
+<span class="sig-name descname"><span class="pre">already_annotated</span></span><a class="headerlink" href="#genomApp.models.Annotation.already_annotated" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Annotation.annotateur">
+<span class="sig-name descname"><span class="pre">annotateur</span></span><a class="headerlink" href="#genomApp.models.Annotation.annotateur" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Annotation.annotateur_id">
+<span class="sig-name descname"><span class="pre">annotateur_id</span></span><a class="headerlink" href="#genomApp.models.Annotation.annotateur_id" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Annotation.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#genomApp.models.Annotation.description" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Annotation.gene">
+<span class="sig-name descname"><span class="pre">gene</span></span><a class="headerlink" href="#genomApp.models.Annotation.gene" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Annotation.gene_symbol">
+<span class="sig-name descname"><span class="pre">gene_symbol</span></span><a class="headerlink" href="#genomApp.models.Annotation.gene_symbol" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Annotation.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#genomApp.models.Annotation.id" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Annotation.id_id">
+<span class="sig-name descname"><span class="pre">id_id</span></span><a class="headerlink" href="#genomApp.models.Annotation.id_id" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Annotation.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#genomApp.models.Annotation.objects" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Annotation.validateur">
+<span class="sig-name descname"><span class="pre">validateur</span></span><a class="headerlink" href="#genomApp.models.Annotation.validateur" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Annotation.validateur_id">
+<span class="sig-name descname"><span class="pre">validateur_id</span></span><a class="headerlink" href="#genomApp.models.Annotation.validateur_id" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genomApp.models.</span></span><span class="sig-name descname"><span class="pre">CodantInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taille</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phaseLecture</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espece</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gc_rate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chromosome</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">codant_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transcript</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_biotype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transcript_biotype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gene_symbol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">description</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_plasmid</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.models.CodantInfo" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <a class="reference internal" href="#genomApp.models.SeqInfo" title="genomApp.models.SeqInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">SeqInfo</span></code></a></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.DoesNotExist" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.MultipleObjectsReturned" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.TYPE_CHOICES">
+<span class="sig-name descname"><span class="pre">TYPE_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">((1,</span> <span class="pre">'CDS'),</span> <span class="pre">(2,</span> <span class="pre">'Peptide'))</span></em><a class="headerlink" href="#genomApp.models.CodantInfo.TYPE_CHOICES" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.annotation_set">
+<span class="sig-name descname"><span class="pre">annotation_set</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.annotation_set" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.chromosome">
+<span class="sig-name descname"><span class="pre">chromosome</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.chromosome" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.chromosome_id">
+<span class="sig-name descname"><span class="pre">chromosome_id</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.chromosome_id" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.codant_type">
+<span class="sig-name descname"><span class="pre">codant_type</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.codant_type" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.description">
+<span class="sig-name descname"><span class="pre">description</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.description" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.espece">
+<span class="sig-name descname"><span class="pre">espece</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.espece" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.gc_rate">
+<span class="sig-name descname"><span class="pre">gc_rate</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.gc_rate" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.gene">
+<span class="sig-name descname"><span class="pre">gene</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.gene" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.gene_biotype">
+<span class="sig-name descname"><span class="pre">gene_biotype</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.gene_biotype" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.gene_symbol">
+<span class="sig-name descname"><span class="pre">gene_symbol</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.gene_symbol" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.get_codant_type_display">
+<span class="sig-name descname"><span class="pre">get_codant_type_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.PositiveSmallIntegerField:</span> <span class="pre">codant_type&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.models.CodantInfo.get_codant_type_display" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.id" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.is_plasmid">
+<span class="sig-name descname"><span class="pre">is_plasmid</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.is_plasmid" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#genomApp.models.CodantInfo.objects" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.phaseLecture">
+<span class="sig-name descname"><span class="pre">phaseLecture</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.phaseLecture" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.sequencecodant_set">
+<span class="sig-name descname"><span class="pre">sequencecodant_set</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.sequencecodant_set" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.start">
+<span class="sig-name descname"><span class="pre">start</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.start" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.stop" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.taille">
+<span class="sig-name descname"><span class="pre">taille</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.taille" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.transcript">
+<span class="sig-name descname"><span class="pre">transcript</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.transcript" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.CodantInfo.transcript_biotype">
+<span class="sig-name descname"><span class="pre">transcript_biotype</span></span><a class="headerlink" href="#genomApp.models.CodantInfo.transcript_biotype" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genomApp.models.Genome">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genomApp.models.</span></span><span class="sig-name descname"><span class="pre">Genome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">taille</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phaseLecture</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">espece</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gc_rate</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.models.Genome" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <a class="reference internal" href="#genomApp.models.SeqInfo" title="genomApp.models.SeqInfo"><code class="xref py py-class docutils literal notranslate"><span class="pre">SeqInfo</span></code></a></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="genomApp.models.Genome.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#genomApp.models.Genome.DoesNotExist" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="genomApp.models.Genome.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#genomApp.models.Genome.MultipleObjectsReturned" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Genome.codantinfo_set">
+<span class="sig-name descname"><span class="pre">codantinfo_set</span></span><a class="headerlink" href="#genomApp.models.Genome.codantinfo_set" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Genome.espece">
+<span class="sig-name descname"><span class="pre">espece</span></span><a class="headerlink" href="#genomApp.models.Genome.espece" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Genome.gc_rate">
+<span class="sig-name descname"><span class="pre">gc_rate</span></span><a class="headerlink" href="#genomApp.models.Genome.gc_rate" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Genome.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#genomApp.models.Genome.id" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Genome.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#genomApp.models.Genome.objects" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Genome.phaseLecture">
+<span class="sig-name descname"><span class="pre">phaseLecture</span></span><a class="headerlink" href="#genomApp.models.Genome.phaseLecture" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Genome.sequencegenome_set">
+<span class="sig-name descname"><span class="pre">sequencegenome_set</span></span><a class="headerlink" href="#genomApp.models.Genome.sequencegenome_set" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.Genome.taille">
+<span class="sig-name descname"><span class="pre">taille</span></span><a class="headerlink" href="#genomApp.models.Genome.taille" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genomApp.models.SeqInfo">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genomApp.models.</span></span><span class="sig-name descname"><span class="pre">SeqInfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.models.SeqInfo" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="genomApp.models.SeqInfo.Meta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="headerlink" href="#genomApp.models.SeqInfo.Meta" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SeqInfo.Meta.abstract">
+<span class="sig-name descname"><span class="pre">abstract</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#genomApp.models.SeqInfo.Meta.abstract" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SeqInfo.espece">
+<span class="sig-name descname"><span class="pre">espece</span></span><a class="headerlink" href="#genomApp.models.SeqInfo.espece" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SeqInfo.gc_rate">
+<span class="sig-name descname"><span class="pre">gc_rate</span></span><a class="headerlink" href="#genomApp.models.SeqInfo.gc_rate" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SeqInfo.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#genomApp.models.SeqInfo.id" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SeqInfo.phaseLecture">
+<span class="sig-name descname"><span class="pre">phaseLecture</span></span><a class="headerlink" href="#genomApp.models.SeqInfo.phaseLecture" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SeqInfo.taille">
+<span class="sig-name descname"><span class="pre">taille</span></span><a class="headerlink" href="#genomApp.models.SeqInfo.taille" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genomApp.models.SequenceBase">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genomApp.models.</span></span><span class="sig-name descname"><span class="pre">SequenceBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.models.SequenceBase" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
+<dl class="py class">
+<dt class="sig sig-object py" id="genomApp.models.SequenceBase.Meta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="headerlink" href="#genomApp.models.SequenceBase.Meta" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SequenceBase.Meta.abstract">
+<span class="sig-name descname"><span class="pre">abstract</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#genomApp.models.SequenceBase.Meta.abstract" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SequenceBase.sequence">
+<span class="sig-name descname"><span class="pre">sequence</span></span><a class="headerlink" href="#genomApp.models.SequenceBase.sequence" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genomApp.models.SequenceCodant">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genomApp.models.</span></span><span class="sig-name descname"><span class="pre">SequenceCodant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.models.SequenceCodant" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <a class="reference internal" href="#genomApp.models.SequenceBase" title="genomApp.models.SequenceBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">SequenceBase</span></code></a></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="genomApp.models.SequenceCodant.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#genomApp.models.SequenceCodant.DoesNotExist" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="genomApp.models.SequenceCodant.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#genomApp.models.SequenceCodant.MultipleObjectsReturned" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SequenceCodant.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#genomApp.models.SequenceCodant.id" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SequenceCodant.id_id">
+<span class="sig-name descname"><span class="pre">id_id</span></span><a class="headerlink" href="#genomApp.models.SequenceCodant.id_id" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SequenceCodant.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#genomApp.models.SequenceCodant.objects" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SequenceCodant.sequence">
+<span class="sig-name descname"><span class="pre">sequence</span></span><a class="headerlink" href="#genomApp.models.SequenceCodant.sequence" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="genomApp.models.SequenceGenome">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">genomApp.models.</span></span><span class="sig-name descname"><span class="pre">SequenceGenome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.models.SequenceGenome" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <a class="reference internal" href="#genomApp.models.SequenceBase" title="genomApp.models.SequenceBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">SequenceBase</span></code></a></p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="genomApp.models.SequenceGenome.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#genomApp.models.SequenceGenome.DoesNotExist" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="genomApp.models.SequenceGenome.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#genomApp.models.SequenceGenome.MultipleObjectsReturned" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SequenceGenome.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#genomApp.models.SequenceGenome.id" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SequenceGenome.id_id">
+<span class="sig-name descname"><span class="pre">id_id</span></span><a class="headerlink" href="#genomApp.models.SequenceGenome.id_id" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SequenceGenome.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#genomApp.models.SequenceGenome.objects" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="genomApp.models.SequenceGenome.sequence">
+<span class="sig-name descname"><span class="pre">sequence</span></span><a class="headerlink" href="#genomApp.models.SequenceGenome.sequence" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-genomApp.tests">
+<span id="genomapp-tests-module"></span><h2>genomApp.tests module<a class="headerlink" href="#module-genomApp.tests" title="Lien permanent vers cette rubrique"></a></h2>
+</section>
+<section id="module-genomApp.urls">
+<span id="genomapp-urls-module"></span><h2>genomApp.urls module<a class="headerlink" href="#module-genomApp.urls" title="Lien permanent vers cette rubrique"></a></h2>
+</section>
+<section id="module-genomApp.views">
+<span id="genomapp-views-module"></span><h2>genomApp.views module<a class="headerlink" href="#module-genomApp.views" title="Lien permanent vers cette rubrique"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.accueil">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">accueil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.accueil" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.accueil_annotateur">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">accueil_annotateur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.accueil_annotateur" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.accueil_validateur">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">accueil_validateur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.accueil_validateur" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.affectation_annotation">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">affectation_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.affectation_annotation" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.allowed_to_annotate">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">allowed_to_annotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id_prot</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.allowed_to_annotate" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.annotateurs_from_validateur">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">annotateurs_from_validateur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validateur</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.annotateurs_from_validateur" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.annotation_possible">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">annotation_possible</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.annotation_possible" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.blastRedirection">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">blastRedirection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.blastRedirection" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.geneProteineAutocomplete">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">geneProteineAutocomplete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.geneProteineAutocomplete" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.get_annotateurs">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">get_annotateurs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.get_annotateurs" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.get_annotations">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">get_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.get_annotations" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.get_annotations_validateur">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">get_annotations_validateur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.get_annotations_validateur" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.get_current_annotateur">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">get_current_annotateur</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">result_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.get_current_annotateur" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.get_dico_annotateurs">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">get_dico_annotateurs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">annotateurs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.get_dico_annotateurs" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.get_espece">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">get_espece</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.get_espece" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.get_names">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">get_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.get_names" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.get_names_from_email">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">get_names_from_email</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.get_names_from_email" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.get_users">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">get_users</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.get_users" title="Lien permanent vers cette définition"></a></dt>
+<dd><dl class="simple">
+<dt>Fonction get_users<span class="classifier">renvoie les informations sur un utilisateur</span></dt><dd><ul class="simple">
+<li><dl class="simple">
+<dt>si un utilisateur connecté<span class="classifier">son rang de profil (lecteur, annotatateur, ….), son statut (connecte),</span></dt><dd><p>son prénom-nom et son email</p>
+</dd>
+</dl>
+</li>
+<li><p>si aucun utilisateur connecté : rang de profile : 0 et connecte=False</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>un dictionnaire</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.idGenomeAutocomplete">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">idGenomeAutocomplete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.idGenomeAutocomplete" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.informationsRelativesProteineGene">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">informationsRelativesProteineGene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.informationsRelativesProteineGene" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.protein_annotation">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">protein_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.protein_annotation" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.protein_not_being_annotated">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">protein_not_being_annotated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">validateur</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.protein_not_being_annotated" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.recherche_affectation_annotation">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">recherche_affectation_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.recherche_affectation_annotation" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.remove_header">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">remove_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.remove_header" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.resultatsFormulaireGenome">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">resultatsFormulaireGenome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.resultatsFormulaireGenome" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.resultatsFormulaireProteineGene">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">resultatsFormulaireProteineGene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.resultatsFormulaireProteineGene" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.seq_deja_affectees">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">seq_deja_affectees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.seq_deja_affectees" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.seq_type">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">seq_type</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.seq_type" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.similarite">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">similarite</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">motif</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratio</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.similarite" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.soumission_annotation">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">soumission_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.soumission_annotation" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.speciesGenomeAutocomplete">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">speciesGenomeAutocomplete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.speciesGenomeAutocomplete" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.speciesProteineAutocomplete">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">speciesProteineAutocomplete</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.speciesProteineAutocomplete" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.validate_annotations">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">validate_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">to_validate</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.validate_annotations" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.valider">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">valider</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.valider" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.view_annotation">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">view_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.view_annotation" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="genomApp.views.visualisationGenome">
+<span class="sig-prename descclassname"><span class="pre">genomApp.views.</span></span><span class="sig-name descname"><span class="pre">visualisationGenome</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">result_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#genomApp.views.visualisationGenome" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-genomApp">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-genomApp" title="Lien permanent vers cette rubrique"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="modules.html" class="btn btn-neutral float-left" title="genomicus" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="genomApp.migrations.html" class="btn btn-neutral float-right" title="genomApp.migrations package" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Ambre Baumann - Lindsay Goulet - George Marchment - Clémence Sebe.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

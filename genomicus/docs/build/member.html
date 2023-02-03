@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>member package &mdash; Documentation Genomicus 1.0</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/translations.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="member.migrations package" href="member.migrations.html" />
+    <link rel="prev" title="manage module" href="manage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Genomicus
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Plan du site:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="accueil.html">Accueil</a></li>
+<li class="toctree-l1"><a class="reference internal" href="formulaire.html">Formulaire</a></li>
+<li class="toctree-l1"><a class="reference internal" href="resultat.html">Resultats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="inscriptionconnexion.html">Inscription - Connexion</a></li>
+<li class="toctree-l1"><a class="reference internal" href="roles.html">Roles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="forum.html">Forum des annotateurs</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Fonctions et Classes du projet</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="py-modindex.html">Index du module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="genindex.html">Index</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Récapitulatif des modules</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">genomicus</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="genomApp.html">genomApp package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="genomicus.html">genomicus package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">member package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="member.migrations.html">member.migrations package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-member.admin">member.admin module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#member.admin.MembersAdmin"><code class="docutils literal notranslate"><span class="pre">MembersAdmin</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-member.apps">member.apps module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#member.apps.MemberConfig"><code class="docutils literal notranslate"><span class="pre">MemberConfig</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-member.backends">member.backends module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#member.backends.MemberBackend"><code class="docutils literal notranslate"><span class="pre">MemberBackend</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-member.forms">member.forms module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#member.forms.ConnexionMemberForm"><code class="docutils literal notranslate"><span class="pre">ConnexionMemberForm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#member.forms.CreationMemberForm"><code class="docutils literal notranslate"><span class="pre">CreationMemberForm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#member.forms.UpdateMemberForm"><code class="docutils literal notranslate"><span class="pre">UpdateMemberForm</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-member.models">member.models module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#member.models.Member"><code class="docutils literal notranslate"><span class="pre">Member</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#member.models.MemberManager"><code class="docutils literal notranslate"><span class="pre">MemberManager</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-member.tests">member.tests module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-member.urls">member.urls module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-member.views">member.views module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#member.views.connexion"><code class="docutils literal notranslate"><span class="pre">connexion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#member.views.deconnexion"><code class="docutils literal notranslate"><span class="pre">deconnexion()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#member.views.inscription"><code class="docutils literal notranslate"><span class="pre">inscription()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#member.views.updateInformation"><code class="docutils literal notranslate"><span class="pre">updateInformation()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-member">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Genomicus</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">genomicus</a></li>
+      <li class="breadcrumb-item active">member package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/member.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="member-package">
+<h1>member package<a class="headerlink" href="#member-package" title="Lien permanent vers cette rubrique"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Lien permanent vers cette rubrique"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="member.migrations.html">member.migrations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="member.migrations.html#module-member.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Lien permanent vers cette rubrique"></a></h2>
+</section>
+<section id="module-member.admin">
+<span id="member-admin-module"></span><h2>member.admin module<a class="headerlink" href="#module-member.admin" title="Lien permanent vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="member.admin.MembersAdmin">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">member.admin.</span></span><span class="sig-name descname"><span class="pre">MembersAdmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">admin_site</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#member.admin.MembersAdmin" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelAdmin</span></code></p>
+<dl class="py property">
+<dt class="sig sig-object py" id="member.admin.MembersAdmin.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#member.admin.MembersAdmin.media" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-member.apps">
+<span id="member-apps-module"></span><h2>member.apps module<a class="headerlink" href="#module-member.apps" title="Lien permanent vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="member.apps.MemberConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">member.apps.</span></span><span class="sig-name descname"><span class="pre">MemberConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#member.apps.MemberConfig" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.apps.MemberConfig.default_auto_field">
+<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django.db.models.BigAutoField'</span></em><a class="headerlink" href="#member.apps.MemberConfig.default_auto_field" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.apps.MemberConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'member'</span></em><a class="headerlink" href="#member.apps.MemberConfig.name" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-member.backends">
+<span id="member-backends-module"></span><h2>member.backends module<a class="headerlink" href="#module-member.backends" title="Lien permanent vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="member.backends.MemberBackend">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">member.backends.</span></span><span class="sig-name descname"><span class="pre">MemberBackend</span></span><a class="headerlink" href="#member.backends.MemberBackend" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelBackend</span></code></p>
+<p>Classe MemberBackend pour l’authentification des membres</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="member.backends.MemberBackend.authenticate">
+<span class="sig-name descname"><span class="pre">authenticate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#member.backends.MemberBackend.authenticate" title="Lien permanent vers cette définition"></a></dt>
+<dd><dl class="simple">
+<dt>Fonction pour l’authentification d’un membre</dt><dd><ul class="simple">
+<li><p>Vérifie que l’utilisateur existe et que le mot de passe donné est correct</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>request</strong> – </p></li>
+<li><p><strong>kwargs</strong> – recupérer les informations de connexion (email et mot de passe)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return member<span class="colon">:</span></dt>
+<dd class="field-even"><p>si il existe</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-member.forms">
+<span id="member-forms-module"></span><h2>member.forms module<a class="headerlink" href="#module-member.forms" title="Lien permanent vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="member.forms.ConnexionMemberForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">member.forms.</span></span><span class="sig-name descname"><span class="pre">ConnexionMemberForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_order=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#member.forms.ConnexionMemberForm" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+<dl class="simple">
+<dt>Classe pour la connexion</dt><dd><ul class="simple">
+<li><p>email</p></li>
+<li><p>password</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.forms.ConnexionMemberForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'email':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#member.forms.ConnexionMemberForm.base_fields" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.forms.ConnexionMemberForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'email':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#member.forms.ConnexionMemberForm.declared_fields" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="member.forms.ConnexionMemberForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#member.forms.ConnexionMemberForm.media" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="member.forms.CreationMemberForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">member.forms.</span></span><span class="sig-name descname"><span class="pre">CreationMemberForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_order=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#member.forms.CreationMemberForm" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+<dl class="simple">
+<dt>Classe pour la creation d’un membre</dt><dd><ul class="simple">
+<li><p>email : devant respecter son format</p></li>
+<li><p>password : demander deux fois pour la verification</p></li>
+<li><p>prenom et nom</p></li>
+<li><p>numero de telephone (optionnel + dans un certain format donné par le placeholder XX XX XX XX XX)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.forms.CreationMemberForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'email':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'firstName':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'lastName':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password1':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password2':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'phone':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#member.forms.CreationMemberForm.base_fields" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.forms.CreationMemberForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'email':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'firstName':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'lastName':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password1':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password2':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'phone':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#member.forms.CreationMemberForm.declared_fields" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="member.forms.CreationMemberForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#member.forms.CreationMemberForm.media" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="member.forms.UpdateMemberForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">member.forms.</span></span><span class="sig-name descname"><span class="pre">UpdateMemberForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">files=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">auto_id='id_%s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_class=&lt;class</span> <span class="pre">'django.forms.utils.ErrorList'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label_suffix=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">empty_permitted=False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field_order=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_required_attribute=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">renderer=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#member.forms.UpdateMemberForm" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Form</span></code></p>
+<dl class="simple">
+<dt>Classe pour la mise à jour des données</dt><dd><ul class="simple">
+<li><p>password (x2) pour vérification</p></li>
+<li><p>prenom et nom</p></li>
+<li><p>numero de telephone (dans un certain format donné par le placeholder XX XX XX XX XX)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.forms.UpdateMemberForm.base_fields">
+<span class="sig-name descname"><span class="pre">base_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'firstName':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'lastName':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password1':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password2':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'phone':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#member.forms.UpdateMemberForm.base_fields" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.forms.UpdateMemberForm.declared_fields">
+<span class="sig-name descname"><span class="pre">declared_fields</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'firstName':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'lastName':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password1':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'password2':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;,</span> <span class="pre">'phone':</span> <span class="pre">&lt;django.forms.fields.CharField</span> <span class="pre">object&gt;}</span></em><a class="headerlink" href="#member.forms.UpdateMemberForm.declared_fields" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="member.forms.UpdateMemberForm.media">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">media</span></span><a class="headerlink" href="#member.forms.UpdateMemberForm.media" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Return all media required to render the widgets on this form.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-member.models">
+<span id="member-models-module"></span><h2>member.models module<a class="headerlink" href="#module-member.models" title="Lien permanent vers cette rubrique"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="member.models.Member">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">member.models.</span></span><span class="sig-name descname"><span class="pre">Member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#member.models.Member" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractBaseUser</span></code></p>
+<p>Class Member avec toutes les informations sur les membres de l’application</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>email</strong> – emailField avec comme pour taille maximal 255, required</p></li>
+<li><p><strong>user_type</strong> – un entier {1,2,3,4} correspond à un niveau d’utilisateur {lecteur, annotateur, validateur, admin}</p></li>
+<li><p><strong>firstName</strong> – string correspond au prénom de taille maximal 100, required</p></li>
+<li><p><strong>lastName</strong> – string correspond au nom de taille maximal 100, required</p></li>
+<li><p><strong>phone</strong> – suite de nombres formant un numéro de téléphone devant suivre le format : XX XX XX XX XX, optionnel</p></li>
+<li><p><strong>connecte</strong> – boolean : True - connecté sur l’application et False - l’inverse</p></li>
+<li><p><strong>object</strong> – MemberManager, crée un nouveau membre</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="member.models.Member.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#member.models.Member.DoesNotExist" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="member.models.Member.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#member.models.Member.MultipleObjectsReturned" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.REQUIRED_FIELDS">
+<span class="sig-name descname"><span class="pre">REQUIRED_FIELDS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['firstName',</span> <span class="pre">'lastName']</span></em><a class="headerlink" href="#member.models.Member.REQUIRED_FIELDS" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.USERNAME_FIELD">
+<span class="sig-name descname"><span class="pre">USERNAME_FIELD</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'email'</span></em><a class="headerlink" href="#member.models.Member.USERNAME_FIELD" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.USER_TYPE_CHOICES">
+<span class="sig-name descname"><span class="pre">USER_TYPE_CHOICES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">((1,</span> <span class="pre">'lecteur'),</span> <span class="pre">(2,</span> <span class="pre">'annotateur'),</span> <span class="pre">(3,</span> <span class="pre">'validateur'),</span> <span class="pre">(4,</span> <span class="pre">'admin'))</span></em><a class="headerlink" href="#member.models.Member.USER_TYPE_CHOICES" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.annotateur">
+<span class="sig-name descname"><span class="pre">annotateur</span></span><a class="headerlink" href="#member.models.Member.annotateur" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.connecte">
+<span class="sig-name descname"><span class="pre">connecte</span></span><a class="headerlink" href="#member.models.Member.connecte" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.email">
+<span class="sig-name descname"><span class="pre">email</span></span><a class="headerlink" href="#member.models.Member.email" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.firstName">
+<span class="sig-name descname"><span class="pre">firstName</span></span><a class="headerlink" href="#member.models.Member.firstName" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="member.models.Member.get_user_type_display">
+<span class="sig-name descname"><span class="pre">get_user_type_display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">field=&lt;django.db.models.fields.PositiveSmallIntegerField:</span> <span class="pre">user_type&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#member.models.Member.get_user_type_display" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#member.models.Member.id" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.lastName">
+<span class="sig-name descname"><span class="pre">lastName</span></span><a class="headerlink" href="#member.models.Member.lastName" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.last_login">
+<span class="sig-name descname"><span class="pre">last_login</span></span><a class="headerlink" href="#member.models.Member.last_login" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;member.models.MemberManager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#member.models.Member.objects" title="Lien permanent vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.password">
+<span class="sig-name descname"><span class="pre">password</span></span><a class="headerlink" href="#member.models.Member.password" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.phone">
+<span class="sig-name descname"><span class="pre">phone</span></span><a class="headerlink" href="#member.models.Member.phone" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.user_type">
+<span class="sig-name descname"><span class="pre">user_type</span></span><a class="headerlink" href="#member.models.Member.user_type" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="member.models.Member.validateur">
+<span class="sig-name descname"><span class="pre">validateur</span></span><a class="headerlink" href="#member.models.Member.validateur" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="member.models.MemberManager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">member.models.</span></span><span class="sig-name descname"><span class="pre">MemberManager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#member.models.MemberManager" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Bases : <code class="xref py py-class docutils literal notranslate"><span class="pre">Manager</span></code></p>
+<p>Classe MemberManager pour la création d’un nouveau membre</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="member.models.MemberManager.create_member">
+<span class="sig-name descname"><span class="pre">create_member</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">email</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">firstName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lastName</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#member.models.MemberManager.create_member" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Fonction create_member</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>email</strong> – email du nouvel utilisateur</p></li>
+<li><p><strong>password</strong> – mot de passe du nouvel utilisateur</p></li>
+<li><p><strong>firstName</strong> – prénom du nouvel utilisateur</p></li>
+<li><p><strong>lastName</strong> – nom du nouvel utilisateur</p></li>
+<li><p><strong>phone</strong> – numéro de téléphone du nouvel utilisateur, de base phone=”” si non renseigné</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-member.tests">
+<span id="member-tests-module"></span><h2>member.tests module<a class="headerlink" href="#module-member.tests" title="Lien permanent vers cette rubrique"></a></h2>
+</section>
+<section id="module-member.urls">
+<span id="member-urls-module"></span><h2>member.urls module<a class="headerlink" href="#module-member.urls" title="Lien permanent vers cette rubrique"></a></h2>
+</section>
+<section id="module-member.views">
+<span id="member-views-module"></span><h2>member.views module<a class="headerlink" href="#module-member.views" title="Lien permanent vers cette rubrique"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="member.views.connexion">
+<span class="sig-prename descclassname"><span class="pre">member.views.</span></span><span class="sig-name descname"><span class="pre">connexion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#member.views.connexion" title="Lien permanent vers cette définition"></a></dt>
+<dd><dl class="simple">
+<dt>Fonction view pour la connexion d’un utilisateur</dt><dd><ul class="simple">
+<li><p>Verifie les champs renseignés et si besoin rajout d’un message d’erreur</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – </p>
+</dd>
+<dt class="field-even">Return HttpResponse<span class="colon">:</span></dt>
+<dd class="field-even"><p>différentes pages selon le cas
+(connextion réussi ou message d’erreur)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="member.views.deconnexion">
+<span class="sig-prename descclassname"><span class="pre">member.views.</span></span><span class="sig-name descname"><span class="pre">deconnexion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#member.views.deconnexion" title="Lien permanent vers cette définition"></a></dt>
+<dd><p>Fonction view pour la deconnexion d’un utilisateur</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – </p>
+</dd>
+<dt class="field-even">Return HttpResponse<span class="colon">:</span></dt>
+<dd class="field-even"><p>page d’accueil</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="member.views.inscription">
+<span class="sig-prename descclassname"><span class="pre">member.views.</span></span><span class="sig-name descname"><span class="pre">inscription</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#member.views.inscription" title="Lien permanent vers cette définition"></a></dt>
+<dd><dl class="simple">
+<dt>Fonction view pour l’inscription d’un nouvel utilisateur</dt><dd><ul class="simple">
+<li><p>Verifie les champs renseignés et si besoin rajout d’un message d’erreur</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – </p>
+</dd>
+<dt class="field-even">Return HttpResponse<span class="colon">:</span></dt>
+<dd class="field-even"><p>différentes pages selon le cas
+(inscription bien enregistrés ou message d’erreur)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="member.views.updateInformation">
+<span class="sig-prename descclassname"><span class="pre">member.views.</span></span><span class="sig-name descname"><span class="pre">updateInformation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#member.views.updateInformation" title="Lien permanent vers cette définition"></a></dt>
+<dd><dl class="simple">
+<dt>Fonction view pour l’affichage des informations d’un utilisateur et leur mise à jour</dt><dd><ul class="simple">
+<li><p>Verifie les champs renseignés et si besoin rajout d’un message d’erreur</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>request</strong> – </p>
+</dd>
+<dt class="field-even">Return HttpResponse<span class="colon">:</span></dt>
+<dd class="field-even"><p>différentes pages selon le cas
+(mise à jour réussi : page d’accueil ou message d’erreur)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-member">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-member" title="Lien permanent vers cette rubrique"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="manage.html" class="btn btn-neutral float-left" title="manage module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="member.migrations.html" class="btn btn-neutral float-right" title="member.migrations package" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Ambre Baumann - Lindsay Goulet - George Marchment - Clémence Sebe.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
