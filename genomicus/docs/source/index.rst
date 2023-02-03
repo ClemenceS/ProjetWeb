@@ -32,13 +32,18 @@ Rejoignez-nous !
    roles
    forum
 
+
 .. toctree::
    :hidden:
    :caption: Fonctions et Classes du projet
 
-   genindex
    modindex
+   genindex
 
+.. toctree:: 
+   :caption: Récapitulatif des modules
+
+   modules
 
 Indices and tables
 ==================

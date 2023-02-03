@@ -1,0 +1,27 @@
+name: Genomicus
+
+on: [push, pull_request, workflow_dispatch]
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+      - name: Install dependencies
+        run: |
+          pip install sphinx sphinx_rtd_theme
+      - name: Sphinx Build
+        run: |
+          rm genomicus/docs/source/genomApp.migrations.rst genomicus/docs/source/genomApp.rst genomicus/docs/source/genomicus.rst genomicus/docs/source/manage.rst genomicus/docs/source/member.migrations.rst genomicus/docs/source/member.rst genomicus/docs/source/modules.rst
+          sphinx-apidoc -o genomicus/docs/source/ genomicus/
+          sphinx-build genomicus/docs/source/ genomicus/docs/build/
+
+       - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        with:
+          publish_branch: gh-pages
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: genomicus/docs/build/
+          force_orphan: true
