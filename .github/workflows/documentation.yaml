@@ -1,6 +1,9 @@
 name: Genomicus
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    branches:
+    - main
 
 jobs:
   docs:
