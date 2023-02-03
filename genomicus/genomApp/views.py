@@ -37,6 +37,13 @@ def seq_type(sequence):
         return "Unknown"
 
 def get_users():
+    """Fonction get_users : renvoie les informations sur un utilisateur 
+        * si un utilisateur connecté : son rang de profil (lecteur, annotatateur, ....), son statut (connecte),
+            son prénom-nom et son email
+        * si aucun utilisateur connecté : rang de profile : 0 et connecte=False
+
+    :return: un dictionnaire
+    """
     m = Member.objects.filter(connecte=True)
     if len(m) != 0:
         perso = m[0].firstName + ' ' + m[0].lastName

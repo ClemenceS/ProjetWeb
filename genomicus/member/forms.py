@@ -10,7 +10,7 @@ class CreationMemberForm(forms.Form):
         - email : devant respecter son format
         - password : demander deux fois pour la verification
         - prenom et nom
-        - numero de telephone (optionnel + dans un certain format)
+        - numero de telephone (optionnel + dans un certain format donné par le placeholder XX XX XX XX XX)
     """
 
     email = forms.CharField(max_length=255, label='email', widget=forms.TextInput(attrs={'placeholder':"xyz@exemple.com"}), validators=[validators.EmailValidator(message="Adresse email incorrecte")])
@@ -40,7 +40,7 @@ class UpdateMemberForm(forms.Form):
     Classe pour la mise à jour des données
         - password (x2) pour vérification
         - prenom et nom 
-        - numero de telephone (dans un certain format)
+        - numero de telephone (dans un certain format donné par le placeholder XX XX XX XX XX)
     """
 
     password1 = forms.CharField(max_length=63, widget=forms.PasswordInput(attrs={'placeholder':'********'}), label='password1', required=False)

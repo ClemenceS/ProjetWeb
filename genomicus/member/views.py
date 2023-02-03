@@ -13,12 +13,14 @@ from .models import Member
 
 # Create your views here.
 
-
 def inscription(request):
-    """
-    Fonction view pour l'inscription d'un nouvel utilisateur
-        - verifie les champs renseignés et si besoin rajout d'un message d'erreur
-        - renvoie différentes pages selon le cas (bien inscrit ou erreur lors de l'inscription)
+    """Fonction view pour l'inscription d'un nouvel utilisateur
+        * Verifie les champs renseignés et si besoin rajout d'un message d'erreur
+
+    :parameter request:  
+
+    :return HttpResponse: différentes pages selon le cas 
+        (inscription bien enregistrés ou message d'erreur)
     """
 
     form = forms.CreationMemberForm()
@@ -63,11 +65,14 @@ def inscription(request):
 
 
 def connexion(request):
+    """Fonction view pour la connexion d'un utilisateur
+        * Verifie les champs renseignés et si besoin rajout d'un message d'erreur
+
+    :parameter request:
+
+    :return HttpResponse: différentes pages selon le cas 
+        (connextion réussi ou message d'erreur)
     """
-    Fonction view pour la connexion d'un utilisateur
-        - verifie les champs renseignés et si besoin rajout d'un message d'erreur
-        - renvoie différentes pages selon le cas (bien connecte ou erreur lors de la connexion)
-    """    
 
     form = forms.ConnexionMemberForm()
     template = loader.get_template('member/connexion.html')
@@ -112,11 +117,13 @@ def connexion(request):
     return HttpResponse(template.render({'form':form, 'people':people}, request))
 
 def deconnexion(request):
-    """
-    Fonction view pour la deconnexion d'un utilisateur
-        - renvoie la page d'accueil
-    """ 
+    """Fonction view pour la deconnexion d'un utilisateur
 
+    :parameter request:
+
+    :return HttpResponse: page d'accueil
+    """
+    
     Member.objects.filter(connecte=True).update(connecte=False)
     logout(request)
     template = loader.get_template('genomApp/accueil.html')
@@ -125,11 +132,14 @@ def deconnexion(request):
 
 
 def updateInformation(request):
+    """Fonction view pour l'affichage des informations d'un utilisateur et leur mise à jour
+        * Verifie les champs renseignés et si besoin rajout d'un message d'erreur
+
+    :parameter request:  
+
+    :return HttpResponse: différentes pages selon le cas 
+        (mise à jour réussi : page d'accueil ou message d'erreur)
     """
-    Fonction view pour l'affichage des informations d'un utilisateur et leur mise à jour
-        - verifie les champs renseignés et si besoin rajout d'un message d'erreur
-        - renvoie différentes pages selon le cas (retour à l'accueil ou la même page avec un message d'erreur
-    """ 
 
     m = Member.objects.filter(connecte=True)
 
