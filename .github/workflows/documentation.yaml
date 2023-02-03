@@ -17,7 +17,7 @@ jobs:
         run: |
           rm genomicus/docs/source/genomApp.migrations.rst genomicus/docs/source/genomApp.rst genomicus/docs/source/genomicus.rst genomicus/docs/source/manage.rst genomicus/docs/source/member.migrations.rst genomicus/docs/source/member.rst genomicus/docs/source/modules.rst
           sphinx-apidoc -o genomicus/docs/source/ genomicus/
-          sphinx-build genomicus/docs/source/ genomicus/docs/build/
+          sphinx-build genomicus/docs/source/ _build
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
@@ -25,5 +25,5 @@ jobs:
         with:
           publish_branch: gh-pages
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: genomicus/docs/build/
+          publish_dir: _build
           force_orphan: true
