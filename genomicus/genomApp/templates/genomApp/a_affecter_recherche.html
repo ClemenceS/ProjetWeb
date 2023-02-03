@@ -78,55 +78,41 @@
 <div class="container">
     <div class="row">
         <div class="mt-5"></div>
-        <div class="h3 pb-2 mb-4 border-bottom border-dark">Annotation à affecter : {{prot_id}}</div>
+        <div class="h3 pb-2 mb-4 border-bottom border-dark">Recherche de protéin à affecter</div>
         <div class="my-2">
         </div>
-        
 
-        <form method="POST">
+        <form action="" method="post" novalidate="">
             {% csrf_token %}
-            <table class="table table-sm table-light">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">ID</th>
-                        <th scope="col">Page de visualisation</th>
-                        <th scope="col">Annotateur actuel</th>
-                        <th scope="col">Sélectionner un annotateur</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th></th>
-                        <td>{{prot_id}}</td>
-                        <td><a href="{% url 'genomApp:info_relatives' result_id=prot_id %}">(lien)</a></td>
-                        <td>{{current_annotateur}}</td>
-                        <td>
-                            <select multiple="multiple" name="annotateurs" id="annotateurs" size="2">
-                                {% for a in annotateurs %}
-                                <option value="{{a.id}}">{{a.name}}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="my-3 d-flex justify-content-end">
-                <input type="submit" value="Valider">
+            <h5>
+            Pour affecter une page de protéine à être annoté, il faut d'abord sélectionner la page. Pour effectuer cela,
+            vous pouvez cherche son ID dans la base.
+            </h5>
+            <p>
+            <div class="mt-3">
+                <label for="id_ID" class="form-label"> <h5>ID :</h5></label>
+                <input type="text" class="form-control" name="ID" maxlength="100" required="" id="id_ID">
             </div>
+            </p>
+
+            <div class="my-3 d-flex justify-content-end">
+                <input type="submit" value="Soumettre">
+            </div>
+
         </form>
 
+        {% for id in ids %}
+        <h5>
+            Résultats de la recherche:
+        </h5>
+            {% if id.exits %}
+                <a href="{% url 'genomApp:aff_ann_res' result_id=id.id %}">{{ id.id }}</a> 
+            {% else %}
+                <a>"{{ id.id }}" n'existe pas dans la base de données.</a>
+            {% endif %}
+        {% endfor %}
 
-        <!--
-        <form method="POST">
-            {% csrf_token %}
-                    <select multiple="multiple"  name="services" id="services" size="1">
-            {% for service in services %}
-                <option value="{{service.id}}">{{service.name}}</option>
-            {% endfor %}
-        </select>
-        <input type="submit" value="Submit">
-    </form>-->
+
 
 
     </div>

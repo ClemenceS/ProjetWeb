@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import SearchGenomeForm, SearchProteineGeneForm, SearchAnnotationForm
+from .forms import SearchGenomeForm, SearchProteineGeneForm, SearchAnnotationForm, SearchAnnotation
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from .models import SequenceGenome, SequenceCodant, Genome, CodantInfo, Annotation
@@ -9,6 +9,7 @@ import re
 from django.contrib import admin
 from .functionsVisualisationGenome import *
 from django import forms
+from django.db.models import Q
 
 
 
@@ -146,6 +147,27 @@ def protein_not_being_annotated(validateur):
     return tab
 
 
+#Function that returns the annotateurs
+def get_annotateurs():
+    return list(Member.objects.filter(Q(user_type = 2) | Q(user_type = 3) | Q(user_type = 4)))
+
+
+def get_dico_annotateurs(annotateurs):
+    tab = []
+    for a in annotateurs:
+        tab.append({'id': a.email, 'name': f'{a.firstName} {a.lastName}'})
+    return tab
+
+#Function that returns the current annotateur for a protein
+def get_current_annotateur(result_id):
+    try:
+        prot = CodantInfo.objects.get(id='cds_'+result_id)
+        annot = Annotation.objects.get(id = prot)
+        a = annot.annotateur
+        return f'{a.firstName} {a.lastName}'
+    except:
+        return 'None'
+
 
 # ------------------------------------------------------------------------------       
 
@@ -205,24 +227,54 @@ def soumission_annotation(request):
     template = loader.get_template('genomApp/a_annoter.html')
     return HttpResponse(template.render({'people':people}, request))
 
-def affectation_annotation(request):
-    people = get_users()
-    print('HEERRREEE')
-    if request.method == 'POST':
-        print(request.POST.getlist('services'))
-    else: 
-        people = get_users()
 
+def recherche_affectation_annotation(request):
+    people = get_users()
+
+    if request.method == 'POST':
+        
+        form = SearchAnnotation(request.POST)
+        ids =[]
+        if form.is_valid():
+            id = form.cleaned_data['ID']
+            #Checks to see if the id exists in the DB
+            try:
+                CodantInfo.objects.get(id='cds_'+id)
+                ids.append({'id' : id, 'exits':True})
+            except:
+                ids.append({'id' : id, 'exits':False})
+
+        template = loader.get_template('genomApp/a_affecter_recherche.html')
+        return HttpResponse(template.render({'people':people, 'ids':ids}, request))
+
+    print("GGEEEOOOORRGGEE  Didn't work")
+    template = loader.get_template('genomApp/a_affecter_recherche.html')
+    return HttpResponse(template.render({'people':people}, request))
+
+
+def affectation_annotation(request, result_id):
+    people = get_users()
+    print("YOOOO we here", result_id)
+    if request.method == 'POST':
+        annotateurs = request.POST.getlist('annotateurs')
+        #Attributing the annotation to the user
+        Annotation(id= CodantInfo.objects.get(id="cds_"+result_id), gene = "", gene_symbol = "", description = "", annotateur = Member.objects.get(email=annotateurs[0]), validateur = Member.objects.get(email=people['email']), already_annotated =False).save()
+        return valider(request)
+
+    else: 
+        annotateurs = get_annotateurs()
+        annotateurs_dico = get_dico_annotateurs(annotateurs)
+        current_annotateur = get_current_annotateur(result_id)
         #Pour l'instant seumelement les 50 premier
         ids= protein_not_being_annotated(people)[:50]
         person = ['George', 'Clemence', 'Lindsay']
-
-
-
+    
+    
+    
         services = [{'id':'George', 'name':'--George--'}, {'id':'Clemence', 'name':'--Clemence--'}, {'id':'Lindsay', 'name':'--Lindsay--'}]
 
-        template = loader.get_template('genomApp/a_affecter.html')
-        return HttpResponse(template.render({'people':people, 'services':services, 'ids':ids}, request))
+    template = loader.get_template('genomApp/a_affecter.html')
+    return HttpResponse(template.render({'people':people, 'services':services, 'ids':ids, 'annotateurs':annotateurs_dico, 'prot_id':result_id, 'current_annotateur':current_annotateur}, request))
 
 def annotation_possible(request):
     people = get_users()

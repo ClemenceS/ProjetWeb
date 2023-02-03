@@ -28,3 +28,6 @@ class SearchAnnotationForm(forms.Form):
     nom_gene = forms.CharField(label='nom_gene', max_length=100, required=False)
     symbol_gene = forms.CharField(label='symbol_gene', max_length=100, required=False)
     description = forms.CharField(label='description', max_length=100, required=False)
+
+class SearchAnnotation(forms.Form):
+    ID = forms.CharField(label='ID', max_length=100, required=False)
