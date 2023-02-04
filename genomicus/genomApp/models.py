@@ -2,6 +2,13 @@ from django.db import models
 from member.models import Member
 
 class SeqInfo(models.Model):
+    """Classe pour les informations relatives à une séquence :
+        - identifiant 
+        - taille
+        - phase de lecture 
+        - espèce 
+        - taux de GC
+    """
     id = models.CharField(primary_key=True, max_length=200)
     taille = models.IntegerField(blank=False)
     phaseLecture = models.IntegerField(blank=True, null=True)
@@ -16,15 +23,35 @@ class SeqInfo(models.Model):
         return f'{self.id}'
 
 
-
 class Genome(SeqInfo):
-
+    """Classe qui hérite de la classe SeqInfo donc pour les informations relatives à une séquence :
+        - identifiant 
+        - taille
+        - phase de lecture 
+        - espèce 
+        - taux de GC
+    """
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.id}'
 
 
 class CodantInfo(SeqInfo):
+    """Classe qui hérite de la classe SeqInfo donc pour les informations relatives à une séquence :
+        - identifiant 
+        - taille
+        - phase de lecture 
+        - espèce 
+        - taux de GC
+        Et pour les informations relatives aux séquences codantes (protéines & CDS) :
+        - identifiant du chromosome
+        - type de séquences (CDS ou Peptide)
+        - identifiant du gène
+        - start
+        - stop
+        - transcript
+        - ...
+    """
     #Blank -> If True, the field is allowed to be blank. Default is False.
     chromosome = models.ForeignKey('Genome', on_delete=models.RESTRICT)
     TYPE_CHOICES = (
@@ -47,6 +74,15 @@ class CodantInfo(SeqInfo):
         return f'{self.id}'
 
 class Annotation(models.Model):
+    """Classe pour les annotations de séquences :
+        - identifiant du chromosome
+        - identifiant du gène 
+        - symbole du gène 
+        - description
+        - identifiant de l'annotateur
+        - identifiant du validateur 
+        - déjà annoté ou non
+    """
     #On suppose qu'un seul annotateur peut annoter -> d'où qu'un seul clé primaire et non double
     id = models.ForeignKey('CodantInfo', on_delete=models.RESTRICT, primary_key=True)
     gene = models.CharField(max_length=200, blank=True, null=True)
@@ -63,16 +99,17 @@ class Annotation(models.Model):
         return f'{self.id}'
 
 
-   
-
-
 class SequenceBase(models.Model):
+    """Classe pour les séquences
+    """
     sequence = models.TextField(blank=False)
 
     class Meta:
         abstract = True
 
 class SequenceGenome(SequenceBase):
+    """Classe qui hérite de la classe SequenceBase et pour les séquences génomiques
+    """
     id = models.ForeignKey('Genome', on_delete=models.RESTRICT, primary_key=True)
 
     def __str__(self):
@@ -80,6 +117,8 @@ class SequenceGenome(SequenceBase):
         return f'{self.id}'
 
 class SequenceCodant(SequenceBase):
+    """Classe qui hérite de la classe SequenceBase et pour les séquences codantes
+    """
     id = models.ForeignKey('CodantInfo', on_delete=models.RESTRICT, primary_key=True)
     
     def __str__(self):
