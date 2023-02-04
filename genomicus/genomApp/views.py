@@ -18,15 +18,29 @@ from member.models import Member
 #Define auxiliary functions
 #Function to remove header from ID
 def remove_header(id):
+    """Fonction pour supprimer l'header des identifiants du codant
+
+    :parameter: id
+    :return: id sans header
+    """
     return id[4:]
 
 def similarite(seq, motif, ratio):
-    ratio = fuzz.partial_ratio(seq, motif)
-    if ratio > ratio:
+    """Fonction pour vérifier que le pourcnetage de similarité entre motifs et séquences est supérieur à celui en paramètre
+
+    :parameter: seq, motif, ratio
+    :return: True ou False
+    """
+    percent = fuzz.partial_ratio(seq, motif)
+    if percent >= ratio :
         return True
     return False
 
 def seq_type(sequence):
+    """Fonction pour déterminer le type de séquence (nucléotidique ou peptidique)
+
+    :return: type de séquence
+    """
     amino_acid_regex = re.compile("^[ARNDCEQGHILKMFPSTWYV]+$")
     nucleotide_regex = re.compile("^[ACGT]+$")
     if nucleotide_regex.match(sequence):
@@ -55,6 +69,10 @@ def get_users():
 
 #Fonction qui retourne la liste IDs dans il a droit d'annoter
 def get_annotations(user):
+    """Fonction qui renvoie la liste des identifiants qu'un annotateur peut annoter
+
+    :parameter: user 
+    """
     tab = list(Annotation.objects.filter(annotateur = Member.objects.get(email = user['email'])))
     res=[]
     annotated=[]
@@ -65,6 +83,13 @@ def get_annotations(user):
 
 #Function that return true is the user is allowed to annotate the protein -> False if not
 def allowed_to_annotate(user, id_prot):
+    """Fonction qui renvoie :
+        * True si l'utilisateur est autorisé à annoter la protéine 
+        * False sinon
+
+    :parameter: user, id_prot
+    :return: True ou False
+    """
     tab = list(Annotation.objects.filter(annotateur = Member.objects.get(email = user['email'])))
     res=[]
     for a in tab:
@@ -74,6 +99,11 @@ def allowed_to_annotate(user, id_prot):
 
 #Fonction qui retourne la liste des annotations dont l'utilisateur est validateur
 def get_annotations_validateur(user):
+    """Fonction qui retourne la liste des annotations dont l'utilisateur est validateur
+
+    :parameter: user
+    :return: liste des identifiants
+    """
     tab = list(Annotation.objects.filter(validateur = Member.objects.get(email = user['email'])))
     res=[]
     annotated=[]
@@ -83,18 +113,37 @@ def get_annotations_validateur(user):
 
 #Function that return the first and last name of a user
 def get_names(user):
+    """Fonction qui retourne le prénom et le nom d'un utilisateur
+
+    :parameter: user
+    :return: prénom et nom
+    """
     return f'{user.firstName} {user.lastName}'
 
 #Function that return the first and last name of a user from the email
 def get_names_from_email(email):
+    """Fonction qui retourne le prénom et le nom d'un utilisateur depuis son email
+
+    :parameter: email
+    :return: prénom et nom
+    """
     return get_names(Member.objects.get(email=email))
 
 #Function that returns the species of a protein from it's short id
 def get_espece(id):
+    """Fonction qui retourne le nom de l'espèce d'une protéine/CDS depuis son identifiant court
+    
+    :parameter: id 
+    :return: nom de l'espèce
+    """
     return CodantInfo.objects.get(id='cds_'+id).espece
 
 #Function that validates the annotations by updating the CodantInfo table and deleting the corresponding annotations
 def validate_annotations(to_validate):
+    """Fonction qui valide les annotations en mettant à jour la table CodantInfo et en supprimant les annotations correspondantes.
+
+    :parameter: to_validate 
+    """
     for v in to_validate:
         cds = CodantInfo.objects.get(id='cds_'+v)
         pep = CodantInfo.objects.get(id='pep_'+v)
