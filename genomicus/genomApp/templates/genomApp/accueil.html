@@ -79,43 +79,66 @@
     <div class="mt-5"></div>
     <div class="h3 pb-2 mb-4 border-bottom border-dark">Accueil</div>
     <div class="row">
-        <div class="col">
+        <div class="col-4">
+
             <p align="center">
-                <img src="{% static 'logo.png' %}" width="400">
+                <img src="{% static 'logo.png' %}" width="350">
             </p>
 
-            <h5 align="justify">
-                Bienvenue à Genomicus! Imaginez que l'ADN est comme le squelette d'un diplodocus, chaque os était un
-                nucléotide composant une séquence. Notre base de données est comme un musée des sciences
-                naturelles, où
-                chaque os est soigneusement catalogué et classé pour une étude approfondie. De la même manière,
-                notre base de données de séquences d'ADN et d'ARN est un outil puissant pour la recherche génétique,
-                permettant aux chercheurs d'étudier et de comprendre les secrets de notre code génétique.
-            </h5>
+
         </div>
-        <div class="col">
+        <div class="col-8 mt-3">
+            <div class="mb-4">
+            <h4>
+                <p class="text-center titre2">Bienvenue à Genomicus !</p>
+            </h4>
+        </div>
 
             <h5 align="justify">
-                Genomicus permet la recherche de Génome ou de Protéine, sélectionnez quelle type de
-                recherche vous souhaitez effectuer.
+
+                Voyez notre site comme le squelette d'un diplodocus, chaque os est une
+                protéine ou une CDS composant un génome. Notre base de données est comme un musée des sciences
+                naturelles, où chaque os est soigneusement catalogué et classé pour une étude approfondie. <br>
+                <br>
+                De la même manière, notre base de données de séquences nucléotidiques ou protéiques est un
+                outil puissant pour la recherche génomique, permettant aux chercheurs d'étudier et de comprendre
+                les secrets de cette discipline. <br>
+                <br>
+                Genomicus permet la recherche de génomes ou de protéines, sélectionnez quel type de
+                recherche vous souhaitez effectuer. <br>
+                <br>
+                <p class="text-center">Bonne navigation !</p>
             </h5>
+            <center>
+                <a href="{% url 'genomApp:formulaire_genome' %}">
+                    <img src="{% static 'genome_bouton.png' %}" width="250" />
+                </a>
+                
+                <a href="{% url 'genomApp:prot_gene' %}">
+                    <img src="{% static 'prot_cds_button.png' %}" width="250" />
+                </a>
+            </center>
             <br>
-            <p align="center">
-                <a role="button" class="btn btn-outline-secondary btn-lg"
-                    href="{% url 'genomApp:formulaire_genome' %}">Génome</a>
-
-                <a role="button" class="btn btn-outline-secondary btn-lg"
-                    href="{% url 'genomApp:prot_gene' %}">Protéine</a>
-            </p>
-
-            <br> <br> <br> <br> <br>
-            <center> <I>
-                    <font color="#0acd1e"> {{ messageAccueil }} </font>
-                </I> </center>
-
+            <br>
         </div>
 
     </div>
+
 </div>
 
+<!--Navigation bar
+<footer>
+<nav class="navbar bg-success bg-opacity-10 justify-content-center">
+droite
+Logo en noir/gros et blanc avec © 2023 Genomicus.
+
+centre
+Qui sommes-nous ?
+
+gauche
+Lien du git avec le logo
+
+
+</nav>
+</footer>-->
 </html>
