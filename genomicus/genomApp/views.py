@@ -16,7 +16,6 @@ from django.db.models import Q
 from member.models import Member
 
 #Define auxiliary functions
-#Function to remove header from ID
 def remove_header(id):
     """Fonction pour supprimer l'header des identifiants du codant
 
@@ -24,6 +23,7 @@ def remove_header(id):
     :return: id sans header
     """
     return id[4:]
+
 
 def similarite(seq, motif, ratio):
     """Fonction pour vérifier que le pourcnetage de similarité entre motifs et séquences est supérieur à celui en paramètre
@@ -35,6 +35,7 @@ def similarite(seq, motif, ratio):
     if percent >= ratio :
         return True
     return False
+
 
 def seq_type(sequence):
     """Fonction pour déterminer le type de séquence (nucléotidique ou peptidique)
@@ -67,11 +68,12 @@ def get_users():
 
     return people
 
-#Fonction qui retourne la liste IDs dans il a droit d'annoter
+
 def get_annotations(user):
     """Fonction qui renvoie la liste des identifiants qu'un annotateur peut annoter
 
     :parameter: user 
+    :return: un tuple composé de deux listes 
     """
     tab = list(Annotation.objects.filter(annotateur = Member.objects.get(email = user['email'])))
     res=[]
@@ -97,7 +99,7 @@ def allowed_to_annotate(user, id_prot):
             return True
     return False
 
-#Fonction qui retourne la liste des annotations dont l'utilisateur est validateur
+
 def get_annotations_validateur(user):
     """Fonction qui retourne la liste des annotations dont l'utilisateur est validateur
 
@@ -111,7 +113,7 @@ def get_annotations_validateur(user):
         res.append(a)
     return res
 
-#Function that return the first and last name of a user
+
 def get_names(user):
     """Fonction qui retourne le prénom et le nom d'un utilisateur
 
@@ -120,7 +122,7 @@ def get_names(user):
     """
     return f'{user.firstName} {user.lastName}'
 
-#Function that return the first and last name of a user from the email
+
 def get_names_from_email(email):
     """Fonction qui retourne le prénom et le nom d'un utilisateur depuis son email
 
@@ -129,7 +131,7 @@ def get_names_from_email(email):
     """
     return get_names(Member.objects.get(email=email))
 
-#Function that returns the species of a protein from it's short id
+
 def get_espece(id):
     """Fonction qui retourne le nom de l'espèce d'une protéine/CDS depuis son identifiant court
     
@@ -138,7 +140,7 @@ def get_espece(id):
     """
     return CodantInfo.objects.get(id='cds_'+id).espece
 
-#Function that validates the annotations by updating the CodantInfo table and deleting the corresponding annotations
+
 def validate_annotations(to_validate):
     """Fonction qui valide les annotations en mettant à jour la table CodantInfo et en supprimant les annotations correspondantes.
 
@@ -163,8 +165,13 @@ def validate_annotations(to_validate):
 
         annotation.delete()
 
-#Function that return the annotateurs (and their possible annotations) from the validateur
+
 def annotateurs_from_validateur(validateur):
+    """Fonction qui retourne les annotateurs (et leurs annotations éventuelles) d'un validateur
+
+    :parameter: validateur 
+    :return: une liste contenant les différentes informations sur les annotateurs et leurs annotations éventuelles
+    """
     tab = list(Annotation.objects.filter(validateur = Member.objects.get(email = validateur['email'])))
     dico ={}
     num ={}
@@ -189,13 +196,16 @@ def annotateurs_from_validateur(validateur):
         for i in range(len(dico[d])):
             temp.append({'id':dico[d][i], 'num':list_num[d][i]})
         tab.append({'key':d, 'val':temp})
-
-        
+   
     return tab
 
 
-#Function that returns the ids of the proteins which aren't being annotated
 def protein_not_being_annotated(validateur):
+    """Fonction qui retourne les identifiants des protéines qui n'ont pas été annotés
+
+    :parameter: validateur
+    :return: une liste contenant les identifiants des protéines
+    """
     temp = list(CodantInfo.objects.exclude(id__in=Annotation.objects.values('id')).filter(codant_type = 1).values('id'))
     tab = []
     for t in temp:
@@ -203,19 +213,30 @@ def protein_not_being_annotated(validateur):
     return tab
 
 
-#Function that returns the annotateurs
 def get_annotateurs():
+    """Fonction qui retourne les annotateurs
+    """
     return list(Member.objects.filter(Q(user_type = 2) | Q(user_type = 3) | Q(user_type = 4)))
 
 
 def get_dico_annotateurs(annotateurs):
+    """Fonction qui retourne les informations concernant les annotateurs
+
+    :parameter: annotateurs
+    :return: liste avec les informations sur les annotateurs : email, prénom et nom
+    """
     tab = []
     for a in annotateurs:
         tab.append({'id': a.email, 'name': f'{a.firstName} {a.lastName}'})
     return tab
 
-#Function that returns the current annotateur for a protein
+
 def get_current_annotateur(result_id):
+    """Fonction qui retourne l'annotateur actuel pour une protéine s'il existe
+
+    :parameter: result_id
+    :return: prénom et nom de l'annotateur s'il existe
+    """
     try:
         prot = CodantInfo.objects.get(id='cds_'+result_id)
         annot = Annotation.objects.get(id = prot)
@@ -227,21 +248,36 @@ def get_current_annotateur(result_id):
 
 # ------------------------------------------------------------------------------       
 
-#Pages d'accueil
 def accueil(request):
+    """Fonction view pour la page d'accueil
+
+    :parameter request:
+    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
+    """
     people = get_users()
     template = loader.get_template('genomApp/accueil.html')
     return HttpResponse(template.render({'people':people}, request))
 
 
 def accueil_validateur(request):
+    """Fonction view pour la page d'accueil de validation
+
+    :parameter request:
+    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
+    et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
+    """
     people = get_users()
     template = loader.get_template('genomApp/validation.html')
     return HttpResponse(template.render({'people':people}, request))
 
 
-#Function that shows the annotations possible for the user
 def accueil_annotateur(request):
+    """Fonction view pour la page d'accueil annotateur qui montre les annotations possibles pour l'utilisateur 
+
+    :parameter request:
+    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
+    et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
+    """
     people = get_users()
 
     #List des annotations possible pour l'utilisateur
@@ -270,21 +306,27 @@ def accueil_annotateur(request):
     return HttpResponse(template.render(context, request))
 
 
-#Function that shows the annotateurs that the validateur has affected pages to
 def seq_deja_affectees(request):
+    """Fonction view pour la page des séquences déjà affectées qui montre les annotateurs avec les séquences qui leur sont affectées
+
+    :parameter request:
+    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
+    et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
+    """
     people = get_users()
     annotateurs = annotateurs_from_validateur(people)
     print(annotateurs)
     template = loader.get_template('genomApp/affecte.html')
     return HttpResponse(template.render({'people':people, 'annotateurs':annotateurs}, request))
 
-def soumission_annotation(request):
-    people = get_users()
-    template = loader.get_template('genomApp/a_annoter.html')
-    return HttpResponse(template.render({'people':people}, request))
-
 
 def recherche_affectation_annotation(request):
+    """Fonction view pour la page d'accueil pour les affectations d'annotations 
+
+    :parameter request:
+    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
+    et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
+    """
     people = get_users()
 
     if request.method == 'POST':
@@ -303,14 +345,18 @@ def recherche_affectation_annotation(request):
         template = loader.get_template('genomApp/a_affecter_recherche.html')
         return HttpResponse(template.render({'people':people, 'ids':ids}, request))
 
-    print("GGEEEOOOORRGGEE  Didn't work")
     template = loader.get_template('genomApp/a_affecter_recherche.html')
     return HttpResponse(template.render({'people':people}, request))
 
 
 def affectation_annotation(request, result_id):
+    """Fonction view pour la page d'affectations d'annotations pour l'identifiant sélectionné
+
+    :parameter request, result_id:
+    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
+    et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
+    """
     people = get_users()
-    print("YOOOO we here", result_id)
     if request.method == 'POST':
         annotateurs = request.POST.getlist('annotateurs')
         #Attributing the annotation to the user
@@ -332,13 +378,14 @@ def affectation_annotation(request, result_id):
     template = loader.get_template('genomApp/a_affecter.html')
     return HttpResponse(template.render({'people':people, 'services':services, 'ids':ids, 'annotateurs':annotateurs_dico, 'prot_id':result_id, 'current_annotateur':current_annotateur}, request))
 
-def annotation_possible(request):
-    people = get_users()
-    template = loader.get_template('genomApp/annotation.html')
-    return HttpResponse(template.render({'people':people}, request))
 
-#Function that allows the validateur to validate annotations
 def valider(request):
+    """Fonction view pour la page de validation d'annotations contenant les annotations à valider et celle qui ont été affectés mais pas encore annotés 
+
+    :parameter request:
+    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
+    et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
+    """
     people = get_users()
 
     if request.method == 'POST':
@@ -367,8 +414,14 @@ def valider(request):
     template = loader.get_template('genomApp/valider.html')
     return HttpResponse(template.render(context, request))
 
-#Function that shows the formulaire Genome
+
 def resultatsFormulaireGenome(request):
+    """Fonction view pour la page de formumaire génome et pour la page de résultats
+
+    :parameter request:
+    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
+    et différents résultats en fonction de la recherche
+    """
     people = get_users()
 
     if request.method == 'POST':
@@ -453,8 +506,13 @@ def resultatsFormulaireGenome(request):
     return HttpResponse(template.render({'form':form, 'people':people}, request))
 
 
-#Function that shows the formulaire Proteine
 def resultatsFormulaireProteineGene(request):
+    """Fonction view pour la page de formumaire protéine/CDS et pour la page de résultats
+
+    :parameter request:
+    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
+    et différents résultats en fonction de la recherche
+    """
     people = get_users()
 
     if request.method == 'POST':
@@ -544,8 +602,13 @@ def resultatsFormulaireProteineGene(request):
     return HttpResponse(template.render({'form':form, 'people':people}, request))
 
 
-#Function that shows corresponding info for a protein
 def informationsRelativesProteineGene(request, result_id):
+    """Fonction view pour la page d'informations relatives aux protéines/CDS
+
+    :parameter request, result_id:
+    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
+    et la page affiche les résultats en fonction de l'identifiant choisi lors des résultats au formulaire
+    """
     people = get_users()
 
     #p = CodantInfo.objects.get(id="cds_"+result_id)
@@ -581,6 +644,12 @@ def informationsRelativesProteineGene(request, result_id):
 
 
 def visualisationGenome(request, result_id):
+    """Fonction view pour la page de visualisation des génomes
+
+    :parameter request, result_id:
+    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
+    et la page affiche les résultats en fonction de l'identifiant de l'espèce choisi lors des résultats au formulaire
+    """
     people = get_users()
 
     p = Genome.objects.get(id=result_id)
@@ -596,6 +665,11 @@ def visualisationGenome(request, result_id):
 
 
 def blastRedirection(request, result_id):
+    """Fonction view pour la redirection vers blast
+
+    :parameter request, result_id:
+    :return HttpResponseRedirect: redirige vers le site BLAST (blastn ou blastp)
+    """
     type = CodantInfo.objects.filter(id=result_id).values_list('codant_type', flat=True)[0]
     print(type)
     if type == 1 :
@@ -608,29 +682,53 @@ def blastRedirection(request, result_id):
     response = requests.get("https://blast.ncbi.nlm.nih.gov/Blast.cgi", params=data)
     return HttpResponseRedirect(response.url)
 
+
 #Autocomplétion
 def speciesGenomeAutocomplete(request):
+    """Fonction qui permet l'autocomplétion dans les formulaires pour les noms d'espèces
+
+    :parameter request:
+    :return: une liste avec les espèces possibles en fonction des caractères entrés dans le formulaire
+    """
     query = request.GET.get("term", "")
     suggestions = Genome.objects.filter(espece__icontains=query)
     espece =  [obj.espece for obj in suggestions]
     suggestions_list = [{"label": s} for s in set(espece)]
     return JsonResponse(suggestions_list, safe=False)
 
+
 def idGenomeAutocomplete(request):
+    """Fonction qui permet l'autocomplétion dans les formulaires pour les identifiants de génome
+
+    :parameter request:
+    :return: une liste avec les identifiants de génome possibles en fonction des caractères entrés dans le formulaire
+    """
     query = request.GET.get("term", "")
     suggestions = Genome.objects.filter(id__icontains=query)
     id =  [obj.id for obj in suggestions]
     suggestions_list = [{"label": i} for i in set(id)]
     return JsonResponse(suggestions_list, safe=False)
 
+
 def speciesProteineAutocomplete(request):
+    """Fonction qui permet l'autocomplétion dans les formulaires pour les noms d'espèces
+
+    :parameter request:
+    :return: une liste avec les espèces possibles en fonction des caractères entrés dans le formulaire
+    """
     query = request.GET.get("term", "")
     suggestions = CodantInfo.objects.filter(espece__icontains=query)
     espece =  [obj.espece for obj in suggestions]
     suggestions_list = [{"label": s} for s in set(espece)]
     return JsonResponse(suggestions_list, safe=False)
 
+
 def geneProteineAutocomplete(request):
+    """Fonction qui permet l'autocomplétion dans les formulaires pour les noms de gènes
+
+    :parameter request:
+    :return: une liste avec les noms de gènes possibles en fonction des caractères entrés dans le formulaire
+    """
     query = request.GET.get("term", "")
     suggestions = set(list(CodantInfo.objects.filter(gene__icontains=query)))
     gene =  [obj.gene for obj in suggestions]
@@ -638,8 +736,14 @@ def geneProteineAutocomplete(request):
     print(suggestions_list)
     return JsonResponse(suggestions_list, safe=False)
 
-#Function that allows to modifie an annotation
+
 def protein_annotation(request, result_id):
+    """Fonction qui permet la modification d'une annotation
+
+    :parameter request, result_id:
+    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
+    et la page affichée dépend de l'identifiant de l'annotation 
+    """
     people = get_users()
 
     if request.method == 'POST':
@@ -691,8 +795,13 @@ def protein_annotation(request, result_id):
         return HttpResponse(template.render(context, request))
 
 
-#Function that allows to visualize an annotation
 def view_annotation(request, result_id):
+    """Fonction qui permet la visualisation d'une annotation et des informations relatives à une protéine
+
+    :parameter request, result_id:
+    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
+    et la page affichée dépend de l'identifiant de l'annotation 
+    """
     people = get_users()
     #Function to check if the user is allowed to annotate
     #If the user is not connected, they are not allowed to annotate anyway -> so we catch the error
@@ -717,8 +826,6 @@ def view_annotation(request, result_id):
     annote_gene = a.gene
     annote_gene_symbol = a.gene_symbol 
     annote_description = a.description
-
-
 
     context = {'id_cds' : "cds_"+result_id, 'id_pep' : "pep_"+result_id, 'id_chr' : id_chr, 'start' : start, 
         'stop' : stop, 'gene' : gene, 'description' : description, 'seq_aa':sequence_aa, 'seq_nucl' : sequence_nucl, 

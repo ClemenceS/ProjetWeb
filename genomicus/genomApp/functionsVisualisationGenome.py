@@ -6,7 +6,7 @@ from pyfaidx import Faidx
 #Creates fasta file needed in the format for genome visualisation
 def create_new_fa(id):
     """Fonction pour la création des fichiers fasta nécessaire pour la visualisation du génome
-
+    
     :parameter id:
     """
     #Get genome
