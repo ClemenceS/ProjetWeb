@@ -5,6 +5,10 @@ from pyfaidx import Faidx
 
 #Creates fasta file needed in the format for genome visualisation
 def create_new_fa(id):
+    """Fonction functionsVisualisationGenome qui permet la création des fichiers fasta nécessaire pour la visualisation du génome
+
+    :parameter id:
+    """
     #Get genome
     g = Genome.objects.get(id = id)
     #Get species
@@ -19,6 +23,10 @@ def create_new_fa(id):
 
 #Function that creates the gff file following the correct format
 def create_gff(id):
+    """Fonction functionsVisualisationGenome qui permet la création des fichiers au format GFF nécessaire pour la visualisation du génome
+
+    :parameter id:
+    """
     #Get genome
     g = Genome.objects.get(id = id)
     cds_list = list(CodantInfo.objects.filter(chromosome = g, codant_type = 1))
@@ -44,6 +52,10 @@ def create_gff(id):
 
 #Function that creates the .fai file using the Faidx function
 def creat_fai(id):
+    """Fonction functionsVisualisatonGenome qui permet la création des fichiers fai (fasta indexé) nécessaire pour la visualisation du génome
+
+    :parameter id:
+    """
     #Get genome
     g = Genome.objects.get(id = id)
     #Get species
