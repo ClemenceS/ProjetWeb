@@ -31,8 +31,7 @@ def similarite(seq, motif, ratio):
     :parameter: seq, motif, ratio
     :return: True ou False
     """
-    percent = fuzz.partial_ratio(seq, motif)
-    if percent >= ratio :
+    if fuzz.partial_ratio(seq, motif) >= ratio :
         return True
     return False
 
@@ -586,7 +585,12 @@ def resultatsFormulaireProteineGene(request):
                 shown_id = [remove_header(id) for id in id_list]
                 shown_id = list(set(shown_id))
 
-                context = {**form.cleaned_data, **{'id_results' : id_list}, **{'shown_id' : shown_id}, **{'criterias':criterias}, **{'people':people}}
+                results = []
+                for i in range(len(id_list)):
+                    p = CodantInfo.objects.get(id=id_list[i])
+                    results.append({'id' : remove_header(id_list[i]), 'espece':p.espece, 'start':p.start, 'stop':p.stop})
+
+                context = {**form.cleaned_data, **{'id_results' : id_list}, **{'shown_id' : shown_id}, **{'criterias':criterias}, **{'people':people}, **{'results':results}}
                 template = loader.get_template('genomApp/resultat_gene_transcrit.html')
                 return HttpResponse(template.render(context, request))
             
