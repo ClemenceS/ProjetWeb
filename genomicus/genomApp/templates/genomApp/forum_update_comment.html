@@ -4,8 +4,7 @@
 <html lang="en">
 
 <head>
-    <title>Affectation</title>
-    <link rel="icon" href="{% static 'logo.png' %}" type="image/png">
+    <title>Forum</title>
 </head>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -92,67 +91,70 @@
 </nav>
 <!--end of Navigation bar-->
 
-{% if people.profile >= 3 and people.connecte %}
+{% if people.profile >= 2 and people.connecte %}
+
+<style>
+    .forum-box {
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f2f2f2;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family:helvetica;
+    }
+
+    .modification-box {
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #a1a2a2;
+      border: 1px solid #a1a2a2;
+      border-radius: 5px;
+      font-family:helvetica;
+    }
+</style>
 
 <div class="container">
+    <div class="mt-5"></div>
+    <div class="h3 pb-2 mb-4 border-bottom border-dark">Forum - Discussion sur {{ id_forum }}</div>
     <div class="row">
-        <div class="mt-5"></div>
-        <div class="h3 pb-2 mb-4 border-bottom border-dark">Annotation à affecter : {{prot_id}}</div>
-        <div class="my-2">
+
+    {% for key, value in comment.items %}
+    <div class="forum-box">
+        <font class=fonce> écrit le {{value.date}} par {{value.auteur}}: </font>
+        <br>
+        {{value.text}}
+        {% if people.who == value.auteur %}
+        <div class="my+2 d-flex justify-content-end">
+        <a href="{% url 'genomApp:deleteComment' id_forum=id_forum id_com=key %}" class="link-light" >&#10060</a>
         </div>
-        
+        <div class="my+2 d-flex justify-content-end">
+        <a href="{% url 'genomApp:updateComment' id_forum=id_forum id_com=key %}" class="link-light" >&#128395</a>
+        </div>
+        {% endif %}
+    {% if key == id_com %}
+    <div class="mt-5"></div>
+    <form action="" method="post" novalidate="">
+        {% csrf_token %}
+        <div class="modification-box">
+            <label for="id_text" class="form-label"> Modifier :</label>
+            <input type="text" class="form-control" name="updated_text" maxlength="1000" required="" id="id_text" value="{{value.text}}">
+        </div>
 
-        <form method="POST">
-            {% csrf_token %}
-            <table class="table table-sm table-light">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">ID</th>
-                        <th scope="col">Page de visualisation</th>
-                        <th scope="col">Annotateur actuel</th>
-                        <th scope="col">Sélectionner un annotateur</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th></th>
-                        <td>{{prot_id}}</td>
-                        <td><a href="{% url 'genomApp:info_relatives' result_id=prot_id %}">(lien)</a></td>
-                        <td>{{current_annotateur}}</td>
-                        <td>
-                            <select multiple="multiple" name="annotateurs" id="annotateurs" size="2">
-                                {% for a in annotateurs %}
-                                <option value="{{a.id}}">{{a.name}}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="my-3 d-flex justify-content-end">
-                <input class="btn btn-outline-success" type="submit" value="Valider">
-            </div>
-        </form>
+        <input id="id_updated_date" name="updated_date" type="hidden">
+        <input id="id_auteur_email_up" name="auteur" type="hidden" value="{{people.email}}">
+        <input id="id_forum_up" name="forum" type="hidden" value="{{id}}">
 
-
-        <!--
-        <form method="POST">
-            {% csrf_token %}
-                    <select multiple="multiple"  name="services" id="services" size="1">
-            {% for service in services %}
-                <option value="{{service.id}}">{{service.name}}</option>
-            {% endfor %}
-        </select>
-        <input type="submit" value="Submit">
-    </form>-->
+        <div class="my-3 d-flex justify-content-end">
+            <input class="btn btn-outline-secondary" type="submit" value="Modifier">
+        </div>
+    </form>
+    {% endif %}
+    </div>
+    {% endfor %}
 
 
     </div>
 </div>
-
-
-
 
 {% else %}
 
@@ -164,5 +166,9 @@
 
 {% endif %}
 
+
+<script type="text/javascript">
+    document.getElementById("id_updated_date").value = new Date().toISOString().substr(0, 10);
+</script>
 
 </html>

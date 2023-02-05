@@ -5,7 +5,13 @@ from . import views
 urlpatterns = [
     path('', views.accueil, name="accueil"),
     path('recherche_genome/', views.resultatsFormulaireGenome, name="formulaire_genome"),
-    path('recherche_genome/visualisation_<result_id>/', views.visualisationGenome, name="visualisation"),
+    path('contact/', views.contact, name="contact"),
+    path('email_envoye/', views.email_envoi, name="email_envoi"),
+    path('forum/', views.accueil_forum, name="accueil_forum_genome"),
+    path('forum/<id>/', views.forum, name="forum"),
+    path('delete_comment/<id_forum>_<id_com>', views.deleteComment, name="deleteComment"),
+    path('update_comment/<id_forum>_<id_com>', views.updateComment, name="updateComment"),
+    path('recherche_genome/visualisation/<result_id>/', views.visualisationGenome, name="visualisation"),
     path('recherche_proteine_gene/', views.resultatsFormulaireProteineGene, name="prot_gene"),
     path('recherche_proteine_gene/info_<result_id>/', views.informationsRelativesProteineGene, name="info_relatives"),
     path('annotation/', views.accueil_annotateur, name = 'accueil_annotateur'),
@@ -20,6 +26,8 @@ urlpatterns = [
     path('recherche_proteine_gene/id_chr_proteine_autocomplete/', views.idGenomeAutocomplete, name='idChrProteineAutocomplete'),
     path('recherche_proteine_gene/gene_proteine_autocomplete/', views.geneProteineAutocomplete, name='geneProteineAutocomplete'),
     path('recherche_proteine_gene/species_proteine_autocomplete/', views.speciesProteineAutocomplete, name='speciesProteineAutocomplete'),
+    path('recherche_proteine_gene/id_proteine_autocomplete/', views.idProteineAutocomplete, name='idProteineAutocomplete'),
+    path('forum/id_proteine_autocomplete/', views.idProteineAutocomplete, name='idProteineAutocomplete'),
     path('protein_annotation/<result_id>/', views.protein_annotation, name='protein_annotation'),
     path('view_annotation/<result_id>/', views.view_annotation, name='view_annotation'),
 ]

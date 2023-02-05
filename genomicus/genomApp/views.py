@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
-from .forms import SearchGenomeForm, SearchProteineGeneForm, SearchAnnotationForm, SearchAnnotation
+from .forms import SearchGenomeForm, SearchProteineGeneForm, SearchAnnotationForm, SearchAnnotation, AddCommentForm, SearchForumForm, UpdateCommentForm, ContactUsForm
 from django.template import loader
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
-from .models import SequenceGenome, SequenceCodant, Genome, CodantInfo, Annotation
+from .models import SequenceGenome, SequenceCodant, Genome, CodantInfo, Annotation, Forum, Commentaire
 import requests
 from fuzzywuzzy import fuzz
 import re
@@ -10,7 +10,7 @@ from django.contrib import admin
 from .functionsVisualisationGenome import *
 from django import forms
 from django.db.models import Q
-
+from django.core.mail import send_mail
 
 
 from member.models import Member
@@ -25,16 +25,16 @@ def remove_header(id):
     return id[4:]
 
 
-def similarite(sequence, motif, r):
-	best_ratio = 0
-	for i in range(len(sequence) - len(motif) + 1):
-		sub_sequence = sequence[i:i+len(motif)]
-		ratio = fuzz.partial_ratio(motif, sub_sequence)
-		if ratio > best_ratio:
-			best_ratio = ratio
-	if best_ratio >= r:
-		return True
-	return False
+#def similarite(sequence, motif, r):
+#	best_ratio = 0
+#	for i in range(len(sequence) - len(motif) + 1):
+#		sub_sequence = sequence[i:i+len(motif)]
+#		ratio = fuzz.partial_ratio(motif, sub_sequence)
+#		if ratio > best_ratio:
+#			best_ratio = ratio
+#	if best_ratio >= r:
+#		return True
+#	return False
 
 
 def seq_type(sequence):
@@ -423,7 +423,6 @@ def resultatsFormulaireGenome(request):
         if form.is_valid():
             id = form.cleaned_data['ID']
             motif = form.cleaned_data['motif']
-            ratio = form.cleaned_data['ratio']
             espece = form.cleaned_data['espece']
             tailleMin = form.cleaned_data['tailleMin']
             tailleMax = form.cleaned_data['tailleMax']
@@ -468,18 +467,21 @@ def resultatsFormulaireGenome(request):
                     id_list = q.values_list('id', flat=True)
 
                 if motif != "":
-                    motif= motif.upper()
+                    motif = motif.upper()
                     criterias.append({'key': 'Motif ', 'value':motif})
-                    criterias.append({'key': 'Similarité (%)', 'value':ratio})
-                    for id in q:
-                        seq = SequenceGenome.objects.get(id=id).sequence
-                        if similarite(seq, motif, ratio)==False:
-                            q = q.exclude(id=id)
-                    id_list = q.values_list('id', flat=True)
+                    q2 = SequenceGenome.objects.filter(sequence__contains=motif)
+                    id_list2 = q2.values_list('id', flat=True)
+                    id_list = [value for value in id_list if value in id_list2]
 
-                context = {**form.cleaned_data, **{'id_results' : id_list}, **{'criterias':criterias}, **{'people':people}}
+                results = []
+                for i in range(len(id_list)):
+                    p = Genome.objects.get(id=id_list[i])
+                    results.append({'id' : id_list[i], 'taille':p.taille, 'espece':p.espece, 'gc_rate':p.gc_rate})
+
+
+                context = {**form.cleaned_data, **{'id_results' : results }, **{'criterias':criterias}, **{'people':people}}
                 #print(context)
-                
+
                 template = loader.get_template('genomApp/resultat_genome.html')
                 return HttpResponse(template.render(context, request))
 
@@ -504,7 +506,6 @@ def resultatsFormulaireProteineGene(request):
             id_chr = form.cleaned_data['ID_chr']
             gene = form.cleaned_data['gene']
             motif = form.cleaned_data['motif']
-            ratio = form.cleaned_data['ratio']
             espece = form.cleaned_data['espece']
             tailleMin = form.cleaned_data['tailleMin']
             tailleMax = form.cleaned_data['tailleMax']
@@ -547,29 +548,21 @@ def resultatsFormulaireProteineGene(request):
                     id_list = q.values_list('id', flat=True)
 
                 if motif != "":
-                    motif= motif.upper()
                     criterias.append({'key': 'Motif ', 'value':motif})
-                    criterias.append({'key': 'Similarité (%)', 'value':ratio})
-                    if seq_type(motif) == 'Amino Acid':
-                        for id in id_list:
-                            if id.startswith("pep_"):
-                                seq = SequenceCodant.objects.get(id=id).sequence
-                                if similarite(seq, motif, ratio)==False:
-                                    q = q.exclude(id=id)
-                                id_list = q.values_list('id', flat=True)
-
-                    elif seq_type(motif) == 'Nucleotide':
-                        for id in id_list:
-                            if id.startswith("cds_"):
-                                seq = SequenceCodant.objects.get(id=id).sequence
-                                if similarite(seq, motif, ratio)==False:
-                                    q = q.exclude(id=id)
-                                id_list = q.values_list('id', flat=True)
+                    q2 = SequenceCodant.objects.all().filter(sequence__contains=motif)
+                    id_list2 = q2.values_list('id', flat=True)
+                    id_list = [value for value in id_list if value in id_list2]
 
                 shown_id = [remove_header(id) for id in id_list]
                 shown_id = list(set(shown_id))
 
-                context = {**form.cleaned_data, **{'id_results' : id_list}, **{'shown_id' : shown_id}, **{'criterias':criterias}, **{'people':people}}
+                results = []
+                for i in range(len(id_list)):
+                    p = CodantInfo.objects.get(id=id_list[i])
+                    results.append({'id' : id_list[i], 'espece':p.espece, 'start': p.start, 'stop': p.stop})
+
+                context = {**form.cleaned_data, **{'id_results' : results }, **{'criterias':criterias}, **{'people':people}}
+                print(context)
                 template = loader.get_template('genomApp/resultat_gene_transcrit.html')
                 return HttpResponse(template.render(context, request))
             
@@ -692,6 +685,17 @@ def idGenomeAutocomplete(request):
     suggestions_list = [{"label": i} for i in set(id)]
     return JsonResponse(suggestions_list, safe=False)
 
+def idProteineAutocomplete(request):
+    """Fonction qui permet l'autocomplétion dans les formulaires pour les identifiants de protéines
+
+    :parameter request:
+    :return: une liste avec les identifiants de protéines possibles en fonction des caractères entrés dans le formulaire
+    """
+    query = request.GET.get("term", "")
+    suggestions = CodantInfo.objects.filter(id__icontains=query)
+    id =  [remove_header(obj.id) for obj in suggestions]
+    suggestions_list = [{"label": i} for i in set(id)]
+    return JsonResponse(suggestions_list, safe=False)
 
 def speciesProteineAutocomplete(request):
     """Fonction qui permet l'autocomplétion dans les formulaires pour les noms d'espèces
@@ -821,3 +825,150 @@ def view_annotation(request, result_id):
     
     return HttpResponse(template.render(context, request))
 
+#Forum
+def displayComment(request, id):
+    comment = Commentaire.objects.filter(id_forum='cds_'+id).values_list('id', flat=True)
+    d = {}
+
+    for id_c in comment:
+       c = Commentaire.objects.get(id=id_c)
+       text = c.text
+       auteur_lastName = Member.objects.get(email=c.auteur).lastName
+       auteur_firstName = Member.objects.get(email=c.auteur).firstName
+       date = c.date
+       date_update = c.date_update
+
+       d[id_c] = {'auteur':auteur_firstName+" "+auteur_lastName, 'date':date, 'text' : text, 'date_update':date_update}
+
+    return d
+
+def forum(request, id):
+    people = get_users()
+    d = displayComment(request, id)
+
+    if request.method == 'POST':
+        form = AddCommentForm(request.POST)
+        if form.is_valid():
+            auteur = form.cleaned_data['auteur']
+            date = form.cleaned_data['date']
+            id_forum = form.cleaned_data['forum']
+            forum_header = "cds_"+str(id_forum)
+            text = form.cleaned_data['text']
+            if not Forum.objects.filter(id=forum_header): #le forum existe déjà
+                c = CodantInfo.objects.get(id=forum_header)
+                f = Forum(id=c, id_chromosome=Genome.objects.get(id=c.chromosome), date=date, auteur=Member.objects.get(email = auteur))
+                f.save()
+
+            c = Commentaire(id_forum=Forum.objects.get(id=forum_header), date=date, text=text, auteur=Member.objects.get(email = auteur))
+            c.save()
+
+            d = displayComment(request, id)
+
+    context = {'people' : people, 'id':id, 'comment':d}
+    template = loader.get_template('genomApp/forum.html')
+    return HttpResponse(template.render(context, request))
+
+def deleteComment(request, id_forum, id_com):
+    commentToDelete = Commentaire.objects.get(id=id_com)
+    commentToDelete.delete()
+    return redirect('genomApp:forum', id_forum)
+
+def updateComment(request, id_forum, id_com):
+    people = get_users()
+    d = displayComment(request, id_forum)
+    commentToModify = Commentaire.objects.get(id=id_com)
+
+    if request.method == 'POST':
+        form = UpdateCommentForm(request.POST)
+        if form.is_valid():
+            updated_date = form.cleaned_data['updated_date']
+            updated_text = form.cleaned_data['updated_text']
+
+            commentToModify = Commentaire.objects.get(id=id_com)
+            commentToModify.text = updated_text
+            commentToModify.date_update = updated_date
+            commentToModify.save()
+            return redirect('genomApp:forum', id_forum)
+
+
+    context = {'people': people, 'id_forum': id_forum, 'id_com': int(id_com), 'comment':d}
+    template = loader.get_template('genomApp/forum_update_comment.html')
+    return HttpResponse(template.render(context, request))
+    #return redirect('genomApp:updateComment', id_forum, id_com)
+
+
+def accueil_forum(request):
+    people = get_users()
+    id_forum = Forum.objects.all().values_list('id', flat=True) #on récupère tous les forums qui existent
+    d = {}
+    
+    id_prot = CodantInfo.objects.all().values_list('id', flat=True)
+    id_prot = [remove_header(id) for id in id_prot]
+
+    for id in id_forum:
+        f = Forum.objects.get(id=id)
+        id_chr = f.id_chromosome
+        auteur_lastName = Member.objects.get(email=f.auteur).lastName
+        auteur_firstName = Member.objects.get(email=f.auteur).firstName
+        date = f.date
+        nb_comment = (Commentaire.objects.filter(id_forum=id)).count()
+
+        if nb_comment == 0:
+            f.delete()
+
+        else :
+        
+            if id_chr not in d: #alors on l'ajoute
+                d[id_chr] = {}
+                
+            d[id_chr][remove_header(id)] = {'auteur':auteur_firstName+" "+auteur_lastName, 'date':date, 'nb_comment' : nb_comment}
+
+    if request.method == 'POST':
+        form = SearchForumForm(request.POST)
+        if form.is_valid():
+            id_prot = form.cleaned_data["id_prot"]
+            P = CodantInfo.objects.filter(id='cds_'+id_prot).values_list('id', flat=True)
+            if (not P) == False :
+                return redirect ('genomApp:forum', id_prot)
+            else :
+                context = {'people' : people, 'd' : d, 'id_prot':id_prot, 'error':"N"}
+                
+    else :
+        context = {'people' : people, 'd' : d, 'id_prot':id_prot}
+
+    print(context)
+    template = loader.get_template('genomApp/accueil_forum_genome.html')
+    return HttpResponse(template.render(context, request))
+
+def email_envoi(request):
+    people = get_users()
+    template = loader.get_template('genomApp/email_envoi.html')
+    return HttpResponse(template.render({'people':people}, request))
+
+def contact(request):
+    people = get_users()
+
+    if request.method == 'POST':
+        form = ContactUsForm(request.POST)
+        print(form.errors)
+            
+        if form.is_valid():
+            sujet = form.cleaned_data['sujet']
+            message = form.cleaned_data['message']
+            auteur = form.cleaned_data['auteur']
+            print("a",auteur)
+            auteur_nom = form.cleaned_data['auteur_nom']
+            messageToSend = message+"\n\n"+"Envoyé par "+auteur_nom+" ("+auteur+")."
+            
+            destinataires = Member.objects.filter(user_type=4).values_list('email', flat=True)
+            
+            send_mail(sujet, messageToSend, auteur, destinataires, fail_silently=False)
+            
+            template = loader.get_template('genomApp/email_envoi.html')
+            return redirect('genomApp:email_envoi')
+
+    else :
+        ContactUsForm()
+
+    template = loader.get_template('genomApp/formulaire_contact.html')
+    return HttpResponse(template.render({'people':people}, request))

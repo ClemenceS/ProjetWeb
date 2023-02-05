@@ -142,8 +142,19 @@ class Forum(models.Model):
         return f'{self.id}'
 
 class Commentaire(models.Model):
+    """Classe pour les commentaires :
+        - identifiant du forum (correspond à un id de protéine)
+        - texte du commentaire
+        - auteur du commentaire
+        - date de création du commentaire
+        - date de modification du commentaire
+    """
     id_forum = models.ForeignKey('Forum', on_delete=models.RESTRICT, related_name='id_forum', null=True)
     text = models.TextField(blank=True, null=True)
     auteur = models.ForeignKey('member.Member', on_delete=models.RESTRICT, related_name='auteur_commentaire')
     date = models.DateField()
     date_update = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        """String for representing the Model object."""
+        return f'{self.id}'
