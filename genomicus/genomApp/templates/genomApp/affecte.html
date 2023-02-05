@@ -83,7 +83,7 @@
             {% if people.connecte %}
             <a role="button" class="btn btn-outline-secondary" href="{% url 'member:updateInformation' %}" style="margin-right: 10px;">Bienvenue 
                 {{ people.who }}</a>
-            <a role="button" class="btn btn-outline-secondary" href="{% url 'member:deconnexion' %}">Deconnexion</a>
+            <a role="button" class="btn btn-outline-secondary" href="{% url 'member:deconnexion' %}">Déconnexion</a>
             {% else %}
             <a role="button" class="btn btn-outline-secondary" href="{% url 'member:connexion' %}">Connexion</a>
             {% endif %}
@@ -128,10 +128,9 @@
 
 {% else %}
 
-<div class="container-fluid">
-    <div class="row justify-content-md-center">
-        Vous n'avez pas accès à cette page !!!
-    </div>
+<div class="mt-5"></div>
+<div class="container-fluid" style="text-align: center;">
+        <img src="{% static 'erreur.jpg' %}" alt="erreur" width="1000">
 </div>
 
 {% endif %}

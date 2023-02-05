@@ -558,11 +558,11 @@ def resultatsFormulaireProteineGene(request):
 
                 results = []
                 for i in range(len(id_list)):
-                    p = CodantInfo.objects.get(id=id_list[i])
-                    results.append({'id' : id_list[i], 'espece':p.espece, 'start': p.start, 'stop': p.stop})
+                    if id_list[i].startswith("cds_"):
+                        p = CodantInfo.objects.get(id=id_list[i])
+                        results.append({'id' : remove_header(id_list[i]), 'espece':p.espece, 'start':p.start, 'stop':p.stop})
 
-                context = {**form.cleaned_data, **{'id_results' : results }, **{'criterias':criterias}, **{'people':people}}
-                print(context)
+                context = {**form.cleaned_data, **{'id_results' : results }, **{'criterias':criterias}, **{'people':people}, **{'results':results}}
                 template = loader.get_template('genomApp/resultat_gene_transcrit.html')
                 return HttpResponse(template.render(context, request))
             

@@ -27,3 +27,32 @@ details summary>* {
     display: inline;
 }
 /*https://css-tricks.com/two-issues-styling-the-details-element-and-how-to-solve-them/*/
+
+.nav-tabs .nav-item .nav-link {
+    background-color: #41b3959d;
+    color: #FFF;
+}
+
+.nav-tabs .nav-item .nav-link.active {
+    background-color: #FFF;
+    color: #41b394;
+}
+/*https://stackoverflow.com/questions/51701512/how-to-change-the-color-of-active-tab-in-bootstrap*/
+
+.form-check-input:checked {
+    background-color: #41b394;
+}
+
+input[type='checkbox']:checked {
+    accent-color: #41b394;
+}
+
+
+a {
+    color: #41b394;
+}
+
+a:hover {
+    color: #3b7a69;
+}
+/*https://www.w3schools.com/css/css_link.asp*/

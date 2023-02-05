@@ -83,7 +83,7 @@
             {% if people.connecte %}
             <a role="button" class="btn btn-outline-secondary" href="{% url 'member:updateInformation' %}" style="margin-right: 10px;">Bienvenue 
                 {{ people.who }}</a>
-            <a role="button" class="btn btn-outline-secondary" href="{% url 'member:deconnexion' %}">Deconnexion</a>
+            <a role="button" class="btn btn-outline-secondary" href="{% url 'member:deconnexion' %}">Déconnexion</a>
             {% else %}
             <a role="button" class="btn btn-outline-secondary" href="{% url 'member:connexion' %}">Connexion</a>
             {% endif %}
@@ -137,7 +137,7 @@
                             <td>{{id.gc_rate}}</td>
                         </tr>
                         {% endfor %}
-                        </tr>}}
+                        </tr>
 
                         </tr>
                     </tbody>

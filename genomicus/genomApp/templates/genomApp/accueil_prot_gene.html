@@ -83,7 +83,7 @@
             {% if people.connecte %}
             <a role="button" class="btn btn-outline-secondary" href="{% url 'member:updateInformation' %}" style="margin-right: 10px;">Bienvenue 
                 {{ people.who }}</a>
-            <a role="button" class="btn btn-outline-secondary" href="{% url 'member:deconnexion' %}">Deconnexion</a>
+            <a role="button" class="btn btn-outline-secondary" href="{% url 'member:deconnexion' %}">Déconnexion</a>
             {% else %}
             <a role="button" class="btn btn-outline-secondary" href="{% url 'member:connexion' %}">Connexion</a>
             {% endif %}
@@ -98,7 +98,7 @@
     <div class="h3 pb-2 mb-4 border-bottom border-dark">Formulaire</div>
     <div class="row">
 
-        <ul class="nav nav-pills">
+        <ul class="nav nav-tabs">
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'genomApp:formulaire_genome' %}">Génome</a>
             </li>
@@ -170,7 +170,7 @@
             </p>
             <p></p>
             <div class="my-3 d-flex justify-content-end">
-                <input type="submit" class="btn btn-outline-secondary" value="Rechercher">
+                <input type="submit" class="btn btn-outline-success" value="Rechercher">
             </div>
 
         </form>
