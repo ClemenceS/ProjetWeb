@@ -1,0 +1,12 @@
+[
+    {
+        "pk": "ASM666v1",
+        "model": "genomApp.Genome",
+        "fields": {
+            "taille": 5528445,
+            "phaseLecture": 1,
+            "espece": "Escherichia_coli_o157_h7_str_edl933",
+            "gc_rate": 50.38
+        }
+    }
+]

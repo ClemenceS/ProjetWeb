@@ -124,3 +124,26 @@ class SequenceCodant(SequenceBase):
     def __str__(self):
         """String for representing the Model object."""
         return f'{self.id}'
+
+class Forum(models.Model):
+    """Classe pour les forums :
+        - identifiant du forum (correspond à un id de protéine)
+        - identifiant du chromosome
+        - auteur du forum
+        - date de création
+    """
+    id = models.ForeignKey('CodantInfo', on_delete=models.RESTRICT, primary_key=True)
+    id_chromosome = models.ForeignKey('Genome', on_delete=models.RESTRICT)
+    auteur = models.ForeignKey('member.Member', on_delete=models.RESTRICT, related_name='auteur_forum')
+    date = models.DateField()
+
+    def __str__(self):
+        """String for representing the Model object."""
+        return f'{self.id}'
+
+class Commentaire(models.Model):
+    id_forum = models.ForeignKey('Forum', on_delete=models.RESTRICT, related_name='id_forum', null=True)
+    text = models.TextField(blank=True, null=True)
+    auteur = models.ForeignKey('member.Member', on_delete=models.RESTRICT, related_name='auteur_commentaire')
+    date = models.DateField()
+    date_update = models.DateField(blank=True, null=True)

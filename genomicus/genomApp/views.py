@@ -25,15 +25,16 @@ def remove_header(id):
     return id[4:]
 
 
-def similarite(seq, motif, ratio):
-    """Fonction pour vérifier que le pourcnetage de similarité entre motifs et séquences est supérieur à celui en paramètre
-
-    :parameter: seq, motif, ratio
-    :return: True ou False
-    """
-    if fuzz.partial_ratio(seq, motif) >= ratio :
-        return True
-    return False
+def similarite(sequence, motif, r):
+	best_ratio = 0
+	for i in range(len(sequence) - len(motif) + 1):
+		sub_sequence = sequence[i:i+len(motif)]
+		ratio = fuzz.partial_ratio(motif, sub_sequence)
+		if ratio > best_ratio:
+			best_ratio = ratio
+	if best_ratio >= r:
+		return True
+	return False
 
 
 def seq_type(sequence):
@@ -413,14 +414,7 @@ def valider(request):
     template = loader.get_template('genomApp/valider.html')
     return HttpResponse(template.render(context, request))
 
-
 def resultatsFormulaireGenome(request):
-    """Fonction view pour la page de formumaire génome et pour la page de résultats
-
-    :parameter request:
-    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
-    et différents résultats en fonction de la recherche
-    """
     people = get_users()
 
     if request.method == 'POST':
@@ -479,16 +473,11 @@ def resultatsFormulaireGenome(request):
                     criterias.append({'key': 'Similarité (%)', 'value':ratio})
                     for id in q:
                         seq = SequenceGenome.objects.get(id=id).sequence
-                        if similarite(seq, motif, ratio):
-                            id_list.append(seq)
+                        if similarite(seq, motif, ratio)==False:
+                            q = q.exclude(id=id)
+                    id_list = q.values_list('id', flat=True)
 
-                results = []
-                for i in range(len(id_list)):
-                    p = Genome.objects.get(id=id_list[i])
-                    results.append({'id' : id_list[i], 'taille':p.taille, 'espece':p.espece, 'gc_rate':p.gc_rate})
-
-
-                context = {**form.cleaned_data, **{'id_results' : results }, **{'criterias':criterias}, **{'people':people}}
+                context = {**form.cleaned_data, **{'id_results' : id_list}, **{'criterias':criterias}, **{'people':people}}
                 #print(context)
                 
                 template = loader.get_template('genomApp/resultat_genome.html')
@@ -504,14 +493,7 @@ def resultatsFormulaireGenome(request):
     template = loader.get_template('genomApp/accueil_genome.html')
     return HttpResponse(template.render({'form':form, 'people':people}, request))
 
-
 def resultatsFormulaireProteineGene(request):
-    """Fonction view pour la page de formumaire protéine/CDS et pour la page de résultats
-
-    :parameter request:
-    :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
-    et différents résultats en fonction de la recherche
-    """
     people = get_users()
 
     if request.method == 'POST':
@@ -572,32 +554,29 @@ def resultatsFormulaireProteineGene(request):
                         for id in id_list:
                             if id.startswith("pep_"):
                                 seq = SequenceCodant.objects.get(id=id).sequence
-                                if similarite(seq, motif, ratio):
-                                    id_list.append(seq)
+                                if similarite(seq, motif, ratio)==False:
+                                    q = q.exclude(id=id)
+                                id_list = q.values_list('id', flat=True)
 
                     elif seq_type(motif) == 'Nucleotide':
                         for id in id_list:
                             if id.startswith("cds_"):
                                 seq = SequenceCodant.objects.get(id=id).sequence
-                                if similarite(seq, motif, ratio):
-                                    id_list.append(seq)
+                                if similarite(seq, motif, ratio)==False:
+                                    q = q.exclude(id=id)
+                                id_list = q.values_list('id', flat=True)
 
                 shown_id = [remove_header(id) for id in id_list]
                 shown_id = list(set(shown_id))
 
-                results = []
-                for i in range(len(id_list)):
-                    p = CodantInfo.objects.get(id=id_list[i])
-                    results.append({'id' : remove_header(id_list[i]), 'espece':p.espece, 'start':p.start, 'stop':p.stop})
-
-                context = {**form.cleaned_data, **{'id_results' : id_list}, **{'shown_id' : shown_id}, **{'criterias':criterias}, **{'people':people}, **{'results':results}}
+                context = {**form.cleaned_data, **{'id_results' : id_list}, **{'shown_id' : shown_id}, **{'criterias':criterias}, **{'people':people}}
                 template = loader.get_template('genomApp/resultat_gene_transcrit.html')
                 return HttpResponse(template.render(context, request))
             
             else :
                 query = id+" "+id_chr+" "+espece
                 data = {'term' : query}
-                response = requests.get("https://www.ncbi.nlm.nih.gov/all/search", params=data)
+                response = requests.get("https://www.ncbi.nlm.nih.gov/search/all", params=data)
                 return HttpResponseRedirect(response.url)
 
     else:

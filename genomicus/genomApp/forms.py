@@ -31,3 +31,19 @@ class SearchAnnotationForm(forms.Form):
 
 class SearchAnnotation(forms.Form):
     ID = forms.CharField(label='ID', max_length=100, required=False)
+
+class AddCommentForm(forms.Form):
+    text = forms.CharField(label='text', max_length=1000, required=False)
+    auteur = forms.CharField(label='auteur', max_length=100, required=False)
+    date = forms.DateField(label='date', required=False)
+    forum = forms.CharField(label='id_forum', max_length=100, required=False)
+
+class SearchForumForm(forms.Form):
+    id_prot = forms.CharField(label='id_prot', max_length=100, required=False)
+    id_chr = forms.CharField(label='id_chr', max_length=100, required=False)
+
+class UpdateCommentForm(forms.Form):
+    updated_text = forms.CharField(label='updated_text', max_length=1000, required=False)
+    updated_date = forms.DateField(label='updated_date', required=False)
+    auteur = forms.CharField(label='auteur_up', max_length=100, required=False)
+    forum = forms.CharField(label='id_forum_up', max_length=100, required=False)
