@@ -19,8 +19,8 @@ from member.models import Member
 def remove_header(id):
     """Fonction pour supprimer l'header des identifiants du codant
 
-    :parameter: id
-    :return: id sans header
+    :parameter id:
+    :return id: sans header
     """
     return id[4:]
 
@@ -40,6 +40,7 @@ def remove_header(id):
 def seq_type(sequence):
     """Fonction pour déterminer le type de séquence (nucléotidique ou peptidique)
 
+    :parameter sequence:
     :return: type de séquence
     """
     amino_acid_regex = re.compile("^[ARNDCEQGHILKMFPSTWYV]+$")
@@ -57,7 +58,7 @@ def get_users():
             son prénom-nom et son email
         * si aucun utilisateur connecté : rang de profile : 0 et connecte=False
 
-    :return: un dictionnaire
+    :return: un dictionnaire d'informations
     """
     m = Member.objects.filter(connecte=True)
     if len(m) != 0:
@@ -72,7 +73,7 @@ def get_users():
 def get_annotations(user):
     """Fonction qui renvoie la liste des identifiants qu'un annotateur peut annoter
 
-    :parameter: user 
+    :parameter user: 
     :return: un tuple composé de deux listes 
     """
     tab = list(Annotation.objects.filter(annotateur = Member.objects.get(email = user['email'])))
@@ -89,8 +90,9 @@ def allowed_to_annotate(user, id_prot):
         * True si l'utilisateur est autorisé à annoter la protéine 
         * False sinon
 
-    :parameter: user, id_prot
-    :return: True ou False
+    :parameter user:
+    :parameter id_prot:
+    :return boolean: 
     """
     tab = list(Annotation.objects.filter(annotateur = Member.objects.get(email = user['email'])))
     res=[]
@@ -103,7 +105,7 @@ def allowed_to_annotate(user, id_prot):
 def get_annotations_validateur(user):
     """Fonction qui retourne la liste des annotations dont l'utilisateur est validateur
 
-    :parameter: user
+    :parameter user:
     :return: liste des identifiants
     """
     tab = list(Annotation.objects.filter(validateur = Member.objects.get(email = user['email'])))
@@ -117,8 +119,8 @@ def get_annotations_validateur(user):
 def get_names(user):
     """Fonction qui retourne le prénom et le nom d'un utilisateur
 
-    :parameter: user
-    :return: prénom et nom
+    :parameter user:
+    :return string: prénom et nom
     """
     return f'{user.firstName} {user.lastName}'
 
@@ -126,7 +128,7 @@ def get_names(user):
 def get_names_from_email(email):
     """Fonction qui retourne le prénom et le nom d'un utilisateur depuis son email
 
-    :parameter: email
+    :parameter email:
     :return: prénom et nom
     """
     return get_names(Member.objects.get(email=email))
@@ -144,7 +146,7 @@ def get_espece(id):
 def validate_annotations(to_validate):
     """Fonction qui valide les annotations en mettant à jour la table CodantInfo et en supprimant les annotations correspondantes.
 
-    :parameter: to_validate 
+    :parameter to_validate: 
     """
     for v in to_validate:
         cds = CodantInfo.objects.get(id='cds_'+v)
@@ -169,7 +171,7 @@ def validate_annotations(to_validate):
 def annotateurs_from_validateur(validateur):
     """Fonction qui retourne les annotateurs (et leurs annotations éventuelles) d'un validateur
 
-    :parameter: validateur 
+    :parameter validateur: 
     :return: une liste contenant les différentes informations sur les annotateurs et leurs annotations éventuelles
     """
     tab = list(Annotation.objects.filter(validateur = Member.objects.get(email = validateur['email'])))
@@ -203,7 +205,7 @@ def annotateurs_from_validateur(validateur):
 def protein_not_being_annotated(validateur):
     """Fonction qui retourne les identifiants des protéines qui n'ont pas été annotés
 
-    :parameter: validateur
+    :parameter validateur:
     :return: une liste contenant les identifiants des protéines
     """
     temp = list(CodantInfo.objects.exclude(id__in=Annotation.objects.values('id')).filter(codant_type = 1).values('id'))
@@ -222,7 +224,7 @@ def get_annotateurs():
 def get_dico_annotateurs(annotateurs):
     """Fonction qui retourne les informations concernant les annotateurs
 
-    :parameter: annotateurs
+    :parameter annotateurs:
     :return: liste avec les informations sur les annotateurs : email, prénom et nom
     """
     tab = []
@@ -234,7 +236,7 @@ def get_dico_annotateurs(annotateurs):
 def get_current_annotateur(result_id):
     """Fonction qui retourne l'annotateur actuel pour une protéine s'il existe
 
-    :parameter: result_id
+    :parameter result_id:
     :return: prénom et nom de l'annotateur s'il existe
     """
     try:
@@ -264,7 +266,7 @@ def accueil_validateur(request):
 
     :parameter request:
     :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
-    et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
+        et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
     """
     people = get_users()
     template = loader.get_template('genomApp/validation.html')
@@ -276,7 +278,7 @@ def accueil_annotateur(request):
 
     :parameter request:
     :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
-    et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
+        et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
     """
     people = get_users()
 
@@ -311,11 +313,11 @@ def seq_deja_affectees(request):
 
     :parameter request:
     :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
-    et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
+        et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
     """
     people = get_users()
     annotateurs = annotateurs_from_validateur(people)
-    print(annotateurs)
+    #print(annotateurs)
     template = loader.get_template('genomApp/affecte.html')
     return HttpResponse(template.render({'people':people, 'annotateurs':annotateurs}, request))
 
@@ -325,7 +327,7 @@ def recherche_affectation_annotation(request):
 
     :parameter request:
     :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
-    et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
+        et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
     """
     people = get_users()
 
@@ -354,7 +356,7 @@ def affectation_annotation(request, result_id):
 
     :parameter request, result_id:
     :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
-    et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
+        et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
     """
     people = get_users()
     if request.method == 'POST':
@@ -384,7 +386,7 @@ def valider(request):
 
     :parameter request:
     :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
-    et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
+        et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
     """
     people = get_users()
 
@@ -392,7 +394,7 @@ def valider(request):
         to_validate = request.POST.getlist('to_validate')
         #print(request.POST.getlist('to_validate'))
         validate_annotations(to_validate)
-        print(request.POST.getlist('to_validate'))
+        #print(request.POST.getlist('to_validate'))
 
     annotations= get_annotations_validateur(people)
 
@@ -581,9 +583,10 @@ def resultatsFormulaireProteineGene(request):
 def informationsRelativesProteineGene(request, result_id):
     """Fonction view pour la page d'informations relatives aux protéines/CDS
 
-    :parameter request, result_id:
+    :parameter request:
+    :parameter result_id:
     :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
-    et la page affiche les résultats en fonction de l'identifiant choisi lors des résultats au formulaire
+        et la page affiche les résultats en fonction de l'identifiant choisi lors des résultats au formulaire
     """
     people = get_users()
 
@@ -622,9 +625,10 @@ def informationsRelativesProteineGene(request, result_id):
 def visualisationGenome(request, result_id):
     """Fonction view pour la page de visualisation des génomes
 
-    :parameter request, result_id:
+    :parameter request:
+    :parameter result_id:
     :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
-    et la page affiche les résultats en fonction de l'identifiant de l'espèce choisi lors des résultats au formulaire
+        et la page affiche les résultats en fonction de l'identifiant de l'espèce choisi lors des résultats au formulaire
     """
     people = get_users()
 
@@ -643,11 +647,12 @@ def visualisationGenome(request, result_id):
 def blastRedirection(request, result_id):
     """Fonction view pour la redirection vers blast
 
-    :parameter request, result_id:
+    :parameter request:
+    :parameter result_id:
     :return HttpResponseRedirect: redirige vers le site BLAST (blastn ou blastp)
     """
     type = CodantInfo.objects.filter(id=result_id).values_list('codant_type', flat=True)[0]
-    print(type)
+    #print(type)
     if type == 1 :
         program = 'blastn'
     else :
@@ -720,16 +725,17 @@ def geneProteineAutocomplete(request):
     suggestions = set(list(CodantInfo.objects.filter(gene__icontains=query)))
     gene =  [obj.gene for obj in suggestions]
     suggestions_list = [{"label": g} for g in set(gene)]
-    print(suggestions_list)
+    #print(suggestions_list)
     return JsonResponse(suggestions_list, safe=False)
 
 
 def protein_annotation(request, result_id):
     """Fonction qui permet la modification d'une annotation
 
-    :parameter request, result_id:
+    :parameter request:
+    :parameter result_id:
     :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
-    et la page affichée dépend de l'identifiant de l'annotation 
+        et la page affichée dépend de l'identifiant de l'annotation 
     """
     people = get_users()
 
@@ -785,9 +791,10 @@ def protein_annotation(request, result_id):
 def view_annotation(request, result_id):
     """Fonction qui permet la visualisation d'une annotation et des informations relatives à une protéine
 
-    :parameter request, result_id:
+    :parameter request:
+    :parameter result_id:
     :return HttpResponse: différentes barre de navigation en fonction du rôle de l'utilisateur 
-    et la page affichée dépend de l'identifiant de l'annotation 
+        et la page affichée dépend de l'identifiant de l'annotation 
     """
     people = get_users()
     #Function to check if the user is allowed to annotate
@@ -936,7 +943,7 @@ def accueil_forum(request):
     else :
         context = {'people' : people, 'd' : d, 'id_prot':id_prot}
 
-    print(context)
+    #print(context)
     template = loader.get_template('genomApp/accueil_forum_genome.html')
     return HttpResponse(template.render(context, request))
 
@@ -950,13 +957,13 @@ def contact(request):
 
     if request.method == 'POST':
         form = ContactUsForm(request.POST)
-        print(form.errors)
+        #print(form.errors)
             
         if form.is_valid():
             sujet = form.cleaned_data['sujet']
             message = form.cleaned_data['message']
             auteur = form.cleaned_data['auteur']
-            print("a",auteur)
+            #print("a",auteur)
             auteur_nom = form.cleaned_data['auteur_nom']
             messageToSend = message+"\n\n"+"Envoyé par "+auteur_nom+" ("+auteur+")."
             

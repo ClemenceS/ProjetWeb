@@ -118,54 +118,63 @@
                                     {{ form.phone }}
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="row">
-                                <div class="col">
-
-                                    <div class="mt-3">
-                                        <label for="input_pwd" class="form-label">Mot de Passe<text class=text-danger>*
-                                            </text>: </label>
-                                        <!-- <input type="password" class="form-control" id="input_pwd"> -->
-                                        {{ form.password1 }}
-                                    </div>
-                                </div>
-                                <div class="col">
-
-                                    <div class="mt-3">
-                                        <label for="input_pwd2" class="form-label">Mot de passe une nouvelle fois<text
-                                                class=text-danger>* </text>: </label>
-                                        <!-- <input type="password" class="form-control" id="input_pwd2"> -->
-                                        {{ form.password2 }}
-                                    </div>
-                                </div>
-
-
-                                {% if form.errors %}
-                                <center>
-                                    <text class=text-danger> Compte non crée : <br> {{ form.errors }}
-                                    </text>
-                                </center>
-                                {% endif %}
-                                <center>
-                                    <text class=text-danger>
-                                        {{ messageError }} </text>
-                                </center>
-
+                        <div class="row">
+                            <div class="col">
                                 <div class="mt-3">
-                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                        <button type="submit" class="btn btn-outline-dark">S'inscrire</button>
-                                    </div>
+                                    <label for="input_pwd" class="form-label">Mot de Passe<text class=text-danger>*
+                                        </text>: </label>
+                                    <!-- <input type="password" class="form-control" id="input_pwd"> -->
+                                    {{ form.password1 }}
                                 </div>
-
+                            </div>
+                            <div class="col">
                                 <div class="mt-3">
-                                    <text class=fonce>Vous possédez déjà un compte ? </text> <a class="button"
-                                        style="color:black" href="{% url 'member:connexion' %}">Identifiez-vous</a>
+                                    <label for="input_pwd2" class="form-label">Mot de passe une nouvelle fois<text
+                                            class=text-danger>* </text>: </label>
+                                    <!-- <input type="password" class="form-control" id="input_pwd2"> -->
+                                    {{ form.password2 }}
                                 </div>
-
-
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="mt-3">
+                                    <label for="input_infoPlus" class="form-label">Informations supplémentaires :
+                                    </label> <br>
+                                    {{ form.infoPlus }}
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if form.errors %}
+                        <center>
+                            <text class=text-danger> Compte non crée : <br> {{ form.errors }}
+                            </text>
+                        </center>
+                        {% endif %}
+                        <center>
+                            <text class=text-danger>
+                                {{ messageError }} </text>
+                        </center>
+
+                        <div class="mt-3">
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <button type="submit" class="btn btn-outline-dark">S'inscrire</button>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <text class=fonce>Vous possédez déjà un compte ? </text> <a class="button"
+                                style="color:black" href="{% url 'member:connexion' %}">Identifiez-vous</a>
+                        </div>
+
+
                     </div>
+                </div>
+            </div>
     </form>
 </div>
 </div>

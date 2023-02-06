@@ -15,7 +15,7 @@ jobs:
         run: pip install sphinx sphinx_rtd_theme Django==4.1.5 fuzzywuzzy==0.18.0 pyfaidx==0.7.1
       - name: Sphinx Build
         run: |
-          sphinx-apidoc -o genomicus/docs/source/ genomicus/
+          sphinx-apidoc --force -o genomicus/docs/source/ genomicus/
           sphinx-build genomicus/docs/source/ _build
 
       - name: Deploy

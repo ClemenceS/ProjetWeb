@@ -1,15 +1,11 @@
 from django.contrib.auth import login, authenticate, logout
-
 from django.http import HttpResponse
-
 from django.template import loader
-
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 
 from . import forms
-
 from .models import Member
-
 
 # Create your views here.
 
@@ -36,6 +32,9 @@ def inscription(request):
             firstName  = form.cleaned_data['firstName']
             lastName   = form.cleaned_data['lastName']
             phone      = form.cleaned_data['phone']
+            infoPlus   = form.cleaned_data['infoPlus']
+
+            print(infoPlus)
 
             if Member.objects.filter(email=email).exists():
                 message = ("Cette adresse email ne peut pas être utilisée pour s'inscrire ! ")
@@ -54,9 +53,17 @@ def inscription(request):
                     phone
                 )
 
+                sujetMail = 'Nouvelle inscription sur Genomicus !'
+                auteur = 'Nouvel utilisateur : ' + firstName + ' ' + lastName + ' (email : ' + email + ')'
+                messageToSend = auteur + '\n\n' + 'Informations supplémentaires : ' + infoPlus
+            
+                destinataires = Member.objects.filter(user_type=4).values_list('email', flat=True)
+            
+                send_mail(sujetMail, messageToSend, email, destinataires, fail_silently=False)
+
                 message = 'Votre compte a bien été crée ! Connectez-vous pour profiter encore plus de votre visite sur notre site !!'
                 templateA = loader.get_template('genomApp/accueil.html')
-                return HttpResponse(templateA.render({'form':form, 'people':{"profile":0, 'connecte':False}, 'messageAccueil': message}, request))
+                return HttpResponse(templateA.render({'form':form, 'people':{"profile":0, 'connecte':False}, 'messageAccueilBienInscritOuMajCompte': message}, request))
 
         
     template = loader.get_template('member/inscription.html')
@@ -189,6 +196,6 @@ def updateInformation(request):
 
                 message = 'Votre compte a bien été mis à jour !'
                 templateA = loader.get_template('genomApp/accueil.html')
-                return HttpResponse(templateA.render({'form':form, 'people':people, 'messageAccueil': message}, request))
+                return HttpResponse(templateA.render({'form':form, 'people':people, 'messageAccueilBienInscritOuMajCompte': message}, request))
 
     return HttpResponse(template.render({'form':form, 'people':people, 'email':email}, request))

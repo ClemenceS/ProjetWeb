@@ -13,7 +13,8 @@
 <!--<link type="text/css" href="{% static 'mise_en_page.css' %}" rel="stylesheet">-->
 <link rel="stylesheet" href="/static/mise_en_page.css?{% now " U" %}" />
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+    integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -72,16 +73,18 @@
             </ul>
 
             <div class="dropdown">
-                <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
+                <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
                     <i class="fas fa-question"></i>
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="{% url 'genomApp:contact' %}">Un problème ? Contactez nous.</a>
+                    <a class="dropdown-item" href="{% url 'genomApp:contact' %}">Un problème ? Contactez nous.</a>
                 </div>
             </div>
 
             {% if people.connecte %}
-            <a role="button" class="btn btn-outline-secondary" href="{% url 'member:updateInformation' %}" style="margin-right: 10px;">Bienvenue 
+            <a role="button" class="btn btn-outline-secondary" href="{% url 'member:updateInformation' %}"
+                style="margin-right: 10px;">Bienvenue
                 {{ people.who }}</a>
             <a role="button" class="btn btn-outline-secondary" href="{% url 'member:deconnexion' %}">Déconnexion</a>
             {% else %}
@@ -107,10 +110,14 @@
         </div>
         <div class="col-8 mt-3">
             <div class="mb-4">
-            <h4>
-                <p class="text-center titre2">Bienvenue à Genomicus !</p>
-            </h4>
-        </div>
+                <h4>
+                    <p class="text-center titre2">Bienvenue à Genomicus !</p>
+                </h4>
+            </div>
+
+            <center> <I>
+                    <font color="#0acd1e"> {{ messageAccueilBienInscritOuMajCompte }} </font> <br> <br> 
+                </I> </center>
 
             <h5 align="justify">
 
@@ -131,7 +138,7 @@
                 <a href="{% url 'genomApp:formulaire_genome' %}">
                     <img src="{% static 'genome_bouton.png' %}" width="250" />
                 </a>
-                
+
                 <a href="{% url 'genomApp:prot_gene' %}">
                     <img src="{% static 'prot_cds_button.png' %}" width="250" />
                 </a>
@@ -159,4 +166,5 @@ Lien du git avec le logo
 
 </nav>
 </footer>-->
+
 </html>
