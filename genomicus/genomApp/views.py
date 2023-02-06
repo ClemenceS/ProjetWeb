@@ -979,3 +979,8 @@ def contact(request):
 
     template = loader.get_template('genomApp/formulaire_contact.html')
     return HttpResponse(template.render({'people':people}, request))
+
+def qui_sommes_nous(request):
+    people = get_users()
+    template = loader.get_template('genomApp/qui_sommes_nous.html')
+    return HttpResponse(template.render({'people':people}, request))

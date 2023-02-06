@@ -6,6 +6,7 @@ urlpatterns = [
     path('', views.accueil, name="accueil"),
     path('recherche_genome/', views.resultatsFormulaireGenome, name="formulaire_genome"),
     path('contact/', views.contact, name="contact"),
+    path('qui_sommes_nous/', views.qui_sommes_nous, name="qui_sommes_nous"),
     path('email_envoye/', views.email_envoi, name="email_envoi"),
     path('forum/', views.accueil_forum, name="accueil_forum_genome"),
     path('forum/<id>/', views.forum, name="forum"),
