@@ -1,96 +1,9 @@
+{% extends 'genomApp/base.html' %}
 {% load static %}
-<!DOCTYPE html>
 
-<html lang="en">
+{% block title %} À Valider {% endblock %}
 
-<head>
-    <title>À Valider</title>
-    <link rel="icon" href="{% static 'logo.png' %}" type="image/png">
-</head>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<!--<link type="text/css" href="{% static 'mise_en_page.css' %}" rel="stylesheet">-->
-<link rel="stylesheet" href="/static/mise_en_page.css?{% now " U" %}" />
-
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-
-<!--Navigation bar-->
-<nav class="navbar navbar-expand-lg bg-success p-2 bg-opacity-25">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
-            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-            <a class="navbar-brand" href="{% url 'genomApp:accueil' %}">
-                <img src="{% static 'logo.png' %}" alt="logo" width="40" height="40" class="d-inline-block align-text">
-                GENOMICUS
-            </a>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'genomApp:accueil' %}">Accueil</a>
-                </li>
-
-                <!-- une personne de degre plus fort a accès aux pages 'inferieure'-->
-                {% if people.profile == 2 and people.connecte %} <!-- 2 : correspond à annotateur -->
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'genomApp:accueil_annotateur' %}">Annotation</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'genomApp:accueil_forum_genome' %}">Forum</a>
-                </li>
-                {% elif people.profile == 3 and people.connecte %} <!-- 3 : correspond à validateur-->
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'genomApp:accueil_annotateur' %}">Annotation</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'genomApp:accueil_validateur' %}">Validation</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'genomApp:accueil_forum_genome' %}">Forum</a>
-                </li>
-                {% elif people.profile == 4 and people.connecte %} <!-- 4 : correspond à admin-->
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'genomApp:accueil_annotateur' %}">Annotation</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'genomApp:accueil_validateur' %}">Validation</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="http://127.0.0.1:8000/admin/">Page Administrateur</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'genomApp:accueil_forum_genome' %}">Forum</a>
-                </li>
-                {% endif %}
-            </ul>
-
-            <div class="dropdown">
-                <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-right: 10px;">
-                    <i class="fas fa-question"></i>
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="{% url 'genomApp:contact' %}">Un problème ? Contactez nous.</a>
-                </div>
-            </div>
-
-            {% if people.connecte %}
-            <a role="button" class="btn btn-outline-secondary" href="{% url 'member:updateInformation' %}" style="margin-right: 10px;">Bienvenue 
-                {{ people.who }}</a>
-            <a role="button" class="btn btn-outline-secondary" href="{% url 'member:deconnexion' %}">Déconnexion</a>
-            {% else %}
-            <a role="button" class="btn btn-outline-secondary" href="{% url 'member:connexion' %}">Connexion</a>
-            {% endif %}
-        </div>
-    </div>
-</nav>
-<!--end of Navigation bar-->
+{% block content %}
 
 {% if people.profile >= 3 and people.connecte %}
 
@@ -183,4 +96,4 @@
 
 {% endif %}
 
-</html>
+{% endblock %}

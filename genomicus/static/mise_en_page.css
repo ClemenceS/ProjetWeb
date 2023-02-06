@@ -17,6 +17,7 @@
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
 }
+
 /*https://www.w3schools.com/howto/howto_css_arrows.asp*/
 
 .titre2 {
@@ -26,6 +27,7 @@
 details summary>* {
     display: inline;
 }
+
 /*https://css-tricks.com/two-issues-styling-the-details-element-and-how-to-solve-them/*/
 
 .nav-tabs .nav-item .nav-link {
@@ -37,6 +39,7 @@ details summary>* {
     background-color: #FFF;
     color: #41b394;
 }
+
 /*https://stackoverflow.com/questions/51701512/how-to-change-the-color-of-active-tab-in-bootstrap*/
 
 .form-check-input:checked {
@@ -55,6 +58,7 @@ a {
 a:hover {
     color: #3b7a69;
 }
+
 /*https://www.w3schools.com/css/css_link.asp*/
 
 .navbar_bottom {
@@ -75,4 +79,34 @@ body {
     bottom: 0;
     left: 0;
     right: 0
+}
+
+.creation-discussion-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 800px;
+    padding: 20px;
+    margin: 0 auto;
+    background-color: #f2f2f2;
+    border: 1px solid #cbc2c0;
+    border-radius: 5px;
+}
+
+.forum-box {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: helvetica;
+}
+
+.modification-box {
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #a1a2a2;
+    border: 1px solid #a1a2a2;
+    border-radius: 5px;
+    font-family: helvetica;
 }
