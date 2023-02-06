@@ -22,8 +22,7 @@
         </div>
     </form>
 
-    <div class="mt-5"></div>
-    <div class="h3 pb-2 mb-4 border-bottom" style="border-bottom: 2px solid #cbc2c0; width: 90%; margin:auto;">Déjà
+    <div class="h3 pb-2 mb-4 mt-5 border-bottom titre2" style="border-bottom: 2px solid #cbc2c0; width: 90%;">Déjà
         existants</div>
 
     <div class="my-3"></div>
@@ -36,13 +35,23 @@
         <table class="table table-sm table-light forum-box align-text">
             <thead>
                 {% for id_forum, info_forum2 in info_forum.items %}
+                <thead>
+                    <tr>
+                        <th class="text-center" scope="col">Identifiant de la protéine/CDS</th>
+                        <th class="text-center" scope="col">Créateur</th>
+                        <th class="text-center" scope="col">Date de création</th>
+                        <th class="text-center" scope="col">Nombre de commentaires</th>
+                    </tr>
+                </thead>
+                <tbody>
                 <tr>
-                    <th class="text-center" scope="col"> <a
-                            href="{% url 'genomApp:forum' id=id_forum %}"><big>{{id_forum}}</big></a></th>
-                    <th class="text-center" scope="col">Créateur : {{info_forum2.auteur}}</th>
-                    <th class="text-center" scope="col">Date de création : {{info_forum2.date}}</th>
-                    <th class="text-center" scope="col">Nombre de commentaires : {{info_forum2.nb_comment}}</th>
+                    <td class="text-center" scope="col"> <a
+                            href="{% url 'genomApp:forum' id=id_forum %}"><big>{{id_forum}}</big></a></td>
+                    <td class="text-center" scope="col">{{info_forum2.auteur}}</td>
+                    <td class="text-center" scope="col">{{info_forum2.date}}</td>
+                    <td class="text-center" scope="col">{{info_forum2.nb_comment}}</td>
                 </tr>
+            </tbody>
                 {% endfor %}
             </thead>
         </table>

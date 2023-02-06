@@ -5,146 +5,141 @@
 
 {% block content %}
 
-    <div class="container">
-        <div class="mt-5"></div>
-        <div class="h3 pb-2 mb-4 border-bottom border-dark">Formulaire</div>
-        <div class="row">
+<div class="container">
+    <div class="mt-5"></div>
+    <div class="h3 pb-2 mb-4 border-bottom border-dark">Formulaire</div>
+    <div class="row">
 
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active" href="{% url 'genomApp:formulaire_genome' %}">Génome</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'genomApp:prot_gene' %}">Protéine</a>
-                </li>
-            </ul>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="{% url 'genomApp:formulaire_genome' %}">Génome</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'genomApp:prot_gene' %}">Protéine</a>
+            </li>
+        </ul>
 
-            <form action="" method="post" novalidate="">
-                {% csrf_token %}
-                <p>
-                <div class="mt-3">
-                    <label class="form-label">BDD :</label>
-                    </p>
-                    <div id="id_nomBDD">
-                        <div>
-                            <label class="form-check-label" for="id_genomicus"><input class="form-check-input"
-                                    type="radio" name="nomBDD" value="Genomicus" checked id="id_genomicus"
-                                    onclick="enableField()">
-                                Genomicus</label>
-                        </div>
-                        <div>
-                            <label class="form-check-label" for="id_ncbi"><input class="form-check-input" type="radio"
-                                    name="nomBDD" value="NCBI Genome" id="id_ncbi" onclick="disableField()">
-                                NCBI Genome</label>
-                        </div>
+        <form action="" method="post" novalidate="">
+            {% csrf_token %}
+            <div class="mt-3">
+                <label class="form-label">BDD :</label>
+                <div id="id_nomBDD">
+                    <div>
+                        <label class="form-check-label" for="id_genomicus"><input class="form-check-input" type="radio"
+                                name="nomBDD" value="Genomicus" checked id="id_genomicus" onclick="enableField()">
+                            Genomicus</label>
+                    </div>
+                    <div>
+                        <label class="form-check-label" for="id_ncbi"><input class="form-check-input" type="radio"
+                                name="nomBDD" value="NCBI Genome" id="id_ncbi" onclick="disableField()">
+                            NCBI Genome</label>
                     </div>
                 </div>
-                <p>
-                <div class="mt-3">
-                    <label for="id_ID" class="form-label"> ID :</label>
-                    <input type="text" class="form-control" name="ID" maxlength="100" required="" id="id_ID">
+            </div>
+            <div class="mt-3">
+                <label for="id_ID" class="form-label"> ID du chromosome :</label>
+                <input type="text" class="form-control" name="ID" maxlength="100" required="" id="id_ID">
+            </div>
+            <div class="mt-3">
+                <label for="id_motif" class="form-label">Motif recherché :</label>
+                <textarea class="form-control" name="motif" maxlength="500" required="" id="id_motif"></textarea>
+                <small class="fonce">Les motifs comme %ATCG% sont autorisés.</small>
+            </div>
+            <div class="mt-3">
+                <label for="id_espece" class="form-label">Espèce :</label>
+                <input type="text" class="form-control" name="espece" maxlength="100" required="" id="id_espece">
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="mt-3">
+                        <label for="id_gcMin" class="form-label">%GC minimal :</label>
+                        <input type="text" class="form-control" name="gcMin" maxlength="100" required="" id="id_gcMin">
+                    </div>
                 </div>
-                </p>
-                <p>
-                <div class="mt-3">
-                    <label for="id_motif" class="form-label">Motif recherché :</label>
-                    <input type="text" class="form-control" name="motif" maxlength="500" required="" id="id_motif">
-                    <small>Les motifs comme %ATCG% sont autorisés.</small>
+                <div class="col">
+                    <div class="mt-3">
+                        <label for="id_gcMax" class="form-label">%GC maximal :</label>
+                        <input type="text" class="form-control" name="gcMax" maxlength="100" required="" id="id_gcMax">
+                    </div>
                 </div>
-                </p>
-                <p>
-                <div class="mt-3">
-                    <label for="id_espece" class="form-label">Espèce :</label>
-                    <input type="text" class="form-control" name="espece" maxlength="100" required="" id="id_espece">
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="mt-3">
+                        <label for="id_tailleMin" class="form-label">Taille minimale :</label>
+                        <input type="text" class="form-control" name="tailleMin" maxlength="100" required=""
+                            id="id_tailleMin">
+                    </div>
                 </div>
-                </p>
-                <p>
-                <div class="mt-3">
-                    <label for="id_gcMin" class="form-label">%GC minimal :</label>
-                    <input type="text" class="form-control" name="gcMin" maxlength="100" required="" id="id_gcMin">
+                <div class="col">
+                    <div class="mt-3">
+                        <label for="id_tailleMax" class="form-label">Taille maximale :</label>
+                        <input type="text" class="form-control" name="tailleMax" maxlength="100" required=""
+                            id="id_tailleMax">
+                    </div>
                 </div>
-                </p>
-                <p>
-                <div class="mt-3">
-                    <label for="id_gcMax" class="form-label">%GC maximal :</label>
-                    <input type="text" class="form-control" name="gcMax" maxlength="100" required="" id="id_gcMax">
-                </div>
-                </p>
-                <p>
-                <div class="mt-3">
-                    <label for="id_tailleMin" class="form-label">Taille minimale :</label>
-                    <input type="text" class="form-control" name="tailleMin" maxlength="100" required=""
-                        id="id_tailleMin">
-                </div>
-                </p>
-                <p>
-                <div class="mt-3">
-                    <label for="id_tailleMax" class="form-label">Taille maximale :</label>
-                    <input type="text" class="form-control" name="tailleMax" maxlength="100" required=""
-                        id="id_tailleMax">
-                </div>
-                </p>
-                <p></p>
-                <div class="my-3 d-flex justify-content-end">
-                    <input type="submit" class="btn btn-outline-success" value="Rechercher">
-                </div>
-            </form>
-        </div>
-    </div>
+            </div>
 
+            <div class="my-3 d-flex justify-content-end">
+                <input type="submit" class="btn btn-outline-success" value="Rechercher">
+            </div>
+        </form>
+    </div>
+</div>
+</div>
 <br><br>
 
 
-    <script>
-        function disableField() {
-            document.querySelector("#id_motif").disabled = true;
-            document.querySelector("#id_ratio").disabled = true;
-            document.querySelector("#id_tailleMax").disabled = true;
-            document.querySelector("#id_tailleMin").disabled = true;
-            document.querySelector("#id_gcMin").disabled = true;
-            document.querySelector("#id_gcMax").disabled = true;
+<script>
+    function disableField() {
+        document.querySelector("#id_motif").disabled = true;
+        document.querySelector("#id_ratio").disabled = true;
+        document.querySelector("#id_tailleMax").disabled = true;
+        document.querySelector("#id_tailleMin").disabled = true;
+        document.querySelector("#id_gcMin").disabled = true;
+        document.querySelector("#id_gcMax").disabled = true;
+    }
+
+    function enableField() {
+        document.querySelector("#id_motif").disabled = false;
+        document.querySelector("#id_ratio").disabled = false;
+        document.querySelector("#id_tailleMax").disabled = false;
+        document.querySelector("#id_tailleMin").disabled = false;
+        document.querySelector("#id_gcMin").disabled = false;
+        document.querySelector("#id_gcMax").disabled = false;
+    }
+
+    const motifInput = document.querySelector("#id_motif");
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", function (event) {
+        const sequence = motifInput.value;
+        const nucleotideRegex = /^[ATCG]*$/;
+
+        if (!nucleotideRegex.test(sequence)) {
+            alert("La séquence entrée n'est pas une séquence valide.");
+            event.preventDefault();
         }
+    });
 
-        function enableField() {
-            document.querySelector("#id_motif").disabled = false;
-            document.querySelector("#id_ratio").disabled = false;
-            document.querySelector("#id_tailleMax").disabled = false;
-            document.querySelector("#id_tailleMin").disabled = false;
-            document.querySelector("#id_gcMin").disabled = false;
-            document.querySelector("#id_gcMax").disabled = false;
-        }
-
-        const motifInput = document.querySelector("#id_motif");
-        const form = document.querySelector("form");
-
-        form.addEventListener("submit", function (event) {
-            const sequence = motifInput.value;
-            const nucleotideRegex = /^[ATCG]*$/;
-
-            if (!nucleotideRegex.test(sequence)) {
-                alert("La séquence entrée n'est pas une séquence valide.");
-                event.preventDefault();
+    $(document).ready(function () {
+        $("#id_espece").autocomplete({
+            source: function (request, response) {
+                $.getJSON("species_genome_autocomplete/", {
+                    term: request.term
+                }, response);
             }
         });
-
-        $(document).ready(function () {
-            $("#id_espece").autocomplete({
-                source: function (request, response) {
-                    $.getJSON("species_genome_autocomplete/", {
-                        term: request.term
-                    }, response);
-                }
-            });
-            $("#id_ID").autocomplete({
-                source: function (request, response) {
-                    $.getJSON("id_genome_autocomplete/", {
-                        term: request.term
-                    }, response);
-                }
-            });
+        $("#id_ID").autocomplete({
+            source: function (request, response) {
+                $.getJSON("id_genome_autocomplete/", {
+                    term: request.term
+                }, response);
+            }
         });
+    });
 
 
 
-    </script>
+</script>
 {% endblock %}

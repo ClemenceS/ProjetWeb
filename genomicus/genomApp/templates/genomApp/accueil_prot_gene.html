@@ -21,10 +21,8 @@
 
         <form action="" method="post" novalidate="">
             {% csrf_token %}
-            <p>
             <div class="mt-3">
                 <label class="form-label">BDD :</label>
-                </p>
                 <div id="id_nomBDD">
                     <div>
                         <label class="form-check-label" for="id_genomicus"><input class="form-check-input" type="radio"
@@ -38,53 +36,52 @@
                     </div>
                 </div>
             </div>
-            <p>
-            <div class="mt-3">
-                <label for="id_ID" class="form-label"> ID :</label>
-                <input type="text" class="form-control" name="ID" maxlength="100" required="" id="id_ID">
-            </div>
-            </p>
-            <p>
-            <div class="mt-3">
-                <label for="id_ID_chr" class="form-label"> ID du chromosome :</label>
-                <input type="text" class="form-control" name="ID_chr" maxlength="100" required="" id="id_ID_chr">
-            </div>
-            </p>
-            <p>
-            <div class="mt-3">
-                <label for="id_gene" class="form-label"> Gène :</label>
-                <input type="text" class="form-control" name="gene" maxlength="100" required="" id="id_gene">
-            </div>
-            </p>
-            <div class="mt-3">
-                <label for="id_motif" class="form-label">Motif recherché :</label>
-                <input type="text" class="form-control" name="motif" maxlength="500" required="" id="id_motif">
-                <small>Les motifs comme %ATCG% (nucléotides) ou %MIAG% (acides aminés) sont autorisés.</small>
-            </div>
-            </p>
-            <p>
-            <div class="mt-3">
-                <label for="id_espece" class="form-label">Espèce :</label>
-                <input type="text" class="form-control" name="espece" maxlength="100" required="" id="id_espece">
-            </div>
-            </p>
-            <p>
-            <div class="mt-3">
-                <label for="id_tailleMin" class="form-label">Taille minimale :</label>
-                <input type="text" class="form-control" name="tailleMin" maxlength="100" required="" id="id_tailleMin">
-            </div>
-            </p>
-            <p>
-            <div class="mt-3">
-                <label for="id_tailleMax" class="form-label">Taille maximale :</label>
-                <input type="text" class="form-control" name="tailleMax" maxlength="100" required="" id="id_tailleMax">
-            </div>
-            </p>
-            <p></p>
-            <div class="my-3 d-flex justify-content-end">
-                <input type="submit" class="btn btn-outline-success" value="Rechercher">
-            </div>
-
+            <div class="row">
+                <div class="col">
+                    <div class="mt-3">
+                        <label for="id_ID" class="form-label"> ID de la protéine/CDS :</label>
+                        <input type="text" class="form-control" name="ID" maxlength="100" required="" id="id_ID">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="mt-3">
+                        <label for="id_ID_chr" class="form-label"> ID du chromosome :</label>
+                        <input type="text" class="form-control" name="ID_chr" maxlength="100" required=""
+                            id="id_ID_chr">
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <label for="id_gene" class="form-label"> Gène :</label>
+                    <input type="text" class="form-control" name="gene" maxlength="100" required="" id="id_gene">
+                </div>
+                <div class="mt-3">
+                    <label for="id_motif" class="form-label">Motif recherché :</label>
+                    <textarea class="form-control" name="motif" maxlength="500" required="" id="id_motif"></textarea>
+                    <small class="fonce">Les motifs comme %ATCG% (nucléotides) ou %MIAG% (acides aminés) sont
+                        autorisés.</small>
+                </div>
+                <div class="mt-3">
+                    <label for="id_espece" class="form-label">Espèce :</label>
+                    <input type="text" class="form-control" name="espece" maxlength="100" required="" id="id_espece">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="mt-3">
+                            <label for="id_tailleMin" class="form-label">Taille minimale :</label>
+                            <input type="text" class="form-control" name="tailleMin" maxlength="100" required=""
+                                id="id_tailleMin">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mt-3">
+                            <label for="id_tailleMax" class="form-label">Taille maximale :</label>
+                            <input type="text" class="form-control" name="tailleMax" maxlength="100" required=""
+                                id="id_tailleMax">
+                        </div>
+                    </div>
+                    <div class="my-3 d-flex justify-content-end">
+                        <input type="submit" class="btn btn-outline-success" value="Rechercher">
+                    </div>
         </form>
     </div>
 </div>

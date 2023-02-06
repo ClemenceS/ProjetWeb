@@ -15,7 +15,7 @@ class SearchProteineGeneForm(forms.Form):
     ID = forms.CharField(label='ID', max_length=100, required=False)
     ID_chr = forms.CharField(label='ID_chr', max_length=100, required=False)
     gene = forms.CharField(label='gene', max_length=100, required=False)
-    motif = forms.CharField(label='motif', max_length=100, required=False)
+    motif = forms.CharField(label='motif', max_length=500, required=False)
     espece = forms.CharField(label='espece', max_length=100, required=False)
     tailleMin = forms.IntegerField(label='tailleMin', required=False)
     tailleMax = forms.IntegerField(label='tailleMax', required=False)

@@ -551,7 +551,9 @@ def resultatsFormulaireProteineGene(request):
 
                 if motif != "":
                     criterias.append({'key': 'Motif ', 'value':motif})
+                    print(motif)
                     q2 = SequenceCodant.objects.all().filter(sequence__contains=motif)
+                    print(q2)
                     id_list2 = q2.values_list('id', flat=True)
                     id_list = [value for value in id_list if value in id_list2]
 
@@ -559,10 +561,9 @@ def resultatsFormulaireProteineGene(request):
                 shown_id = list(set(shown_id))
 
                 results = []
-                for i in range(len(id_list)):
-                    if id_list[i].startswith("cds_"):
-                        p = CodantInfo.objects.get(id=id_list[i])
-                        results.append({'id' : remove_header(id_list[i]), 'espece':p.espece, 'start':p.start, 'stop':p.stop})
+                for i in range(len(shown_id)):
+                    p = CodantInfo.objects.get(id=f'cds_{shown_id[i]}' )
+                    results.append({'id' : shown_id[i], 'espece':p.espece, 'start':p.start, 'stop':p.stop})
 
                 context = {**form.cleaned_data, **{'id_results' : results }, **{'criterias':criterias}, **{'people':people}, **{'results':results}}
                 template = loader.get_template('genomApp/resultat_gene_transcrit.html')

@@ -14,20 +14,28 @@
             </div>
             <h4>Votre recherche :</h4>
             <br>
+            <ul class="list-group">
             <table class="table table-sm table-light">
+                
                 <tbody>
+                    
                     {% for c in criterias %}
                     <tr>
-                        <th>{{c.key}} </th>
+                        
+                        <th style="width:30%">{{c.key}} </th>
                         <td>{{c.value}} </td>
+                    
                     </tr>
                     {% endfor %}
+                
                     <tr>
                         <th>Base de données</th>
                         <td>{{ nomBDD }}</td>
                     </tr>
                 </tbody>
+            
             </table>
+        </ul>
         </div>
         <div class="col-1"></div>
         <div class="col-6">
