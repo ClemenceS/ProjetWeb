@@ -21,11 +21,6 @@ for e in ${entries[*]};do
     python3 manage.py loaddata ../data/${e}_pep_seq.json
 done
 
-#initiale the bdd with a superuser - you can change the information
-DJANGO_SUPERUSER_PASSWORD='admin' \
-DJANGO_SUPERUSER_USERNAME='admin' \
-DJANGO_SUPERUSER_EMAIL='clemence.22.sebe@gmail.com' \
-python3 manage.py createsuperuser --no-input
 
 # add members in the bdd
 
