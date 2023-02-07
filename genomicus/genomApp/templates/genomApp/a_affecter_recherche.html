@@ -20,17 +20,14 @@
             Pour affecter une protéine à annoter, il faut d'abord sélectionner la page. Pour effectuer cela,
             vous pouvez chercher son ID dans la base.
             </h5>
-            <p>
-            <div class="mt-3">
-                <label for="id_ID" class="form-label"> <h5>ID :</h5></label>
-                <input type="text" class="form-control" name="ID" maxlength="100" required="" id="id_ID">
-            </div>
-            </p>
-
-            <div class="my-3 d-flex justify-content-end">
-                <input class="btn btn-outline-success" type="submit" value="Soumettre">
-            </div>
-
+            <br>
+                <div class="col-3 creation-discussion-box">
+                    <input type="text" class="form-control" style="flex: 1; margin-right: 80px;" placeholder="ID Protéine"
+                        name="ID" maxlength="1000" required="" id="id_ID">
+                    <input type="submit" class="btn btn-outline-secondary" style="flex: 1;"
+                        value="Soumettre">
+                </div>
+                <br>
         </form>
 
         {% for id in ids %}
