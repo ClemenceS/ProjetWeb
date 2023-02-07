@@ -24,11 +24,11 @@
 
         const config = {
             reference: {
-                fastaURL: "http://127.0.0.1:8000/static/{{espece}}.fa",
-                indexURL: "http://127.0.0.1:8000/static/{{espece}}.fa.fai",
+                fastaURL: "http://{{link}}/static/{{espece}}.fa",
+                indexURL: "http://{{link}}/static/{{espece}}.fa.fai",
                 tracks: [
                     {
-                        url: "http://127.0.0.1:8000/static/{{espece}}.gff",
+                        url: "http://{{link}}/static/{{espece}}.gff",
                         indexed: false,
                         format:"gff",
                         type:"annotation",
