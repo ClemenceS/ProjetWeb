@@ -108,5 +108,5 @@ docker run -it -p 8000:8000 --entrypoint bash  -t -i marchment/genomicus:v2.0
 >Note : To access the users, the same rule applies as above.
 
 ___
-<img align="left" src="genomicus/static/logo.png">
+<img align="left" src="genomicus/static/logo.png" width="300">
 <img align="right" src="pictures/paris-saclay.png">
