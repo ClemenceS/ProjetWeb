@@ -1,0 +1,12 @@
+[
+    {
+        "pk": "ASM584v2",
+        "model": "genomApp.Genome",
+        "fields": {
+            "taille": 4641652,
+            "phaseLecture": 1,
+            "espece": "Escherichia_coli_str_k_12_substr_mg1655",
+            "gc_rate": 50.79
+        }
+    }
+]

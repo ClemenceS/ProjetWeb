@@ -28,7 +28,7 @@ urlpatterns = [
     path('recherche_proteine_gene/gene_proteine_autocomplete/', views.geneProteineAutocomplete, name='geneProteineAutocomplete'),
     path('recherche_proteine_gene/species_proteine_autocomplete/', views.speciesProteineAutocomplete, name='speciesProteineAutocomplete'),
     path('recherche_proteine_gene/id_proteine_autocomplete/', views.idProteineAutocomplete, name='idProteineAutocomplete'),
-    path('forum/id_proteine_autocomplete/', views.idProteineAutocomplete, name='idProteineAutocomplete'),
+    path('/forum/id_proteine_forum_autocomplete/', views.idProteineAutocomplete, name='idProteineAutocompleteForum'),
     path('protein_annotation/<result_id>/', views.protein_annotation, name='protein_annotation'),
     path('view_annotation/<result_id>/', views.view_annotation, name='view_annotation'),
 ]

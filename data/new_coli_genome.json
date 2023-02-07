@@ -1,0 +1,12 @@
+[
+    {
+        "pk": "ASM1330v1",
+        "model": "genomApp.Genome",
+        "fields": {
+            "taille": 4938920,
+            "phaseLecture": 1,
+            "espece": "new_coli",
+            "gc_rate": 50.52
+        }
+    }
+]

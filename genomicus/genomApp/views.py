@@ -11,7 +11,7 @@ from .functionsVisualisationGenome import *
 from django import forms
 from django.db.models import Q
 from django.core.mail import send_mail
-
+from django.core.cache import cache
 
 from member.models import Member
 
@@ -23,18 +23,6 @@ def remove_header(id):
     :return id: sans header
     """
     return id[4:]
-
-
-#def similarite(sequence, motif, r):
-#	best_ratio = 0
-#	for i in range(len(sequence) - len(motif) + 1):
-#		sub_sequence = sequence[i:i+len(motif)]
-#		ratio = fuzz.partial_ratio(motif, sub_sequence)
-#		if ratio > best_ratio:
-#			best_ratio = ratio
-#	if best_ratio >= r:
-#		return True
-#	return False
 
 
 def seq_type(sequence):
@@ -551,9 +539,10 @@ def resultatsFormulaireProteineGene(request):
 
                 if motif != "":
                     criterias.append({'key': 'Motif ', 'value':motif})
-                    print(motif)
-                    q2 = SequenceCodant.objects.all().filter(sequence__contains=motif)
-                    print(q2)
+                    if seq_type(motif) == "Amino Acid":
+                        q2 = SequenceCodant.objects.filter(id__id__startswith='pep').filter(sequence__contains=motif)
+                    elif seq_type(motif) == "Nucleotide":
+                        q2 = SequenceCodant.objects.filter(id__id__startswith='cds').filter(sequence__contains=motif)
                     id_list2 = q2.values_list('id', flat=True)
                     id_list = [value for value in id_list if value in id_list2]
 
@@ -702,10 +691,14 @@ def idProteineAutocomplete(request):
     :parameter request:
     :return: une liste avec les identifiants de protéines possibles en fonction des caractères entrés dans le formulaire
     """
-    query = request.GET.get("term", "")
-    suggestions = CodantInfo.objects.filter(id__icontains=query)
-    id =  [remove_header(obj.id) for obj in suggestions]
-    suggestions_list = [{"label": i} for i in set(id)]
+    query = request.GET.get('term', "")
+    cache_key = 'autocomplete_{}'.format(query)
+    suggestions_list = cache.get(cache_key)
+    if suggestions_list is None:
+        suggestions = CodantInfo.objects.filter(id__icontains=query)
+        id =  [remove_header(obj.id) for obj in suggestions]
+        suggestions_list = [{"label": i} for i in set(id)]
+        cache.set(cache_key, suggestions_list, 60 * 60)
     return JsonResponse(suggestions_list, safe=False)
 
 def speciesProteineAutocomplete(request):
