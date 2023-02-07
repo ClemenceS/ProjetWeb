@@ -632,6 +632,11 @@ def visualisationGenome(request, result_id):
         et la page affiche les résultats en fonction de l'identifiant de l'espèce choisi lors des résultats au formulaire
     """
     people = get_users()
+    
+    #Extract the link
+    link=''
+    for match in re.finditer(r'http:\/\/([^\/]+)\/recherche_genome\/visualisation', request.build_absolute_uri()):
+    	link = match.group(1)
 
     p = Genome.objects.get(id=result_id)
     espece = p.espece
@@ -640,7 +645,7 @@ def visualisationGenome(request, result_id):
     create_gff(result_id)
     creat_fai(result_id)
 
-    context = {'id_genome' : result_id, 'people':people, 'espece' : espece}
+    context = {'id_genome' : result_id, 'people':people, 'espece' : espece, 'link' : link}
     template = loader.get_template('genomApp/visualisation.html')
     return HttpResponse(template.render(context, request))
 
