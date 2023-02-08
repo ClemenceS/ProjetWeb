@@ -1,9 +1,13 @@
 {% extends 'genomApp/base.html' %}
 {% load static %}
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+
 {% block title %} Forum {% endblock %}
 
 {% block content %}
+
+{% if people.profile >= 2 and people.connecte %}
 
 <div class="container">
     <div class="mt-5"></div>
@@ -17,10 +21,8 @@
         {{value.text}}
         {% if people.who == value.auteur %}
         <div class="my+2 d-flex justify-content-end">
-        <a href="{% url 'genomApp:deleteComment' id_forum=id_forum id_com=key %}" class="link-light" >&#10060</a>
-        </div>
-        <div class="my+2 d-flex justify-content-end">
-        <a href="{% url 'genomApp:updateComment' id_forum=id_forum id_com=key %}" class="link-light" >&#128395</a>
+            <a href="{% url 'genomApp:updateComment' id_forum=id_forum id_com=key %}" class="fas fa-pencil-alt" style="text-decoration: none; margin-right: 10px;"></a>
+            <a href="{% url 'genomApp:deleteComment' id_forum=id_forum id_com=key %}" class="fas fa-trash-alt"></a>
         </div>
         {% endif %}
     {% if key == id_com %}

@@ -295,6 +295,16 @@ def accueil_annotateur(request):
     template = loader.get_template('genomApp/annotation.html')
     return HttpResponse(template.render(context, request))
 
+def erreur(request):
+    """Fonction view pour la page d'erreur
+
+    :parameter request:
+    :return HttpResponse: page de non accès via un url 
+    """
+    people = get_users()
+    template = loader.get_template('genomApp/erreur.html')
+    return HttpResponse(template.render({'people':people}, request))
+
 
 def seq_deja_affectees(request):
     """Fonction view pour la page des séquences déjà affectées qui montre les annotateurs avec les séquences qui leur sont affectées
@@ -685,20 +695,32 @@ def idGenomeAutocomplete(request):
     suggestions_list = [{"label": i} for i in set(id)]
     return JsonResponse(suggestions_list, safe=False)
 
+    suggestions_list = suggestions_list[0:10]
+
 def idProteineAutocomplete(request):
     """Fonction qui permet l'autocomplétion dans les formulaires pour les identifiants de protéines
 
     :parameter request:
     :return: une liste avec les identifiants de protéines possibles en fonction des caractères entrés dans le formulaire
     """
-    query = request.GET.get('term', "")
-    cache_key = 'autocomplete_{}'.format(query)
-    suggestions_list = cache.get(cache_key)
-    if suggestions_list is None:
-        suggestions = CodantInfo.objects.filter(id__icontains=query)
-        id =  [remove_header(obj.id) for obj in suggestions]
-        suggestions_list = [{"label": i} for i in set(id)]
-        cache.set(cache_key, suggestions_list, 60 * 60)
+    query = request.GET.get("term", "")
+    suggestions = CodantInfo.objects.filter(id__icontains=query)
+    id =  [remove_header(obj.id) for obj in suggestions]
+    id = id[0:10]
+    suggestions_list = [{"label": i} for i in set(id)]
+    return JsonResponse(suggestions_list, safe=False)
+
+def idProteineForumAutocomplete(request):
+    """Fonction qui permet l'autocomplétion dans le forum pour les identifiants de protéines
+
+    :parameter request:
+    :return: une liste avec les identifiants de protéines possibles en fonction des caractères entrés dans le formulaire
+    """
+    query = request.GET.get("term", "")
+    suggestions = CodantInfo.objects.filter(id__icontains=query)
+    id =  [remove_header(obj.id) for obj in suggestions]
+    id = id[0:10]
+    suggestions_list = [{"label": i} for i in set(id)]
     return JsonResponse(suggestions_list, safe=False)
 
 def speciesProteineAutocomplete(request):
@@ -875,32 +897,48 @@ def forum(request, id):
     return HttpResponse(template.render(context, request))
 
 def deleteComment(request, id_forum, id_com):
+    people = get_users()
     commentToDelete = Commentaire.objects.get(id=id_com)
-    commentToDelete.delete()
-    return redirect('genomApp:forum', id_forum)
+    if people['connecte'] == True :
+        if people['email'] == str(commentToDelete.auteur):
+            commentToDelete.delete()
+        return redirect('genomApp:forum', id_forum)
+    else :
+        template = loader.get_template('genomApp/erreur.html')
+        return HttpResponse(template.render({}, request))
 
 def updateComment(request, id_forum, id_com):
     people = get_users()
     d = displayComment(request, id_forum)
     commentToModify = Commentaire.objects.get(id=id_com)
 
-    if request.method == 'POST':
-        form = UpdateCommentForm(request.POST)
-        if form.is_valid():
-            updated_date = form.cleaned_data['updated_date']
-            updated_text = form.cleaned_data['updated_text']
+    if people['connecte'] == True :
 
-            commentToModify = Commentaire.objects.get(id=id_com)
-            commentToModify.text = updated_text
-            commentToModify.date_update = updated_date
-            commentToModify.save()
-            return redirect('genomApp:forum', id_forum)
+        if people['email'] == str(commentToModify.auteur):
 
+            if request.method == 'POST':
+                form = UpdateCommentForm(request.POST)
+                if form.is_valid():
+                    updated_date = form.cleaned_data['updated_date']
+                    updated_text = form.cleaned_data['updated_text']
 
-    context = {'people': people, 'id_forum': id_forum, 'id_com': int(id_com), 'comment':d}
-    template = loader.get_template('genomApp/forum_update_comment.html')
-    return HttpResponse(template.render(context, request))
-    #return redirect('genomApp:updateComment', id_forum, id_com)
+                    commentToModify = Commentaire.objects.get(id=id_com)
+                    commentToModify.text = updated_text
+                    commentToModify.date_update = updated_date
+                    commentToModify.save()
+                    return redirect('genomApp:forum', id_forum)
+        
+            context = {'people': people, 'id_forum': id_forum, 'id_com': int(id_com), 'comment':d}
+            template = loader.get_template('genomApp/forum_update_comment.html')
+            return HttpResponse(template.render(context, request))
+
+        else :
+            return forum(request, id_forum)
+
+    else :
+        template = loader.get_template('genomApp/erreur.html')
+        return HttpResponse(template.render({}, request))
+
 
 
 def accueil_forum(request):

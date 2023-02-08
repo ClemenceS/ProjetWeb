@@ -7,7 +7,7 @@
 
 <!--Autocompletion -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
 {% if people.profile >= 2 and people.connecte %}
@@ -21,8 +21,8 @@
 
         <div class="col-3 creation-discussion-box">
             <input type="text" class="form-control" style="flex: 1; margin-right: 80px;" placeholder="ID Protéine"
-                name="id_prot" maxlength="1000" required="" id="id_prot">
-            <input type="submit" class="btn btn-outline-secondary" style="flex: 1;"
+                name="ID" maxlength="1000" required="" id="id_ID">
+            <input type="submit" class="btn btn-outline-secondary" id="btn" style="flex: 1;"
                 value="Créer ou ouvrir une discussion">
         </div>
     </form>
@@ -62,10 +62,8 @@
         </table>
     </details>
     {% endfor %}
-
-
 </div>
-</div>
+
 
 {% else %}
 
@@ -82,12 +80,12 @@
     if (err === 'N') {
         alert("Cette protéine n'est pas dans Genomicus.");
         event.preventDefault();
-    }
+    };
 
     $(document).ready(function () {
-        $("#id_prot").autocomplete({
+        $("#id_ID").autocomplete({
             source: function (request, response) {
-                $.getJSON("id_proteine_autocomplete/", {
+                $.getJSON("id_proteine_forum_autocomplete/", {
                     term: request.term
                 }, response);
             }
