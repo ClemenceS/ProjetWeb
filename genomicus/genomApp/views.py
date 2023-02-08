@@ -270,30 +270,35 @@ def accueil_annotateur(request):
     """
     people = get_users()
 
-    #List des annotations possible pour l'utilisateur
-    gene_a_annoter, already_annotated= get_annotations(people)
+    if people['connecte']:
+        #List des annotations possible pour l'utilisateur
+        gene_a_annoter, already_annotated= get_annotations(people)
 
-    info_gene = []
-    num=1
-    for i in range(len(gene_a_annoter)):
-        g  = gene_a_annoter[i]
-        annotated = already_annotated[i]
-        dico = {}
-        p = CodantInfo.objects.get(id='cds_'+g)
-        dico['id'] = g
-        dico['start'] = p.start
-        dico['stop'] = p.stop
-        dico['chromosone'] = p.chromosome
-        dico['espece'] = p.espece
-        dico['num'] = num
-        dico['annotated'] = annotated
+        info_gene = []
+        num=1
+        for i in range(len(gene_a_annoter)):
+            g  = gene_a_annoter[i]
+            annotated = already_annotated[i]
+            dico = {}
+            p = CodantInfo.objects.get(id='cds_'+g)
+            dico['id'] = g
+            dico['start'] = p.start
+            dico['stop'] = p.stop
+            dico['chromosone'] = p.chromosome
+            dico['espece'] = p.espece
+            dico['num'] = num
+            dico['annotated'] = annotated
 
-        num+=1
-        info_gene.append(dico)
+            num+=1
+            info_gene.append(dico)
 
-    context = {'genes' : info_gene, 'people':people}
-    template = loader.get_template('genomApp/annotation.html')
-    return HttpResponse(template.render(context, request))
+        context = {'genes' : info_gene, 'people':people}
+        template = loader.get_template('genomApp/annotation.html')
+        return HttpResponse(template.render(context, request))
+
+    else :
+        template = loader.get_template('genomApp/erreur.html')
+        return HttpResponse(template.render({}, request))
 
 def erreur(request):
     """Fonction view pour la page d'erreur
@@ -314,10 +319,15 @@ def seq_deja_affectees(request):
         et pas d'accès à la page si l'utilsateur n'est pas connecté ou s'il n'a pas le rôle requis
     """
     people = get_users()
-    annotateurs = annotateurs_from_validateur(people)
-    #print(annotateurs)
-    template = loader.get_template('genomApp/affecte.html')
-    return HttpResponse(template.render({'people':people, 'annotateurs':annotateurs}, request))
+    
+    if people['connecte']:
+        annotateurs = annotateurs_from_validateur(people)
+        #print(annotateurs)
+        template = loader.get_template('genomApp/affecte.html')
+        return HttpResponse(template.render({'people':people, 'annotateurs':annotateurs}, request))
+    else :
+        template = loader.get_template('genomApp/erreur.html')
+        return HttpResponse(template.render({}, request))
 
 
 def recherche_affectation_annotation(request):
@@ -388,31 +398,37 @@ def valider(request):
     """
     people = get_users()
 
-    if request.method == 'POST':
-        to_validate = request.POST.getlist('to_validate')
-        #print(request.POST.getlist('to_validate'))
-        validate_annotations(to_validate)
-        #print(request.POST.getlist('to_validate'))
+    if people['connecte']:
 
-    annotations= get_annotations_validateur(people)
+        if request.method == 'POST':
+            to_validate = request.POST.getlist('to_validate')
+            #print(request.POST.getlist('to_validate'))
+            validate_annotations(to_validate)
+            #print(request.POST.getlist('to_validate'))
 
-    a_valider, en_attente = [], []
-    a_valider_num, en_attente_num = 1, 1
-    for i in range(len(annotations)):
-        id=str(annotations[i])[4:]
-        v=annotations[i].already_annotated
-        name = get_names(annotations[i].annotateur)
-        espece = get_espece(id)
-        if(not v):
-            en_attente.append({'id':id, 'num':en_attente_num, 'name':name, 'espece':espece})
-            en_attente_num+=1
-        else:
-            a_valider.append({'id':id, 'num':a_valider_num, 'name':name, 'espece':espece})
-            a_valider_num+=1
-    
-    context = {**{'people':people}, **{'en_attente':en_attente}, **{'a_valider':a_valider}}
-    template = loader.get_template('genomApp/valider.html')
-    return HttpResponse(template.render(context, request))
+        annotations= get_annotations_validateur(people)
+
+        a_valider, en_attente = [], []
+        a_valider_num, en_attente_num = 1, 1
+        for i in range(len(annotations)):
+            id=str(annotations[i])[4:]
+            v=annotations[i].already_annotated
+            name = get_names(annotations[i].annotateur)
+            espece = get_espece(id)
+            if(not v):
+                en_attente.append({'id':id, 'num':en_attente_num, 'name':name, 'espece':espece})
+                en_attente_num+=1
+            else:
+                a_valider.append({'id':id, 'num':a_valider_num, 'name':name, 'espece':espece})
+                a_valider_num+=1
+        
+        context = {**{'people':people}, **{'en_attente':en_attente}, **{'a_valider':a_valider}}
+        template = loader.get_template('genomApp/valider.html')
+        return HttpResponse(template.render(context, request))
+
+    else :
+        template = loader.get_template('genomApp/erreur.html')
+        return HttpResponse(template.render({}, request))
 
 def resultatsFormulaireGenome(request):
     people = get_users()
@@ -902,7 +918,7 @@ def forum(request, id):
 def deleteComment(request, id_forum, id_com):
     people = get_users()
     commentToDelete = Commentaire.objects.get(id=id_com)
-    if people['connecte'] == True :
+    if people['connecte']:
         if people['email'] == str(commentToDelete.auteur):
             commentToDelete.delete()
         return redirect('genomApp:forum', id_forum)
@@ -915,7 +931,7 @@ def updateComment(request, id_forum, id_com):
     d = displayComment(request, id_forum)
     commentToModify = Commentaire.objects.get(id=id_com)
 
-    if people['connecte'] == True :
+    if people['connecte']:
 
         if people['email'] == str(commentToModify.auteur):
 
