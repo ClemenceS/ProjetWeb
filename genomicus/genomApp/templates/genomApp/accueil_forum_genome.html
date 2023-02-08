@@ -5,6 +5,13 @@
 
 {% block content %}
 
+<style>
+    .results-forum {
+      height: 350px;
+      overflow-y: scroll;
+    }
+  </style>
+
 <!--Autocompletion -->
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -22,13 +29,15 @@
         <div class="col-3 creation-discussion-box">
             <input type="text" class="form-control" style="flex: 1; margin-right: 80px;" placeholder="ID Protéine"
                 name="ID" maxlength="1000" required="" id="id_ID">
-            <input type="submit" class="btn btn-outline-secondary" id="btn" style="flex: 1;"
+            <input type="submit" class="btn btn-outline-secondary" style="flex: 1;"
                 value="Créer ou ouvrir une discussion">
         </div>
     </form>
 
     <div class="h3 pb-2 mb-4 mt-5 border-bottom titre2" style="border-bottom: 2px solid #cbc2c0; width: 90%;">Déjà
         existants</div>
+
+    <div class = "results-forum">
 
     <div class="my-3"></div>
     {% for id_chr, info_forum in d.items %}
@@ -39,7 +48,6 @@
 
         <table class="table table-sm table-light forum-box align-text">
             <thead>
-                {% for id_forum, info_forum2 in info_forum.items %}
                 <thead>
                     <tr>
                         <th class="text-center" scope="col">Identifiant de la protéine/CDS</th>
@@ -49,6 +57,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                {% for id_forum, info_forum2 in info_forum.items %}
                 <tr>
                     <td class="text-center" scope="col"> <a
                             href="{% url 'genomApp:forum' id=id_forum %}"><big>{{id_forum}}</big></a></td>
@@ -56,12 +65,13 @@
                     <td class="text-center" scope="col">{{info_forum2.date}}</td>
                     <td class="text-center" scope="col">{{info_forum2.nb_comment}}</td>
                 </tr>
-            </tbody>
                 {% endfor %}
+            </tbody>
             </thead>
         </table>
     </details>
     {% endfor %}
+</div>
 </div>
 
 

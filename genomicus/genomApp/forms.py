@@ -2,7 +2,7 @@ from django import forms
 
 class SearchGenomeForm(forms.Form):
     ID = forms.CharField(label='ID', max_length=100, required=False)
-    motif = forms.CharField(label='motif', max_length=500, required=False)
+    motif = forms.CharField(label='motif', max_length=1000, required=False)
     espece = forms.CharField(label='espece', max_length=100, required=False)
     tailleMin = forms.IntegerField(label='tailleMin', required=False)
     tailleMax = forms.IntegerField(label='tailleMax', required=False)
@@ -15,7 +15,7 @@ class SearchProteineGeneForm(forms.Form):
     ID = forms.CharField(label='ID', max_length=100, required=False)
     ID_chr = forms.CharField(label='ID_chr', max_length=100, required=False)
     gene = forms.CharField(label='gene', max_length=100, required=False)
-    motif = forms.CharField(label='motif', max_length=500, required=False)
+    motif = forms.CharField(label='motif', max_length=1000, required=False)
     espece = forms.CharField(label='espece', max_length=100, required=False)
     tailleMin = forms.IntegerField(label='tailleMin', required=False)
     tailleMax = forms.IntegerField(label='tailleMax', required=False)
@@ -37,8 +37,7 @@ class AddCommentForm(forms.Form):
     forum = forms.CharField(label='id_forum', max_length=100, required=False)
 
 class SearchForumForm(forms.Form):
-    id_prot = forms.CharField(label='id_prot', max_length=100, required=False)
-    id_chr = forms.CharField(label='id_chr', max_length=100, required=False)
+    ID = forms.CharField(label='ID', max_length=100, required=False)
 
 class UpdateCommentForm(forms.Form):
     updated_text = forms.CharField(label='updated_text', max_length=1000, required=False)

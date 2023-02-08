@@ -16,7 +16,7 @@
     <div class="row">
 
     {% for key, value in comment.items %}
-    <div class="forum-box">
+    <div class="forum-box list-group">
         <font class=fonce> écrit le {{value.date}} par {{value.auteur}}: </font>
         {% if value.date_update %}
         <br>
@@ -37,7 +37,7 @@
         {% csrf_token %}
         <div class="forum-box">
             <label for="id_text" class="form-label"> Répondre :</label>
-            <input type="text" class="form-control" name="text" maxlength="1000" required="" id="id_text">
+            <textarea type="text" class="form-control" name="text" maxlength="1000" required="" id="id_text"></textarea>
         </div>
 
         <input id="id_date" name="date" type="hidden">

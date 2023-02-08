@@ -110,3 +110,9 @@ body {
     border-radius: 5px;
     font-family: helvetica;
 }
+
+
+.results-proteine {
+      height: 500px;
+      overflow-y: scroll;
+}

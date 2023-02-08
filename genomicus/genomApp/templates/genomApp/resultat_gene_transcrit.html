@@ -3,7 +3,7 @@
 
 {% block title %} Résultats {% endblock %}
 
-{% block content %}
+{% block content %}  
 
 <div class="container">
     <div class="row">
@@ -40,6 +40,8 @@
         <div class="col-1"></div>
         <div class="col-6">
             <div class="mt-5">
+                {% if id_results %}
+                <div class="results-proteine">
                 <table class="table">
                     <thead>
                         <tr>
@@ -63,6 +65,16 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
+                {% else %}
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Aucun résultat.</th>
+                        </tr>
+                    </thead>
+                </table>
+                {% endif %}
             </div>
         </div>
     </div>

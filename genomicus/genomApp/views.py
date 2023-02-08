@@ -486,10 +486,11 @@ def resultatsFormulaireGenome(request):
                 return HttpResponse(template.render(context, request))
 
             else :
-                query = id+" "+espece
-                data = {'term' : query}
-                response = requests.get("https://www.ncbi.nlm.nih.gov/genome", params=data)
-                return HttpResponseRedirect(response.url)
+                if id != "" or espece != "":
+                    query = id+" "+espece
+                    data = {'term' : query}
+                    response = requests.get("https://www.ncbi.nlm.nih.gov/genome", params=data)
+                    return HttpResponseRedirect(response.url)
     else:
         form = SearchGenomeForm()
     template = loader.get_template('genomApp/accueil_genome.html')
@@ -548,10 +549,11 @@ def resultatsFormulaireProteineGene(request):
                     id_list = q.values_list('id', flat=True)
 
                 if motif != "":
+                    motif = motif.upper()
                     criterias.append({'key': 'Motif ', 'value':motif})
                     if seq_type(motif) == "Amino Acid":
                         q2 = SequenceCodant.objects.filter(id__id__startswith='pep').filter(sequence__contains=motif)
-                    elif seq_type(motif) == "Nucleotide":
+                    if seq_type(motif) == "Nucleotide":
                         q2 = SequenceCodant.objects.filter(id__id__startswith='cds').filter(sequence__contains=motif)
                     id_list2 = q2.values_list('id', flat=True)
                     id_list = [value for value in id_list if value in id_list2]
@@ -569,10 +571,11 @@ def resultatsFormulaireProteineGene(request):
                 return HttpResponse(template.render(context, request))
             
             else :
-                query = id+" "+id_chr+" "+espece
-                data = {'term' : query}
-                response = requests.get("https://www.ncbi.nlm.nih.gov/search/all", params=data)
-                return HttpResponseRedirect(response.url)
+                if id != "" or espece != "" or gene != "" or id_chr != "":
+                    query = id+" "+id_chr+" "+espece+" "+gene
+                    data = {'term' : query}
+                    response = requests.get("https://www.ncbi.nlm.nih.gov/search/all", params=data)
+                    return HttpResponseRedirect(response.url)
 
     else:
         form = SearchProteineGeneForm()
@@ -970,12 +973,14 @@ def accueil_forum(request):
     if request.method == 'POST':
         form = SearchForumForm(request.POST)
         if form.is_valid():
-            id_prot = form.cleaned_data["id_prot"]
+            id_prot = form.cleaned_data["ID"]
+            print("id", id_prot)
             P = CodantInfo.objects.filter(id='cds_'+id_prot).values_list('id', flat=True)
+            print(P)
             if (not P) == False :
                 return redirect ('genomApp:forum', id_prot)
             else :
-                context = {'people' : people, 'd' : d, 'id_prot':id_prot, 'error':"N"}
+                context = {'people' : people, 'd' : d, 'id_prot':id_prot, 'error':'N'}
                 
     else :
         context = {'people' : people, 'd' : d, 'id_prot':id_prot}

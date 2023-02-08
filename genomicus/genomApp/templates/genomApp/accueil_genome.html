@@ -47,8 +47,8 @@
             </div>
             <div class="mt-3">
                 <label for="id_motif" class="form-label">Motif recherché :</label>
-                <textarea class="form-control" name="motif" maxlength="500" required="" id="id_motif"></textarea>
-                <small class="fonce">Les motifs comme %ATCG% sont autorisés.</small>
+                <textarea class="form-control" name="motif" maxlength="1000" required="" id="id_motif"></textarea>
+                <small class="fonce">Les motifs comme %ATCG% sont autorisés. La taille du motif est limitée à 1000 caractères.</small>
             </div>
             <div class="mt-3">
                 <label for="id_espece" class="form-label">Espèce :</label>
@@ -115,13 +115,24 @@
     const motifInput = document.querySelector("#id_motif");
     const form = document.querySelector("form");
 
+    const idInput = document.querySelector("#id_ID");
+    const especeInput = document.querySelector("#id_espece");
+
     form.addEventListener("submit", function (event) {
         const sequence = motifInput.value;
-        const nucleotideRegex = /^[ATCG]*$/;
+        const nucleotideRegex = /^[ATCG]*$/i;
+        const radioBtnNCBI = document.querySelector('#id_ncbi');
 
         if (!nucleotideRegex.test(sequence)) {
             alert("La séquence entrée n'est pas une séquence valide.");
-            event.preventDefault();
+        }
+
+        if (radioBtnNCBI.checked) {
+            const selectedValue = radioBtnNCBI.value;
+            const idValue = idInput.value;
+            if (idInput.value === "" && especeInput.value === "") {
+                alert("Vous devez entrer au moins un des deux champs, sinon il n'y aura pas de résultats.");
+            }
         }
     });
 

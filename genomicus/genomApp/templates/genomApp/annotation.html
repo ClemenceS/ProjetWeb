@@ -1,6 +1,8 @@
 {% extends 'genomApp/base.html' %}
 {% load static %}
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+
 {% block title %} Annotation {% endblock %}
 
 {% block content %}
@@ -25,7 +27,7 @@
                 <th scope="col">Espèce</th>
                 <th scope="col">Chromosome</th>
                 <th scope="col">Position</th>
-                <th scope="col">Déjà Annotée</th>
+                <th scope="col">Déjà annotée</th>
 
             </tr>
         </thead>
@@ -37,7 +39,7 @@
                 <td>{{ g.espece }}</td>
                 <td>{{ g.chromosone }}</td>
                 <td>{{ g.start }}:{{ g.stop }}</td>
-                <td>{{ g.annotated }}
+                <td>{% if g.annotated == False %} <i class="fa fa-times"></i> {% else %} <i class="fa fa-check"></i> {% endif %}
                     {% if g.annotated %}
                     <a href="{% url 'genomApp:view_annotation' result_id=g.id%}">(View)</a>
                     {% endif %}
