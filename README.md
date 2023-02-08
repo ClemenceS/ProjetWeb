@@ -77,7 +77,7 @@ To fill the database we have decided to use (*json*) fixtures which we create by
 
 ___
 
-## Steps to run Genomicus on a docker container
+## Steps to run Genomicus in a docker container
 
 >Warning : When using docker, you might have to use `sudo`
 
