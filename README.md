@@ -15,6 +15,7 @@ This repository contains :
 * The Genomicus source code
 * The Documentation
 * Step by step guides to run Genomicus on a local work environnement or as a Docker container
+* Visual representation of the database and how to generate it
 
 
 Supervisors : 
@@ -108,6 +109,29 @@ docker run -it -p 8000:8000 --entrypoint bash  -t -i marchment/genomicus:v3.0
 * Now to access the application, go to the following address : http://localhost:8000/
 
 >Note : To access the users, the same rule applies as above.
+
+___
+
+## Visual representation of the Database
+
+Here is a UML class diagram of the genomicus data base :
+
+<img align="center" src="pictures/diagram.png" width="200">
+
+### Steps to generate the diagram 
+
+* The first step is to install *graphviz* if it is not installed already. Simply run the following command (for Debian or Debian-based Linux distributions) :
+
+```
+sudo apt install graphviz
+```
+
+* Then we need to generate the diagram using the command *manage.py graph_models*, simply run the following commands :
+
+```
+python3 genomicus/manage.py graph_models -a --dot -o diagram.dot
+dot -Tpng diagram.dot -o diagram.png
+```
 
 ___
 <img align="left" src="genomicus/static/logo.png" width="150">
