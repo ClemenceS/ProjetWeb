@@ -81,12 +81,14 @@ ___
 
 >Warning : When using docker, you might have to use `sudo`
 
+>The Dockerfile and the create_site.sh script can be found in the folder [elements_docker](./elements_docker). 
+
 ### Pulling Docker image
 
 * We first have to start by pulling the corresponding Docker image, run the command :
 
 ```
-docker pull marchment/genomicus:v2.0
+docker pull marchment/genomicus:v3.0
 ```
 
 ### Running the application 
@@ -94,7 +96,7 @@ docker pull marchment/genomicus:v2.0
 * To guarantee the docker container is up to date with the current version of the genomicus project, we access the containers terminal. Simply run the following command :
 
 ```
-docker run -it -p 8000:8000 --entrypoint bash  -t -i marchment/genomicus:v2.0
+docker run -it -p 8000:8000 --entrypoint bash  -t -i marchment/genomicus:v3.0
 ```
 
 * Now we need to create the database, fill it and run the application. Simply run the following command :
