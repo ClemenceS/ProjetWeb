@@ -3,11 +3,11 @@ from member.models import Member
 
 class SeqInfo(models.Model):
     """Classe pour les informations relatives à une séquence :
-        - identifiant 
-        - taille
-        - phase de lecture 
-        - espèce 
-        - taux de GC
+        * identifiant 
+        * taille
+        * phase de lecture 
+        * espèce 
+        * taux de GC
     """
     id = models.CharField(primary_key=True, max_length=200)
     taille = models.IntegerField(blank=False)
@@ -25,11 +25,11 @@ class SeqInfo(models.Model):
 
 class Genome(SeqInfo):
     """Classe qui hérite de la classe SeqInfo donc pour les informations relatives à une séquence :
-        - identifiant 
-        - taille
-        - phase de lecture 
-        - espèce 
-        - taux de GC
+        * identifiant 
+        * taille
+        * phase de lecture 
+        * espèce 
+        * taux de GC
     """
     def __str__(self):
         """String for representing the Model object."""
@@ -38,19 +38,19 @@ class Genome(SeqInfo):
 
 class CodantInfo(SeqInfo):
     """Classe qui hérite de la classe SeqInfo donc pour les informations relatives à une séquence :
-        - identifiant 
-        - taille
-        - phase de lecture 
-        - espèce 
-        - taux de GC
+        * identifiant 
+        * taille
+        * phase de lecture 
+        * espèce 
+        * taux de GC
         Et pour les informations relatives aux séquences codantes (protéines & CDS) :
-        - identifiant du chromosome
-        - type de séquences (CDS ou Peptide)
-        - identifiant du gène
-        - start
-        - stop
-        - transcript
-        - ...
+        * identifiant du chromosome
+        * type de séquences (CDS ou Peptide)
+        * identifiant du gène
+        * start
+        * stop
+        * transcript
+        * ...
     """
     #Blank -> If True, the field is allowed to be blank. Default is False.
     chromosome = models.ForeignKey('Genome', on_delete=models.RESTRICT)
@@ -75,13 +75,13 @@ class CodantInfo(SeqInfo):
 
 class Annotation(models.Model):
     """Classe pour les annotations de séquences :
-        - identifiant du chromosome
-        - identifiant du gène 
-        - symbole du gène 
-        - description
-        - identifiant de l'annotateur
-        - identifiant du validateur 
-        - déjà annoté ou non
+        * identifiant du chromosome
+        * identifiant du gène 
+        * symbole du gène 
+        * description
+        * identifiant de l'annotateur
+        * identifiant du validateur 
+        * déjà annoté ou non
     """
     #On suppose qu'un seul annotateur peut annoter -> d'où qu'un seul clé primaire et non double
     id = models.ForeignKey('CodantInfo', on_delete=models.RESTRICT, primary_key=True)
@@ -127,10 +127,10 @@ class SequenceCodant(SequenceBase):
 
 class Forum(models.Model):
     """Classe pour les forums :
-        - identifiant du forum (correspond à un id de protéine)
-        - identifiant du chromosome
-        - auteur du forum
-        - date de création
+        * identifiant du forum (correspond à un id de protéine)
+        * identifiant du chromosome
+        * auteur du forum
+        * date de création
     """
     id = models.ForeignKey('CodantInfo', on_delete=models.RESTRICT, primary_key=True)
     id_chromosome = models.ForeignKey('Genome', on_delete=models.RESTRICT)
@@ -143,11 +143,11 @@ class Forum(models.Model):
 
 class Commentaire(models.Model):
     """Classe pour les commentaires :
-        - identifiant du forum (correspond à un id de protéine)
-        - texte du commentaire
-        - auteur du commentaire
-        - date de création du commentaire
-        - date de modification du commentaire
+        * identifiant du forum (correspond à un id de protéine)
+        * texte du commentaire
+        * auteur du commentaire
+        * date de création du commentaire
+        * date de modification du commentaire
     """
     id_forum = models.ForeignKey('Forum', on_delete=models.RESTRICT, related_name='id_forum', null=True)
     text = models.TextField(blank=True, null=True)

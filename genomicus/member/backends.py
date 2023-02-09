@@ -14,7 +14,7 @@ class MemberBackend(ModelBackend):
         :parameter request: 
         :parameter kwargs: recupérer les informations de connexion (email et mot de passe)
 
-        :return member: si il existe       
+        :return member: si il existe 
         """
 
         email = kwargs['email']
