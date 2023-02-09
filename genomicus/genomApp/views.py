@@ -42,9 +42,9 @@ def seq_type(sequence):
 
 def get_users():
     """Fonction get_users : renvoie les informations sur un utilisateur 
-        * si un utilisateur connecté : son rang de profil (lecteur, annotatateur, ....), son statut (connecte),
+        - si un utilisateur connecté : son rang de profil (lecteur, annotatateur, ....), son statut (connecte),
             son prénom-nom et son email
-        * si aucun utilisateur connecté : rang de profile : 0 et connecte=False
+        - si aucun utilisateur connecté : rang de profile : 0 et connecte=False
 
     :return: un dictionnaire d'informations
     """
@@ -75,8 +75,8 @@ def get_annotations(user):
 #Function that return true is the user is allowed to annotate the protein -> False if not
 def allowed_to_annotate(user, id_prot):
     """Fonction qui renvoie :
-        * True si l'utilisateur est autorisé à annoter la protéine 
-        * False sinon
+        - True si l'utilisateur est autorisé à annoter la protéine 
+        - False sinon
 
     :parameter user:
     :parameter id_prot:
