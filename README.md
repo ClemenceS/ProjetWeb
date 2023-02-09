@@ -116,7 +116,9 @@ ___
 
 Here is a UML class diagram of the genomicus data base :
 
-<img align="center" src="pictures/diagram.png" width="200">
+<p align="center">
+    <img src="pictures/diagram.png" width="700">
+</p>
 
 ### Steps to generate the diagram 
 
