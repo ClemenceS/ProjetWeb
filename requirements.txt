@@ -1,4 +1,4 @@
-Django==4.1.5
+Django==4.1.6
 Bio==1.5.3
 fuzzywuzzy==0.18.0
 pyfaidx==0.7.1
