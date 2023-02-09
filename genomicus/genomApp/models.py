@@ -2,7 +2,7 @@ from django.db import models
 from member.models import Member
 
 class SeqInfo(models.Model):
-    """Classe pour les informations relatives à une séquence :
+    """Classe pour les informations relatives à une séquence
         * identifiant 
         * taille
         * phase de lecture 
@@ -24,7 +24,7 @@ class SeqInfo(models.Model):
 
 
 class Genome(SeqInfo):
-    """Classe qui hérite de la classe SeqInfo donc pour les informations relatives à une séquence :
+    """Classe qui hérite de la classe SeqInfo donc pour les informations relatives à une séquence
         * identifiant 
         * taille
         * phase de lecture 
@@ -37,13 +37,14 @@ class Genome(SeqInfo):
 
 
 class CodantInfo(SeqInfo):
-    """Classe qui hérite de la classe SeqInfo donc pour les informations relatives à une séquence :
+    """Classe qui hérite de la classe SeqInfo donc pour les informations relatives à une séquence
         * identifiant 
         * taille
         * phase de lecture 
         * espèce 
         * taux de GC
-        Et pour les informations relatives aux séquences codantes (protéines & CDS) :
+
+        Et pour les informations relatives aux séquences codantes (protéines & CDS)
         * identifiant du chromosome
         * type de séquences (CDS ou Peptide)
         * identifiant du gène
@@ -74,7 +75,7 @@ class CodantInfo(SeqInfo):
         return f'{self.id}'
 
 class Annotation(models.Model):
-    """Classe pour les annotations de séquences :
+    """Classe pour les annotations de séquences
         * identifiant du chromosome
         * identifiant du gène 
         * symbole du gène 
@@ -126,7 +127,7 @@ class SequenceCodant(SequenceBase):
         return f'{self.id}'
 
 class Forum(models.Model):
-    """Classe pour les forums :
+    """Classe pour les forums
         * identifiant du forum (correspond à un id de protéine)
         * identifiant du chromosome
         * auteur du forum
@@ -142,7 +143,7 @@ class Forum(models.Model):
         return f'{self.id}'
 
 class Commentaire(models.Model):
-    """Classe pour les commentaires :
+    """Classe pour les commentaires
         * identifiant du forum (correspond à un id de protéine)
         * texte du commentaire
         * auteur du commentaire
