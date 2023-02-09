@@ -5,5 +5,6 @@ from .models import Member
 
 # Register your models here.
 class MembersAdmin(admin.ModelAdmin):
-    pass
+    readonly_fields = ["connecte"]
+    #pass
 admin.site.register(Member, MembersAdmin)

@@ -63,7 +63,7 @@ class Member(AbstractBaseUser):
     #specify the connexion field
     USERNAME_FIELD = 'email'
 
-    connecte = models.BooleanField()
+    connecte = models.BooleanField(editable=False)
 
     REQUIRED_FIELDS = ['firstName', 'lastName']
 

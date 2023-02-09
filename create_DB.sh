@@ -23,7 +23,6 @@ done
 
 
 # add members in the bdd
-
 echo "from member.models import Member; Member.objects.create_member(email='clemence.sebe@universite-paris-saclay.fr', password='clemence', lastName='Sebe', firstName='Clémence')" | python3 manage.py shell
 
 echo "from member.models import Member; Member.objects.create_member(email='ambre.baumann@universite-paris-saclay.fr', password='ambre', lastName='Baumann', firstName='Ambre')" | python3 manage.py shell
