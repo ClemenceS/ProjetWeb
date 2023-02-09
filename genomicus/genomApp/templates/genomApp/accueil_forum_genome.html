@@ -85,16 +85,6 @@
         event.preventDefault();
     };
 
-    $(document).ready(function () {
-        $("#id_ID").autocomplete({
-            source: function (request, response) {
-                $.getJSON("id_proteine_forum_autocomplete/", {
-                    term: request.term
-                }, response);
-            }
-        });
-    });
-
 </script>
 
 {% endblock %}

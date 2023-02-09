@@ -729,19 +729,6 @@ def idProteineAutocomplete(request):
     suggestions_list = [{"label": i} for i in set(id)]
     return JsonResponse(suggestions_list, safe=False)
 
-def idProteineForumAutocomplete(request):
-    """Fonction qui permet l'autocomplétion dans le forum pour les identifiants de protéines
-
-    :parameter request:
-    :return: une liste avec les identifiants de protéines possibles en fonction des caractères entrés dans le formulaire
-    """
-    query = request.GET.get("term", "")
-    suggestions = CodantInfo.objects.filter(id__icontains=query)
-    id =  [remove_header(obj.id) for obj in suggestions]
-    id = id[0:10]
-    suggestions_list = [{"label": i} for i in set(id)]
-    return JsonResponse(suggestions_list, safe=False)
-
 def speciesProteineAutocomplete(request):
     """Fonction qui permet l'autocomplétion dans les formulaires pour les noms d'espèces
 
