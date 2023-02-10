@@ -45,3 +45,6 @@ Administrateur
 
 L’utilisateur qui est administrateur est aussi validateur et annotateur. 
 L’administrateur a accès à la liste de tous les utilisateurs avec la date et heure de leur dernière connexion et leur rôle. Il peut créer et supprimer des utilisateurs. Il peut également changer le rôle d’un utilisateur.
+
+**Attention** : Pour se connecter au site administrateur, il faut au préalable se connecter sur le site *Genomicus* et suivre le lien vers cette page admin pour que le système puisse vous enregistrer comme ayant le droit de vous connecter à ce site.
+Pour se connecter, une nouvelle authentification est demandée (même adresse email et mot de passe que sur le site *Genomicus*)
